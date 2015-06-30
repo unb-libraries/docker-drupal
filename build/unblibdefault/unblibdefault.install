@@ -1,0 +1,9 @@
+<?php
+/**
+ * @file
+ * Install, update and uninstall functions for the unblibdefault profile.
+ */
+function unblibdefault_install() {
+ include_once DRUPAL_ROOT . '/profiles/standard/standard.install';
+ standard_install();
+}
