@@ -45,6 +45,16 @@ then
   cp -r /tmp/drupal_build/$DRUPAL_BUILD_SLUG/ profiles/
   drush site-install $DRUPAL_BUILD_SLUG -y --account-name=admin --account-pass=admin --db-url="mysqli://${DRUPAL_SITE_ID}_user:$DRUPAL_PASSWORD@$MYSQL_HOSTNAME:3306/${DRUPAL_SITE_ID}_db"
 
+  # Apply settings overrides
+  OVERRIDE_SOURCE_FILE='/tmp/drupal_build/settings_override.php'
+  OVERRIDE_TARGET_FILE='/var/www/drupal/htdocs/sites/default/settings.php'
+  if [ -e $OVERRIDE_SOURCE_FILE ]; then
+    while read -u 10 CONF_LINE; do
+      TRIMMED_LINE=`echo "$CONF_LINE" | xargs`
+      grep -q "^${TRIMMED_LINE}$" $OVERRIDE_TARGET_FILE || echo "$TRIMMED_LINE" >> $OVERRIDE_TARGET_FILE
+    done 10<$OVERRIDE_SOURCE_FILE
+  fi
+
   # Drupal Permissions
   chown root:root -R /var/www/drupal/htdocs
   chown www-data:www-data -R /var/www/drupal/htdocs/sites/default/files
@@ -64,6 +74,16 @@ then
   cp -r /tmp/drupal_build/$DRUPAL_BUILD_SLUG/ /tmp/htdocs/profiles/
   cd ..
   rsync --verbose --recursive --delete --omit-dir-times --chmod=o+r --perms --exclude=htdocs/sites/default/files/ --exclude=htdocs/sites/default/settings.php --exclude=htdocs/profiles/$DRUPAL_BUILD_SLUG htdocs /var/www/drupal
+
+  # Apply settings overrides
+  OVERRIDE_SOURCE_FILE='/tmp/drupal_build/settings_override.php'
+  OVERRIDE_TARGET_FILE='/var/www/drupal/htdocs/sites/default/settings.php'
+  if [ -e $OVERRIDE_SOURCE_FILE ]; then
+    while read -u 10 CONF_LINE; do
+      TRIMMED_LINE=`echo "$CONF_LINE" | xargs`
+      grep -q "^${TRIMMED_LINE}$" $OVERRIDE_TARGET_FILE || echo "$TRIMMED_LINE" >> $OVERRIDE_TARGET_FILE
+    done 10<$OVERRIDE_SOURCE_FILE
+  fi
 
   # Run DB Updates
   cd /var/www/drupal/htdocs
