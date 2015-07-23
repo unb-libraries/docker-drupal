@@ -1,5 +1,5 @@
 FROM unblibraries/nginx-php
-MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
+MAINTAINER Jacob Sanford <jsanford_at_unb.ca>
 
 RUN apt-get update && \
   apt-get install -y curl drush mysql-client rsync && apt-get clean
