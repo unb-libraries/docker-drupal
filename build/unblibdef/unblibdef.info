@@ -1,5 +1,5 @@
-name = unblibdefault
-description = Install unblibdefault.
+name = unblibdef
+description = Install unblibdef.
 version = VERSION
 core = 7.x
 

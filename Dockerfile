@@ -1,22 +1,24 @@
 FROM unblibraries/nginx-php
 MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
-RUN apt-get update && apt-get install -y curl drush mysql-client rsync && apt-get clean
-RUN service nginx stop
+RUN apt-get update && \
+  apt-get install -y curl drush mysql-client rsync && apt-get clean
+
+CMD ["/sbin/my_init"]
 
 # Move the default make and profile to the tmp directory
-RUN mkdir -p /tmp/drupal_build/unblibdefault
-ADD build/unblibdefault.makefile /tmp/drupal_build/unblibdefault.makefile
+RUN mkdir -p /tmp/drupal_build/unblibdef
+ADD build/unblibdef.makefile /tmp/drupal_build/unblibdef.makefile
 ADD build/settings_override.php /tmp/drupal_build/settings_override.php
 
-ADD build/unblibdefault/unblibdefault.info /tmp/drupal_build/unblibdefault/unblibdefault.info
-ADD build/unblibdefault/unblibdefault.install /tmp/drupal_build/unblibdefault/unblibdefault.install
-ADD build/unblibdefault/unblibdefault.profile /tmp/drupal_build/unblibdefault/unblibdefault.profile
+ADD build/unblibdef/unblibdef.info /tmp/drupal_build/unblibdef/unblibdef.info
+ADD build/unblibdef/unblibdef.install /tmp/drupal_build/unblibdef/unblibdef.install
+ADD build/unblibdef/unblibdef.profile /tmp/drupal_build/unblibdef/unblibdef.profile
 
 # Add Conf File
 ADD conf/drupal.conf /etc/nginx/sites-available/default
 
-# Build The Site
-ADD ./start.sh /start.sh
-RUN chmod 755 /start.sh
-CMD ["/bin/bash", "/start.sh"]
+ADD init/60_build_drupal_tree.sh /etc/my_init.d/60_build_drupal_tree.sh
+RUN chmod -v +x /etc/my_init.d/*.sh
+
+EXPOSE 80

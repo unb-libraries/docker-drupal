@@ -1,17 +1,17 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Determine the SITE_ID
 if env | grep -q ^DRUPAL_SITE_ID=
 then
   echo "DRUPAL_SITE_ID set to $DRUPAL_SITE_ID"
 else
-  DRUPAL_SITE_ID='unblibdefault'
+  DRUPAL_SITE_ID='unblibdef'
 fi
 
 # Determine the BUILD_SLUG
 if [ ! -e "/tmp/drupal_build/$DRUPAL_SITE_ID.makefile" ] || [ ! -e "/tmp/drupal_build/$DRUPAL_SITE_ID/$DRUPAL_SITE_ID.install" ] || [ ! -e "/tmp/drupal_build/$DRUPAL_SITE_ID/$DRUPAL_SITE_ID.info" ] || [ ! -e "/tmp/drupal_build/$DRUPAL_SITE_ID/$DRUPAL_SITE_ID.profile" ]
 then
-  DRUPAL_BUILD_SLUG='unblibdefault'
+  DRUPAL_BUILD_SLUG='unblibdef'
 else
   DRUPAL_BUILD_SLUG=$DRUPAL_SITE_ID
 fi
@@ -23,7 +23,7 @@ if [ "$RESULT" == "${DRUPAL_SITE_ID}_db" ]; then
 else
   DB_LIVE="NO"
 fi
-if [ ! -e /var/www/drupal/htdocs/sites/default/settings.php ]; then
+if [ ! -e /usr/share/nginx/html/sites/default/settings.php ]; then
   FILES_LIVE="NO"
 else
   FILES_LIVE="YES"
@@ -33,21 +33,22 @@ fi
 if [ "$DB_LIVE" == "NO" ] && [ "$FILES_LIVE" == "NO" ]
 then
   # Initial deploy, site needs install
-  mkdir -p /var/www/drupal/htdocs
-  cd /var/www/drupal/htdocs
+  rm -rf /usr/share/nginx/html
+  mkdir -p /usr/share/nginx/html
+  cd /usr/share/nginx/html
   drush make --yes "/tmp/drupal_build/$DRUPAL_BUILD_SLUG.makefile"
 
   # Create Database
   mysql -uroot -p$MYSQL_ROOT_PASSWORD -h $MYSQL_HOSTNAME -e "DROP DATABASE IF EXISTS ${DRUPAL_SITE_ID}_db; CREATE DATABASE ${DRUPAL_SITE_ID}_db; GRANT ALL PRIVILEGES ON ${DRUPAL_SITE_ID}_db.* TO '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_PASSWORD'; FLUSH PRIVILEGES;"
 
   # Install
-  cd /var/www/drupal/htdocs
+  cd /usr/share/nginx/html
   cp -r /tmp/drupal_build/$DRUPAL_BUILD_SLUG/ profiles/
   drush site-install $DRUPAL_BUILD_SLUG -y --account-name=admin --account-pass=admin --db-url="mysqli://${DRUPAL_SITE_ID}_user:$DRUPAL_PASSWORD@$MYSQL_HOSTNAME:3306/${DRUPAL_SITE_ID}_db"
 
   # Apply settings overrides
   OVERRIDE_SOURCE_FILE='/tmp/drupal_build/settings_override.php'
-  OVERRIDE_TARGET_FILE='/var/www/drupal/htdocs/sites/default/settings.php'
+  OVERRIDE_TARGET_FILE='/usr/share/nginx/html/sites/default/settings.php'
   if [ -e $OVERRIDE_SOURCE_FILE ]; then
     while read -u 10 CONF_LINE; do
       TRIMMED_LINE=`echo "$CONF_LINE" | xargs`
@@ -56,28 +57,28 @@ then
   fi
 
   # Drupal Permissions
-  chown root:root -R /var/www/drupal/htdocs
-  chown www-data:www-data -R /var/www/drupal/htdocs/sites/default/files
-  chown root:root -R /var/www/drupal/htdocs/sites/default/files/.htaccess
+  chown root:root -R /usr/share/nginx/html
+  chown www-data:www-data -R /usr/share/nginx/html/sites/default/files
+  chown root:root -R /usr/share/nginx/html/sites/default/files/.htaccess
 elif [ "$DB_LIVE" == "YES" ] && [ "$FILES_LIVE" == "YES" ]
 then
   # Site Needs Upgrade
   echo "Database Exists and Files Found, Updating Existing Site"
-  rm -rf /tmp/htdocs
-  mkdir /tmp/htdocs
-  cd /tmp/htdocs
+  rm -rf /tmp/html
+  mkdir /tmp/html
+  cd /tmp/html
 
   # Making temporary build location
   drush make --yes "/tmp/drupal_build/$DRUPAL_BUILD_SLUG.makefile"
 
   # Deploy to live dir
-  cp -r /tmp/drupal_build/$DRUPAL_BUILD_SLUG/ /tmp/htdocs/profiles/
+  cp -r /tmp/drupal_build/$DRUPAL_BUILD_SLUG/ /tmp/html/profiles/
   cd ..
-  rsync --verbose --recursive --delete --omit-dir-times --chmod=o+r --perms --exclude=htdocs/sites/default/files/ --exclude=htdocs/sites/default/settings.php --exclude=htdocs/profiles/$DRUPAL_BUILD_SLUG htdocs /var/www/drupal
+  rsync --verbose --recursive --delete --omit-dir-times --chmod=o+r --perms --exclude=html/sites/default/files/ --exclude=html/sites/default/settings.php --exclude=html/profiles/$DRUPAL_BUILD_SLUG html /usr/share/nginx
 
   # Apply settings overrides
   OVERRIDE_SOURCE_FILE='/tmp/drupal_build/settings_override.php'
-  OVERRIDE_TARGET_FILE='/var/www/drupal/htdocs/sites/default/settings.php'
+  OVERRIDE_TARGET_FILE='/usr/share/nginx/html/sites/default/settings.php'
   if [ -e $OVERRIDE_SOURCE_FILE ]; then
     while read -u 10 CONF_LINE; do
       TRIMMED_LINE=`echo "$CONF_LINE" | xargs`
@@ -86,19 +87,16 @@ then
   fi
 
   # Run DB Updates
-  cd /var/www/drupal/htdocs
+  cd /usr/share/nginx/html
   drush --yes cc all
   drush --yes updb
 
   # Drupal Permissions
-  chown root:root -R /var/www/drupal/htdocs
-  chown www-data:www-data -R /var/www/drupal/htdocs/sites/default/files
-  chown root:root -R /var/www/drupal/htdocs/sites/default/files/.htaccess
+  chown root:root -R /usr/share/nginx/html
+  chown www-data:www-data -R /usr/share/nginx/html/sites/default/files
+  chown root:root -R /usr/share/nginx/html/sites/default/files/.htaccess
 else
   # Yikes
   echo "DB: $DB_LIVE FILES: $FILES_LIVE"
   echo "Something seems odd, cowardly refusing to do anything"
 fi
-
-php5-fpm -c /etc/php5/fpm &
-service nginx start
