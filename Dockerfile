@@ -2,7 +2,7 @@ FROM unblibraries/nginx-php
 MAINTAINER Jacob Sanford <jsanford_at_unb.ca>
 
 RUN apt-get update && \
-  apt-get install -y curl drush mysql-client rsync && apt-get clean
+  apt-get install -y curl drush mysql-client rsync git && apt-get clean
 
 CMD ["/sbin/my_init"]
 
