@@ -2,39 +2,30 @@
 
 if [[ -n "$DRUSH_TRANSFER_KEY" && -n "$DRUSH_TRANSFER_USER" && -n "$DRUSH_TRANSFER_HOST" && -n "$DRUSH_TRANSFER_PATH" && -n "$DRUSH_TRANSFER_URI" ]] ; then
 
-cat <<EOT >> /tmp/remote_site.php
-$aliases['remote_site'] = array(
+  cat <<EOT >> /tmp/remote_auth_key
+$DRUSH_TRANSFER_KEY
+EOT
+  chmod 0600 /tmp/remote_auth_key
+  
+  mkdir /tmp/drush-aliases
+  cat <<EOT >> /tmp/drush-aliases/aliases.drushrc.php
+<?php
+\$aliases['live'] = array(
   'uri' => '$DRUSH_TRANSFER_URI',
   'root' => '$DRUSH_TRANSFER_PATH',
   'remote-user' => '$DRUSH_TRANSFER_USER',
   'remote-host' => '$DRUSH_TRANSFER_HOST',
-  'ssh-options' => '-o PasswordAuthentication=no -i /home/YOURUSERNAME/.ssh/id_rsa',
+  'ssh-options' => '-o PasswordAuthentication=no -o StrictHostKeyChecking=no -i /tmp/remote_auth_key',
 );
 EOT
 
+  if [[ $(drush @live status --alias-path=/tmp/drush-aliases) =~ "Successful" ]]; then
+    DRUSH_BIN='drush --yes --verbose --alias-path=/tmp/drush-aliases --uri=default'
+    cd /usr/share/nginx/html
+    $DRUSH_BIN @live status
+    $DRUSH_BIN rsync @live:%files @self:%files --omit-dir-times --no-p --no-o --exclude-paths="css:js:styles:imagecache:ctools:tmp"
+    $DRUSH_BIN sql-sync @live @self
+  fi
+
 fi
 
-
-# * @file yoursite.aliases.drushrc.php
-# * Site aliases for [your site domain]
-# * Place this file at ~/.drush/ 
-#
-# /**
-# * Production alias
-#
-#
-# drush --root=#{node['unblibraries-drupal']['deploy-path']}/#{node['unblibraries-drupal']['deploy-dir-name']} --uri=default rsync @#{node['unblibraries-drupal']['deploy-uri']}:%files @self:%files --omit-dir-times --no-p --no-o --exclude-paths="css:js:styles:imagecache:ctools:tmp"
-
-# Change File Path Permissions (TODO : Drush?)
-# chmod -R 777 #{node['unblibraries-drupal']['deploy-path']}/#{node['unblibraries-drupal']['deploy-dir-name']}/sites/default/files
-
-# Transfer live DB to Local
-# drush --root=#{node['unblibraries-drupal']['deploy-path']}/#{node['unblibraries-drupal']['deploy-dir-name']} --uri=default sql-sync @#{node['unblibraries-drupal']['deploy-uri']} @self
-
-# Set filepath var
-# drush --root=#{node['unblibraries-drupal']['deploy-path']}/#{node['unblibraries-drupal']['deploy-dir-name']} --uri=default vset file_public_path sites/default/files
-# drush --root=#{node['unblibraries-drupal']['deploy-path']}/#{node['unblibraries-drupal']['deploy-dir-name']} --uri=default vset file_private_path sites/default/files
-# drush --root=#{node['unblibraries-drupal']['deploy-path']}/#{node['unblibraries-drupal']['deploy-dir-name']} --uri=default vset file_temporary_path /tmp
-
-# Rebuild Registry
-# drush --root=#{node['unblibraries-drupal']['deploy-path']}/#{node['unblibraries-drupal']['deploy-dir-name']} --uri=default registry-rebuild

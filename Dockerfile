@@ -1,8 +1,8 @@
 FROM unblibraries/nginx-php
-MAINTAINER Jacob Sanford <jsanford_at_unb.ca>
+MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
 RUN apt-get update && \
-  apt-get install -y curl drush mysql-client rsync git && apt-get clean
+  apt-get install -y git curl drush mysql-client rsync && apt-get clean
 
 CMD ["/sbin/my_init"]
 
@@ -20,7 +20,6 @@ ADD conf/drupal.conf /etc/nginx/sites-available/default
 
 ADD init/60_build_drupal_tree.sh /etc/my_init.d/60_build_drupal_tree.sh
 ADD init/65_transfer_remote_filesystem.sh /etc/my_init.d/65_transfer_remote_filesystem.sh
-ADD init/70_clear_cache.sh /etc/my_init.d/70_clear_cache.sh
+ADD init/70_set_permissions.sh /etc/my_init.d/70_set_permissions.sh
+ADD init/71_clear_cache.sh /etc/my_init.d/71_clear_cache.sh
 RUN chmod -v +x /etc/my_init.d/*.sh
-
-EXPOSE 80
