@@ -1,7 +1,7 @@
 # unblibraries/drupal
-Simple, extensible Drupal docker container. Leverages the phusion/baseimage my_init system.
+Simple, extensible Drupal docker container. Leverages the [phusion/baseimage](https://registry.hub.docker.com/u/phusion/baseimage/) my_init system.
 
-This image builds and installs Drupal using the embedded profile from scratch if a database and filesystem is not found.
+This image builds and installs [Drupal](https://www.drupal.org/) using the embedded profile from scratch if a database and filesystem is not found. Content is served via [nginx](http://wiki.nginx.org/Main).
 
 If a persistent filesystem is used and a previous build and database is found, the image defined makefile is built and applied to the current instance, overwriting the existing filesystem. This allows in-place upgrades only by updating the makefile.
 
@@ -20,7 +20,7 @@ docker run \
 ## Runtime/Environment Variables
 
 ### Baseline Deployment
-* `MYSQL_HOSTNAME` - (Required) The hostname of the MySQL server for the Drupal site
+* `MYSQL_HOSTNAME` - (Required) The hostname of the MySQL server for the Drupal instance
 * `MYSQL_ROOT_PASSWORD` - (Required) The root password for the above server
 
 ### Overriding the Makefile and Install Profile
