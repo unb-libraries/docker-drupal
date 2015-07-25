@@ -19,9 +19,19 @@ docker run \
 
 ## Runtime/Environment Variables
 
-### Standard Deployment and Updates
+### Baseline Deployment
 * `MYSQL_HOSTNAME` - (Required) The hostname of the MySQL server for the Drupal site
 * `MYSQL_ROOT_PASSWORD` - (Required) The root password for the above server
+
+### Overriding the Makefile and Install Profile
+* `DRUPAL_SITE_ID` - (Optional) A unique string slug, (8 characters maximum) uniquely identifying the site install.
+
+By passing `DRUPAL_SITE_ID` and ADDing :
+
+* A makefile named `DRUPAL_SITE_ID.makefile` to `/tmp/drupal_build/DRUPAL_SITE_ID.makefile`
+* A full install profile named `DRUPAL_SITE_ID` to  `/tmp/drupal_build/DRUPAL_SITE_ID/`
+
+The build process can be controlled to create any configuration desired.
 
 ### Cloning an Existing Instance
 If key based access SSH is enabled on the server of an existing Drupal instance, the init process can clone that instance to the docker container. All of the following environment variables must be set, or the init script will not attempt to clone that instance. Please ensure that the makefile and profiles defined for the container match that of the existing instance, or erratic behavior will occur within the container.
