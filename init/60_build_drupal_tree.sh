@@ -55,11 +55,6 @@ then
       grep -q "^${TRIMMED_LINE}$" $OVERRIDE_TARGET_FILE || echo "$TRIMMED_LINE" >> $OVERRIDE_TARGET_FILE
     done 10<$OVERRIDE_SOURCE_FILE
   fi
-
-  # Drupal Permissions
-  chown root:root -R /usr/share/nginx/html
-  chown www-data:www-data -R /usr/share/nginx/html/sites/default/files
-  chown root:root -R /usr/share/nginx/html/sites/default/files/.htaccess
 elif [ "$DB_LIVE" == "YES" ] && [ "$FILES_LIVE" == "YES" ]
 then
   # Site Needs Upgrade
@@ -88,13 +83,7 @@ then
 
   # Run DB Updates
   cd /usr/share/nginx/html
-  drush --yes cc all
   drush --yes updb
-
-  # Drupal Permissions
-  chown root:root -R /usr/share/nginx/html
-  chown www-data:www-data -R /usr/share/nginx/html/sites/default/files
-  chown root:root -R /usr/share/nginx/html/sites/default/files/.htaccess
 else
   # Yikes
   echo "DB: $DB_LIVE FILES: $FILES_LIVE"
