@@ -1,7 +1,9 @@
 # unblibraries/drupal
 Simple, extensible Drupal docker container. Leverages the phusion/baseimage my_init system.
 
-Builds and installs from scratch if a database and filesystem is not found. The init system updates from the makefile if the database and filesystem exist.
+This image builds and installs Drupal using the embedded profile from scratch if a database and filesystem is not found.
+
+If a persistent filesystem is used and a previous build and database is found, the image defined makefile is built and applied to the current instance, overwriting the existing filesystem. This allows in-place upgrades only by updating the makefile.
 
 ## Usage
 ```
