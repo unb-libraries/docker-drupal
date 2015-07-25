@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
 cd /usr/share/nginx/html
-/sbin/setuser www-run drush yes cc all
+/sbin/setuser www-data drush yes cc all
 
