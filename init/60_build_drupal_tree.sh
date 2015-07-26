@@ -33,8 +33,7 @@ fi
 if [ "$DB_LIVE" == "NO" ] && [ "$FILES_LIVE" == "NO" ]
 then
   # Initial deploy, site needs install
-  rm -rf /usr/share/nginx/html
-  mkdir -p /usr/share/nginx/html
+  rm -rf /usr/share/nginx/html/*
   cd /usr/share/nginx/html
   drush make --yes "/tmp/drupal_build/$DRUPAL_BUILD_SLUG.makefile"
 
