@@ -68,7 +68,9 @@ then
   # Deploy to live dir
   cp -r /tmp/drupal_build/$DRUPAL_BUILD_SLUG/ /tmp/html/profiles/
   cd ..
-  rsync --verbose --recursive --delete --omit-dir-times --chmod=o+r --perms --exclude=html/sites/default/files/ --exclude=html/sites/default/settings.php --exclude=html/profiles/$DRUPAL_BUILD_SLUG html /usr/share/nginx
+
+  chown 500:500 -R /tmp/html
+  rsync --verbose --recursive --exclude=sites/default/files/ --exclude=sites/default/settings.php --exclude=profiles/$DRUPAL_BUILD_SLUG --perms --delete --omit-dir-times --chmod=o+r /tmp/html/ /usr/share/nginx/html
 
   # Apply settings overrides
   OVERRIDE_SOURCE_FILE='/tmp/drupal_build/settings_override.php'
@@ -80,7 +82,6 @@ then
     done 10<$OVERRIDE_SOURCE_FILE
   fi
 
-  # Run DB Updates
   cd /usr/share/nginx/html
   drush --yes updb
 else
