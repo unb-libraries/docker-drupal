@@ -17,7 +17,7 @@ else
 fi
 
 # Triage request
-RESULT=`mysqlshow -h $MYSQL_HOSTNAME --user=${DRUPAL_SITE_ID}_user --password=$DRUPAL_PASSWORD| grep -v Wildcard | grep -o ${DRUPAL_SITE_ID}_db`
+RESULT=`mysqlshow -h $MYSQL_HOSTNAME --user=${DRUPAL_SITE_ID}_user --password=$DRUPAL_DB_PASSWORD| grep -v Wildcard | grep -o ${DRUPAL_SITE_ID}_db`
 if [ "$RESULT" == "${DRUPAL_SITE_ID}_db" ]; then
   DB_LIVE="YES"
 else
@@ -38,12 +38,12 @@ then
   drush make --yes "/tmp/drupal_build/$DRUPAL_BUILD_SLUG.makefile"
 
   # Create Database
-  mysql -uroot -p$MYSQL_ROOT_PASSWORD -h $MYSQL_HOSTNAME -e "DROP DATABASE IF EXISTS ${DRUPAL_SITE_ID}_db; CREATE DATABASE ${DRUPAL_SITE_ID}_db; GRANT ALL PRIVILEGES ON ${DRUPAL_SITE_ID}_db.* TO '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_PASSWORD'; FLUSH PRIVILEGES;"
+  mysql -uroot -p$MYSQL_ROOT_PASSWORD -h $MYSQL_HOSTNAME -e "DROP DATABASE IF EXISTS ${DRUPAL_SITE_ID}_db; CREATE DATABASE ${DRUPAL_SITE_ID}_db; GRANT ALL PRIVILEGES ON ${DRUPAL_SITE_ID}_db.* TO '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; FLUSH PRIVILEGES;"
 
   # Install
   cd /usr/share/nginx/html
   cp -r /tmp/drupal_build/$DRUPAL_BUILD_SLUG/ profiles/
-  drush site-install $DRUPAL_BUILD_SLUG -y --account-name=admin --account-pass=admin --db-url="mysqli://${DRUPAL_SITE_ID}_user:$DRUPAL_PASSWORD@$MYSQL_HOSTNAME:3306/${DRUPAL_SITE_ID}_db"
+  drush site-install $DRUPAL_BUILD_SLUG -y --account-name=admin --account-pass=admin --db-url="mysqli://${DRUPAL_SITE_ID}_user:$DRUPAL_DB_PASSWORD@$MYSQL_HOSTNAME:3306/${DRUPAL_SITE_ID}_db"
 
   # Apply settings overrides
   OVERRIDE_SOURCE_FILE='/tmp/drupal_build/settings_override.php'
