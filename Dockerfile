@@ -18,7 +18,7 @@ ADD build/unblibdef/unblibdef.install /tmp/drupal_build/unblibdef/unblibdef.inst
 ADD build/unblibdef/unblibdef.profile /tmp/drupal_build/unblibdef/unblibdef.profile
 
 # Add Conf File
-ADD conf/drupal.conf /etc/nginx/sites-available/default
+ADD conf/nginx/drupal.conf /etc/nginx/sites-available/default
 
 ADD init/ /etc/my_init.d/
 RUN chmod -v +x /etc/my_init.d/*.sh
