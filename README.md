@@ -1,9 +1,13 @@
 # unblibraries/drupal
 Simple, extensible Drupal docker container. Leverages the [phusion/baseimage](https://registry.hub.docker.com/u/phusion/baseimage/) my_init system.
 
-This image builds and installs [Drupal](https://www.drupal.org/) using the embedded profile from scratch if a database and filesystem is not found. Content is served via [nginx](http://wiki.nginx.org/Main).
+This image does not contain a Database (MySQL) server.
 
-If a persistent filesystem is used and a previous build and database is found, the image defined makefile is built and applied to the current instance, overwriting the existing filesystem. This allows in-place upgrades only by updating the makefile.
+It builds and installs [Drupal](https://www.drupal.org/) using the embedded makefile and install profile from scratch (if a database and filesystem is not found). Content is served via [nginx](http://wiki.nginx.org/Main).
+
+If a persistent filesystem is used and a previous build and database is found, the image defined makefile is built and applied to the current instance, overwriting the existing filesystem.
+
+This upgrade system allows in-place upgrades only by updating the makefile, and is appropriate for Github post-commit hook driven rebuilds.
 
 ## Usage
 ```
@@ -20,8 +24,8 @@ docker run \
 ## Runtime/Environment Variables
 
 ### Baseline Deployment
-* `MYSQL_HOSTNAME` - (Required) The hostname of the MySQL server for the Drupal instance
-* `MYSQL_ROOT_PASSWORD` - (Required) The root password for the above server
+* `MYSQL_HOSTNAME` - (Required) The hostname of the MySQL server for the Drupal instance. This is not included in the image.
+* `MYSQL_ROOT_PASSWORD` - (Required) The root password for the MySQL server.
 * `DRUPAL_DB_PASSWORD` - (Required) The password the drupal framework should assert to access the database.
 
 ### Overriding the Makefile and Install Profile
