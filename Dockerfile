@@ -18,8 +18,5 @@ ADD build/unblibdef/unblibdef.profile /tmp/drupal_build/unblibdef/unblibdef.prof
 # Add Conf File
 ADD conf/drupal.conf /etc/nginx/sites-available/default
 
-ADD init/60_build_drupal_tree.sh /etc/my_init.d/60_build_drupal_tree.sh
-ADD init/65_transfer_remote_filesystem.sh /etc/my_init.d/65_transfer_remote_filesystem.sh
-ADD init/70_set_permissions.sh /etc/my_init.d/70_set_permissions.sh
-ADD init/71_clear_cache.sh /etc/my_init.d/71_clear_cache.sh
+ADD init/ /etc/my_init.d/
 RUN chmod -v +x /etc/my_init.d/*.sh
