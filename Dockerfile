@@ -2,7 +2,9 @@ FROM unblibraries/nginx-php
 MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
 RUN apt-get update && \
-  apt-get install -y git curl drush mysql-client rsync && apt-get clean
+  DEBIAN_FRONTEND="noninteractive" apt-get install -y git curl drush \
+  mysql-client rsync && \
+  apt-get clean
 
 CMD ["/sbin/my_init"]
 
