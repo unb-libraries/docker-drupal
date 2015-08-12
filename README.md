@@ -15,6 +15,7 @@ docker run \
        --rm \
        --name drupal \
        -e MYSQL_HOSTNAME= \
+       -e MYSQL_PORT= \
        -e MYSQL_ROOT_PASSWORD= \
        -v /local/dir:/usr/share/nginx \
        -p 80:80 \
@@ -25,6 +26,10 @@ docker run \
 
 ### Baseline Deployment
 * `MYSQL_HOSTNAME` - (Required) The hostname of the MySQL server for the Drupal instance. This is not included in the image.
+* `MYSQL_PORT` - (Required) The hostname of the MySQL server for the Drupal instance. This is not included in the image.
+
+If a MySQL container is on the same docker host, uses port 3306 and is linked to the drupal container via ```--link``` , the above two environment variables do not need to be set.
+
 * `MYSQL_ROOT_PASSWORD` - (Required) The root password for the MySQL server.
 * `DRUPAL_DB_PASSWORD` - (Required) The password the drupal framework should assert to access the database.
 
