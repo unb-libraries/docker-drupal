@@ -2,8 +2,8 @@ FROM unblibraries/nginx-php
 MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
 ENV DRUSH_VERSION=7.x
-ENV WEBTREE_ROOT=/usr/share/nginx
-ENV DRUPAL_ROOT=${WEBTREE_ROOT}/html
+ENV WEBTREE_ROOT=${WEBTREE_ROOT}
+ENV DRUPAL_ROOT=${WEBTREE_WEBROOT}
 
 RUN apt-get update && \
   DEBIAN_FRONTEND="noninteractive" apt-get install -y git curl \
