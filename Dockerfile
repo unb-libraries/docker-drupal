@@ -1,12 +1,21 @@
 FROM unblibraries/nginx-php
 MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
+ENV DRUSH_VERSION=7.x
+
 RUN apt-get update && \
-  DEBIAN_FRONTEND="noninteractive" apt-get install -y git curl drush \
+  DEBIAN_FRONTEND="noninteractive" apt-get install -y git curl \
   mysql-client rsync && \
   apt-get clean
 
 CMD ["/sbin/my_init"]
+
+# Install Drush
+RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && \
+  cd /usr/local/src/drush && \
+  git checkout ${DRUSH_VERSION} && \
+  ln -s /usr/local/src/drush/drush /usr/bin/drush && \
+  composer install
 
 # Move the default make and profile to the tmp directory
 RUN mkdir -p /tmp/drupal_build/unblibdef
