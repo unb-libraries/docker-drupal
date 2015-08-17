@@ -42,7 +42,7 @@ if [ "$DB_LIVE" == "NO" ] && [ "$FILES_LIVE" == "NO" ]
 then
   # Initial deploy, site needs install
   rm -rf ${DRUPAL_ROOT}/*
-  cd ${DRUPAL_ROOT}/html
+  cd ${DRUPAL_ROOT}
   drush make --yes "/tmp/drupal_build/$DRUPAL_BUILD_SLUG.makefile"
 
   # Create Database
