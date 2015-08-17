@@ -31,7 +31,7 @@ if [ "$RESULT" == "${DRUPAL_SITE_ID}_db" ]; then
 else
   DB_LIVE="NO"
 fi
-if [ ! -e /usr/share/nginx/html/sites/default/settings.php ]; then
+if [ ! -e ${DRUPAL_ROOT}/sites/default/settings.php ]; then
   FILES_LIVE="NO"
 else
   FILES_LIVE="YES"
@@ -41,21 +41,21 @@ fi
 if [ "$DB_LIVE" == "NO" ] && [ "$FILES_LIVE" == "NO" ]
 then
   # Initial deploy, site needs install
-  rm -rf /usr/share/nginx/html/*
-  cd /usr/share/nginx/html
+  rm -rf ${DRUPAL_ROOT}/*
+  cd ${DRUPAL_ROOT}/html
   drush make --yes "/tmp/drupal_build/$DRUPAL_BUILD_SLUG.makefile"
 
   # Create Database
   mysql -uroot -p$MYSQL_ROOT_PASSWORD -h $MYSQL_HOSTNAME -e "DROP DATABASE IF EXISTS ${DRUPAL_SITE_ID}_db; CREATE DATABASE ${DRUPAL_SITE_ID}_db; GRANT ALL PRIVILEGES ON ${DRUPAL_SITE_ID}_db.* TO '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; FLUSH PRIVILEGES;"
 
   # Install
-  cd /usr/share/nginx/html
+  cd ${DRUPAL_ROOT}
   cp -r /tmp/drupal_build/$DRUPAL_BUILD_SLUG/ profiles/
   drush site-install $DRUPAL_BUILD_SLUG -y --account-name=admin --account-pass=admin --db-url="mysqli://${DRUPAL_SITE_ID}_user:$DRUPAL_DB_PASSWORD@$MYSQL_HOSTNAME:$MYSQL_PORT/${DRUPAL_SITE_ID}_db"
 
   # Apply settings overrides
   OVERRIDE_SOURCE_FILE='/tmp/drupal_build/settings_override.php'
-  OVERRIDE_TARGET_FILE='/usr/share/nginx/html/sites/default/settings.php'
+  OVERRIDE_TARGET_FILE="${DRUPAL_ROOT}/sites/default/settings.php"
   if [ -e $OVERRIDE_SOURCE_FILE ]; then
     while read -u 10 CONF_LINE; do
       TRIMMED_LINE=`echo "$CONF_LINE" | xargs`
@@ -78,11 +78,11 @@ then
   cd ..
 
   chown 500:500 -R /tmp/html
-  rsync --verbose --recursive --exclude=sites/default/files/ --exclude=sites/default/settings.php --exclude=profiles/$DRUPAL_BUILD_SLUG --perms --delete --omit-dir-times --chmod=o+r /tmp/html/ /usr/share/nginx/html
+  rsync --verbose --recursive --exclude=sites/default/files/ --exclude=sites/default/settings.php --exclude=profiles/$DRUPAL_BUILD_SLUG --perms --delete --omit-dir-times --chmod=o+r /tmp/html/ ${DRUPAL_ROOT}
 
   # Apply settings overrides
   OVERRIDE_SOURCE_FILE='/tmp/drupal_build/settings_override.php'
-  OVERRIDE_TARGET_FILE='/usr/share/nginx/html/sites/default/settings.php'
+  OVERRIDE_TARGET_FILE="${DRUPAL_ROOT}/sites/default/settings.php"
   if [ -e $OVERRIDE_SOURCE_FILE ]; then
     while read -u 10 CONF_LINE; do
       TRIMMED_LINE=`echo "$CONF_LINE" | xargs`
@@ -90,7 +90,7 @@ then
     done 10<$OVERRIDE_SOURCE_FILE
   fi
 
-  cd /usr/share/nginx/html
+  cd ${DRUPAL_ROOT}
   drush --yes updb
 else
   # Yikes

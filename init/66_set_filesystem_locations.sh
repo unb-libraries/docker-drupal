@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-cd /usr/share/nginx/html
+cd ${DRUPAL_ROOT}
 drush --yes vset file_temporary_path /tmp

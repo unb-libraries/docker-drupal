@@ -21,7 +21,7 @@ EOT
 
   if [[ $(drush @live status --alias-path=/tmp/drush-aliases) =~ "Successful" ]]; then
     DRUSH_BIN='drush --yes --verbose --alias-path=/tmp/drush-aliases --uri=default'
-    cd /usr/share/nginx/html
+    cd ${DRUPAL_ROOT}
     $DRUSH_BIN @live status
     $DRUSH_BIN rsync @live:%files @self:%files --omit-dir-times --no-p --no-o --exclude-paths="css:js:styles:imagecache:ctools:tmp"
     $DRUSH_BIN sql-sync @live @self
