@@ -1,4 +1,4 @@
-FROM unblibraries/nginx-php
+FROM unblibraries/apache-php
 MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
 ENV DRUSH_VERSION=7.x
@@ -28,8 +28,7 @@ ADD build/unblibdef/unblibdef.info /tmp/drupal_build/unblibdef/unblibdef.info
 ADD build/unblibdef/unblibdef.install /tmp/drupal_build/unblibdef/unblibdef.install
 ADD build/unblibdef/unblibdef.profile /tmp/drupal_build/unblibdef/unblibdef.profile
 
-# Add Conf File
-ADD conf/nginx/drupal.conf /etc/nginx/sites-available/default
+# Add conf files
 ADD conf/php5/fpm/php.ini /etc/php5/fpm/php.ini
 
 ADD init/ /etc/my_init.d/
