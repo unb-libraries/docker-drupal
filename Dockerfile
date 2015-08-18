@@ -1,9 +1,8 @@
 FROM unblibraries/apache-php
 MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
-ENV DRUSH_VERSION=7.x
-ENV WEBTREE_ROOT ${WEBTREE_ROOT}
-ENV DRUPAL_ROOT ${WEBTREE_WEBROOT}
+ENV DRUSH_VERSION 7.x
+ENV DRUPAL_ROOT $WEBTREE_WEBROOT
 
 RUN apt-get update && \
   DEBIAN_FRONTEND="noninteractive" apt-get install -y git curl \
