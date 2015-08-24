@@ -3,7 +3,7 @@ Simple, extensible Drupal docker container. Leverages the [phusion/baseimage](ht
 
 This image does not contain a Database (MySQL) server.
 
-It builds and installs [Drupal](https://www.drupal.org/) using the embedded makefile and install profile from scratch (if a database and filesystem is not found). Content is served via [nginx](http://wiki.nginx.org/Main).
+It builds and installs [Drupal](https://www.drupal.org/) using the embedded makefile and install profile from scratch (if a database and filesystem is not found). Content is served via [apache](http://httpd.apache.org/).
 
 If a persistent filesystem is used and a previous build and database is found, the image defined makefile is built and applied to the current instance, overwriting the existing filesystem.
 
