@@ -9,6 +9,9 @@ If a persistent filesystem is used and a previous build and database is found, t
 
 This upgrade system allows in-place upgrades only by updating the makefile, and is appropriate for Github post-commit hook driven rebuilds.
 
+## Getting Started
+Not sure where to start? New to Docker? Check out the [unblibraries/drupal Wiki](https://github.com/unb-libraries/docker-drupal/wiki) for detailed instructions.
+
 ## Usage
 ```
 docker run \
