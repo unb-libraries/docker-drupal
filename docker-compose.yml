@@ -1,0 +1,21 @@
+mysql:
+  image: mysql
+  command: mysqld --skip-name-resolve
+  environment:
+    MYSQL_ROOT_PASSWORD: drupal
+    MYSQL_USER: drupal
+    MYSQL_PASSWORD: drupal
+    MYSQL_DATABASE: drupal
+  expose:
+   - "3306"
+drupal:
+  image: unblibraries/drupal:apache
+  links:
+    - mysql:mysql
+  expose:
+   - "80"
+  ports:
+    - "80:80"
+  environment:
+    MYSQL_ROOT_PASSWORD: drupal
+    DRUPAL_DB_PASSWORD: drupal
