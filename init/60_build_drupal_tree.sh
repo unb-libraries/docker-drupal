@@ -36,16 +36,6 @@ then
   cd ${DRUPAL_ROOT}
   cp -r /tmp/drupal_build/$DRUPAL_BUILD_SLUG/ profiles/
   drush site-install $DRUPAL_BUILD_SLUG -y --account-name=admin --account-pass=admin --db-url="mysqli://${DRUPAL_SITE_ID}_user:$DRUPAL_DB_PASSWORD@${MYSQL_PORT_3306_TCP_ADDR}:${MYSQL_PORT_3306_TCP_PORT}/${DRUPAL_SITE_ID}_db"
-
-  # Apply settings overrides.
-  OVERRIDE_SOURCE_FILE='/tmp/drupal_build/settings_override.php'
-  OVERRIDE_TARGET_FILE="${DRUPAL_ROOT}/sites/default/settings.php"
-  if [ -e $OVERRIDE_SOURCE_FILE ]; then
-    while read -u 10 CONF_LINE; do
-      TRIMMED_LINE=`echo "$CONF_LINE" | xargs`
-      grep -q "^${TRIMMED_LINE}$" $OVERRIDE_TARGET_FILE || echo "$TRIMMED_LINE" >> $OVERRIDE_TARGET_FILE
-    done 10<$OVERRIDE_SOURCE_FILE
-  fi
 # See if the instance appears to have previously been deployed
 elif [[ -f /tmp/DRUPAL_DB_LIVE && -f /tmp/DRUPAL_FILES_LIVE ]];
 then
@@ -70,16 +60,6 @@ then
   # Rsync newly deployed site files on top of one one.
   chown ${WEBSERVER_USER_ID}:${WEBSERVER_USER_ID} -R /tmp/html
   rsync --verbose --recursive --exclude=sites/default/files/ --exclude=sites/default/settings.php --exclude=profiles/$DRUPAL_BUILD_SLUG --perms --delete --omit-dir-times --chmod=o+r /tmp/html/ ${DRUPAL_ROOT}
-
-  # Apply settings overrides
-  OVERRIDE_SOURCE_FILE='/tmp/drupal_build/settings_override.php'
-  OVERRIDE_TARGET_FILE="${DRUPAL_ROOT}/sites/default/settings.php"
-  if [ -e $OVERRIDE_SOURCE_FILE ]; then
-    while read -u 10 CONF_LINE; do
-      TRIMMED_LINE=`echo "$CONF_LINE" | xargs`
-      grep -q "^${TRIMMED_LINE}$" $OVERRIDE_TARGET_FILE || echo "$TRIMMED_LINE" >> $OVERRIDE_TARGET_FILE
-    done 10<$OVERRIDE_SOURCE_FILE
-  fi
 
   # Apply database updates, if they exist.
   drush --yes --root=${DRUPAL_ROOT} --uri=default updb
