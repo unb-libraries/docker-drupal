@@ -5,15 +5,10 @@
 MYSQL_PORT_3306_TCP_ADDR="${MYSQL_PORT_3306_TCP_ADDR:-$(echo $MYSQL_HOSTNAME)}"
 MYSQL_PORT_3306_TCP_PORT="${MYSQL_PORT_3306_TCP_PORT:-$(echo $MYSQL_PORT)}"
 
-# Determine the SITE_ID, which is the slug used to uniquely reference most site properties.
-if env | grep -q ^DRUPAL_SITE_ID=
-then
-  echo "DRUPAL_SITE_ID set to $DRUPAL_SITE_ID"
-else
-  DRUPAL_SITE_ID='unblibdef'
-fi
+# Determine the SITE_ID, which used to uniquely reference most site properties.
+DRUPAL_SITE_ID="${DRUPAL_SITE_ID:-unblibdef}"
 
-# Determine the BUILD_SLUG.
+# Determine if the SITE_ID makefile and profile is deployed, otherwise use the default to build.
 if [ ! -e "/tmp/drupal_build/$DRUPAL_SITE_ID.makefile" ] || [ ! -e "/tmp/drupal_build/$DRUPAL_SITE_ID/$DRUPAL_SITE_ID.install" ] || [ ! -e "/tmp/drupal_build/$DRUPAL_SITE_ID/$DRUPAL_SITE_ID.info" ] || [ ! -e "/tmp/drupal_build/$DRUPAL_SITE_ID/$DRUPAL_SITE_ID.profile" ]
 then
   DRUPAL_BUILD_SLUG='unblibdef'
