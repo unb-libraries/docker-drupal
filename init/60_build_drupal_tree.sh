@@ -48,6 +48,11 @@ elif [[ -f /tmp/DRUPAL_DB_LIVE && -f /tmp/DRUPAL_FILES_LIVE ]];
 then
   # Site Needs Upgrade
   echo "Database Exists and Files Found, Updating Existing Site"
+
+  # Ensure Databse String Valid
+  sed -i "s|'host' => '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}',|'host' => '$MYSQL_PORT_3306_TCP_ADDR',|g" ${DRUPAL_ROOT}/sites/default/settings.php
+  sed -i "s|'port' => '[0-9]\{2,4\}',|'port' => '$MYSQL_PORT_3306_TCP_PORT',|g" ${DRUPAL_ROOT}/sites/default/settings.php
+
   rm -rf /tmp/html
   mkdir /tmp/html
   cd /tmp/html
