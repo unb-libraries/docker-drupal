@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ -n "$DRUSH_TRANSFER_KEY" && -n "$DRUSH_TRANSFER_USER" && -n "$DRUSH_TRANSFER_HOST" && -n "$DRUSH_TRANSFER_PATH" && -n "$DRUSH_TRANSFER_URI" ]] ; then
+if [[ -n "$DRUSH_TRANSFER_KEY" && -n "$DRUSH_TRANSFER_USER" && -n "$DRUSH_TRANSFER_HOST" && -n "$DRUSH_TRANSFER_PATH" && -n "$DRUSH_TRANSFER_URI" && ! -f /tmp/DB_LIVE && ! -f /tmp/FILES_LIVE ]] ; then
 
   cat <<EOT >> /tmp/remote_auth_key
 $DRUSH_TRANSFER_KEY
