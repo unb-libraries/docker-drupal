@@ -81,6 +81,5 @@ then
   drush --yes updb
 else
   # Yikes
-  echo "DB: $DB_LIVE FILES: $FILES_LIVE"
-  echo "Something seems odd, cowardly refusing to do anything"
+  echo "Something seems odd with the Database and Filesystem, cowardly refusing to do anything"
 fi
