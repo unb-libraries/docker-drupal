@@ -25,7 +25,7 @@ else
 fi
 
 # Build / Update Site
-if [[ ! -f /tmp/DB_LIVE && ! -f /tmp/FILES_LIVE ]];
+if [[ ! -f /tmp/DRUPAL_DB_LIVE && ! -f /tmp/DRUPAL_FILES_LIVE ]];
 then
   # Initial deploy, site needs install
   rm -rf ${DRUPAL_ROOT}/*
@@ -49,7 +49,7 @@ then
       grep -q "^${TRIMMED_LINE}$" $OVERRIDE_TARGET_FILE || echo "$TRIMMED_LINE" >> $OVERRIDE_TARGET_FILE
     done 10<$OVERRIDE_SOURCE_FILE
   fi
-elif [[ -f /tmp/DB_LIVE && ! /tmp/FILES_LIVE ]];
+elif [[ -f /tmp/DRUPAL_DB_LIVE && ! /tmp/DRUPAL_FILES_LIVE ]];
 then
   # Site Needs Upgrade
   echo "Database Exists and Files Found, Updating Existing Site"
