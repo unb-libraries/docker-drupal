@@ -24,7 +24,7 @@ fi
 # Check if this is a new deployment.
 if [[ ! -f /tmp/DRUPAL_DB_LIVE && ! -f /tmp/DRUPAL_FILES_LIVE ]];
 then
-  # Initial deploy, site needs building and site-install.
+  # Site needs building and site-install.
   rm -rf ${DRUPAL_ROOT}/*
   cd ${DRUPAL_ROOT}
   drush make --yes "/tmp/drupal_build/$DRUPAL_BUILD_SLUG.makefile"
@@ -36,6 +36,7 @@ then
   cd ${DRUPAL_ROOT}
   cp -r /tmp/drupal_build/$DRUPAL_BUILD_SLUG/ profiles/
   drush site-install $DRUPAL_BUILD_SLUG -y --account-name=admin --account-pass=admin --db-url="mysqli://${DRUPAL_SITE_ID}_user:$DRUPAL_DB_PASSWORD@${MYSQL_PORT_3306_TCP_ADDR}:${MYSQL_PORT_3306_TCP_PORT}/${DRUPAL_SITE_ID}_db"
+
 # See if the instance appears to have previously been deployed
 elif [[ -f /tmp/DRUPAL_DB_LIVE && -f /tmp/DRUPAL_FILES_LIVE ]];
 then
@@ -63,6 +64,7 @@ then
 
   # Apply database updates, if they exist.
   drush --yes --root=${DRUPAL_ROOT} --uri=default updb
+
 else
   # Inconsistency detected, do nothing to avoid data loss.
   echo "Something seems odd with the Database and Filesystem, cowardly refusing to do anything"
