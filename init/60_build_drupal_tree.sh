@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
 
-# Determine if we have a linked MySQL container
-# This only works for port 3306
-if env | grep -q ^MYSQL_PORT_3306_TCP_ADDR=
-then
-  MYSQL_HOSTNAME=$MYSQL_PORT_3306_TCP_ADDR
-  MYSQL_PORT=$MYSQL_PORT_3306_TCP_PORT
-fi
+MYSQL_PORT_3306_TCP_ADDR="${MYSQL_PORT_3306_TCP_ADDR:-$(echo $MYSQL_HOSTNAME)}"
+MYSQL_PORT_3306_TCP_PORT="${MYSQL_PORT_3306_TCP_PORT:-$(echo $MYSQL_PORT)}"
 
 # Determine the SITE_ID
 if env | grep -q ^DRUPAL_SITE_ID=
@@ -33,12 +28,12 @@ then
   drush make --yes "/tmp/drupal_build/$DRUPAL_BUILD_SLUG.makefile"
 
   # Create Database
-  mysql -uroot -p$MYSQL_ROOT_PASSWORD -h $MYSQL_HOSTNAME -e "DROP DATABASE IF EXISTS ${DRUPAL_SITE_ID}_db; CREATE DATABASE ${DRUPAL_SITE_ID}_db; GRANT ALL PRIVILEGES ON ${DRUPAL_SITE_ID}_db.* TO '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; FLUSH PRIVILEGES;"
+  mysql -uroot -p${MYSQL_ROOT_PASSWORD} -h ${MYSQL_PORT_3306_TCP_ADDR} -P ${MYSQL_PORT_3306_TCP_PORT} -e "DROP DATABASE IF EXISTS ${DRUPAL_SITE_ID}_db; CREATE DATABASE ${DRUPAL_SITE_ID}_db; GRANT ALL PRIVILEGES ON ${DRUPAL_SITE_ID}_db.* TO '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; FLUSH PRIVILEGES;"
 
   # Install
   cd ${DRUPAL_ROOT}
   cp -r /tmp/drupal_build/$DRUPAL_BUILD_SLUG/ profiles/
-  drush site-install $DRUPAL_BUILD_SLUG -y --account-name=admin --account-pass=admin --db-url="mysqli://${DRUPAL_SITE_ID}_user:$DRUPAL_DB_PASSWORD@$MYSQL_HOSTNAME:$MYSQL_PORT/${DRUPAL_SITE_ID}_db"
+  drush site-install $DRUPAL_BUILD_SLUG -y --account-name=admin --account-pass=admin --db-url="mysqli://${DRUPAL_SITE_ID}_user:$DRUPAL_DB_PASSWORD@${MYSQL_PORT_3306_TCP_ADDR}:${MYSQL_PORT_3306_TCP_PORT}/${DRUPAL_SITE_ID}_db"
 
   # Apply settings overrides
   OVERRIDE_SOURCE_FILE='/tmp/drupal_build/settings_override.php'
@@ -49,7 +44,7 @@ then
       grep -q "^${TRIMMED_LINE}$" $OVERRIDE_TARGET_FILE || echo "$TRIMMED_LINE" >> $OVERRIDE_TARGET_FILE
     done 10<$OVERRIDE_SOURCE_FILE
   fi
-elif [[ -f /tmp/DRUPAL_DB_LIVE && ! /tmp/DRUPAL_FILES_LIVE ]];
+elif [[ -f /tmp/DRUPAL_DB_LIVE && -f /tmp/DRUPAL_FILES_LIVE ]];
 then
   # Site Needs Upgrade
   echo "Database Exists and Files Found, Updating Existing Site"

@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-# Wait for MySQL server to be ready.
+MYSQL_PORT_3306_TCP_ADDR="${MYSQL_PORT_3306_TCP_ADDR:-$(echo $MYSQL_HOSTNAME)}"
+MYSQL_PORT_3306_TCP_PORT="${MYSQL_PORT_3306_TCP_PORT:-$(echo $MYSQL_PORT)}"
+
 nc -zw10 ${MYSQL_PORT_3306_TCP_ADDR} ${MYSQL_PORT_3306_TCP_PORT}
 RETVAL=$?
 while [ $RETVAL -ne 0 ]
