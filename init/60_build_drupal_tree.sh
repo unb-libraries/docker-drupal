@@ -68,7 +68,7 @@ then
   cd ..
 
   # Rsync newly deployed site files on top of one one.
-  chown 500:500 -R /tmp/html
+  chown ${WEBSERVER_USER_ID}:${WEBSERVER_USER_ID} -R /tmp/html
   rsync --verbose --recursive --exclude=sites/default/files/ --exclude=sites/default/settings.php --exclude=profiles/$DRUPAL_BUILD_SLUG --perms --delete --omit-dir-times --chmod=o+r /tmp/html/ ${DRUPAL_ROOT}
 
   # Apply settings overrides
