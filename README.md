@@ -1,7 +1,7 @@
 # unblibraries/drupal
 Simple, extensible Drupal docker container. Leverages the [phusion/baseimage](https://registry.hub.docker.com/u/phusion/baseimage/) my_init system.
 
-This image does not contain a Database (MySQL) server.
+This image does not contain a Database (MySQL) server, although the docker-compose.yml file provided for convenience will build and attach one for you.
 
 It builds and installs [Drupal](https://www.drupal.org/) using the embedded makefile and install profile from scratch (if a database and filesystem is not found). Content is served via [apache](http://httpd.apache.org/).
 
