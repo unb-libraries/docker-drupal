@@ -24,21 +24,8 @@ else
   DRUPAL_BUILD_SLUG=$DRUPAL_SITE_ID
 fi
 
-# Triage request
-RESULT=`mysqlshow -h $MYSQL_HOSTNAME --user=${DRUPAL_SITE_ID}_user --password=$DRUPAL_DB_PASSWORD| grep -v Wildcard | grep -o ${DRUPAL_SITE_ID}_db`
-if [ "$RESULT" == "${DRUPAL_SITE_ID}_db" ]; then
-  DB_LIVE="YES"
-else
-  DB_LIVE="NO"
-fi
-if [ ! -e ${DRUPAL_ROOT}/sites/default/settings.php ]; then
-  FILES_LIVE="NO"
-else
-  FILES_LIVE="YES"
-fi
-
 # Build / Update Site
-if [ "$DB_LIVE" == "NO" ] && [ "$FILES_LIVE" == "NO" ]
+if [[ ! -f /tmp/DB_LIVE && ! -f /tmp/FILES_LIVE ]];
 then
   # Initial deploy, site needs install
   rm -rf ${DRUPAL_ROOT}/*
@@ -62,7 +49,7 @@ then
       grep -q "^${TRIMMED_LINE}$" $OVERRIDE_TARGET_FILE || echo "$TRIMMED_LINE" >> $OVERRIDE_TARGET_FILE
     done 10<$OVERRIDE_SOURCE_FILE
   fi
-elif [ "$DB_LIVE" == "YES" ] && [ "$FILES_LIVE" == "YES" ]
+elif [[ -f /tmp/DB_LIVE && ! /tmp/FILES_LIVE ]];
 then
   # Site Needs Upgrade
   echo "Database Exists and Files Found, Updating Existing Site"
