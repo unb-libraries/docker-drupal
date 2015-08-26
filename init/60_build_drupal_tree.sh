@@ -81,8 +81,8 @@ then
     done 10<$OVERRIDE_SOURCE_FILE
   fi
 
-  cd ${DRUPAL_ROOT}
-  drush --yes updb
+  # Apply database updates, if they exist.
+  drush --yes --root=${DRUPAL_ROOT} --uri=default updb
 else
   # Inconsistency detected, do nothing to avoid data loss.
   echo "Something seems odd with the Database and Filesystem, cowardly refusing to do anything"

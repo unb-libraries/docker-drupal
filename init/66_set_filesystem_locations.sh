@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
-cd ${DRUPAL_ROOT}
-drush --yes vset file_temporary_path /tmp
+drush --yes --root=${DRUPAL_ROOT} --uri=default vset file_temporary_path /tmp
