@@ -9,8 +9,6 @@ RUN apt-get update && \
   mysql-client rsync && \
   apt-get clean
 
-CMD ["/sbin/my_init"]
-
 # Install Drush
 RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && \
   cd /usr/local/src/drush && \
@@ -21,7 +19,7 @@ RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && \
 # Add Apache conf.
 ADD conf/apache2/default.conf /etc/apache2/sites-available/000-default.conf
 
-# Move the default make and profile to the tmp directory
+# Deploy the default makefile and install profile to the container
 RUN mkdir -p /tmp/drupal_build/unblibdef
 ADD build/unblibdef.makefile /tmp/drupal_build/unblibdef.makefile
 ADD build/settings_override.php /tmp/drupal_build/settings_override.php
@@ -33,5 +31,6 @@ ADD build/unblibdef/unblibdef.profile /tmp/drupal_build/unblibdef/unblibdef.prof
 # Add PHP conf.
 ADD conf/php5/apache2/php.ini /etc/php5/apache2/php.ini
 
+CMD ["/sbin/my_init"]
 ADD init/ /etc/my_init.d/
 RUN chmod -v +x /etc/my_init.d/*.sh

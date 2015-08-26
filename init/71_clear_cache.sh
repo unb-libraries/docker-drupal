@@ -2,4 +2,3 @@
 
 cd ${DRUPAL_ROOT}
 /sbin/setuser www-data drush --yes cc all
-

@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 
+# Transfer data from a remote site to the local instance.
+#
+# Ensure that all details are provided and this is the a first time deployment. Otherwise, skip this.
 if [[ -n "$DRUSH_TRANSFER_KEY" && -n "$DRUSH_TRANSFER_USER" && -n "$DRUSH_TRANSFER_HOST" && -n "$DRUSH_TRANSFER_PATH" && -n "$DRUSH_TRANSFER_URI" && ! -f /tmp/DRUPAL_DB_LIVE && ! -f /tmp/DRUPAL_FILES_LIVE ]] ; then
 
+  # Write remote auth key to a temporary location and set appropriate permissions.
   cat <<EOT >> /tmp/remote_auth_key
 $DRUSH_TRANSFER_KEY
 EOT
   chmod 0600 /tmp/remote_auth_key
-  
+
+  # Create an alias file for drush to use.
   mkdir /tmp/drush-aliases
   cat <<EOT >> /tmp/drush-aliases/aliases.drushrc.php
 <?php
@@ -19,6 +24,7 @@ EOT
 );
 EOT
 
+  # If we can access the site and drush reports a normal status, then transfer the data.
   if [[ $(drush @live status --alias-path=/tmp/drush-aliases) =~ "Successful" ]]; then
     DRUSH_BIN='drush --yes --verbose --alias-path=/tmp/drush-aliases --uri=default'
     cd ${DRUPAL_ROOT}
@@ -26,6 +32,4 @@ EOT
     $DRUSH_BIN rsync @live:%files @self:%files --omit-dir-times --no-p --no-o --exclude-paths="css:js:styles:imagecache:ctools:tmp"
     $DRUSH_BIN sql-sync @live @self
   fi
-
 fi
-
