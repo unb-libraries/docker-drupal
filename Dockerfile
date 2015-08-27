@@ -3,7 +3,7 @@ MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
 ENV DRUSH_VERSION 7.x
 ENV DRUPAL_ROOT $WEBTREE_WEBROOT
-ENV WEBSERVER_USER_ID 500
+ENV WEBSERVER_USER_ID 33
 
 RUN apt-get update && \
   DEBIAN_FRONTEND="noninteractive" apt-get install -y git curl \
