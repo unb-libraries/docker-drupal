@@ -1,13 +1,15 @@
 # unblibraries/drupal
-Simple, extensible Drupal docker container. Leverages the [phusion/baseimage](https://registry.hub.docker.com/u/phusion/baseimage/) my_init system.
+Simple, extensible Drupal docker image, suitable for both development and production.
 
-This image does not contain a Database (MySQL) server, although the docker-compose.yml file provided for convenience will build and attach one for you.
+Serves content via [apache](https://github.com/unb-libraries/docker-drupal/tree/apache) or [nginx](https://github.com/unb-libraries/docker-drupal/tree/nginx).
 
-It builds and installs [Drupal](https://www.drupal.org/) using the embedded makefile and install profile from scratch (if a database and filesystem is not found). Content is served via [apache](http://httpd.apache.org/).
+The image builds [Drupal](https://www.drupal.org/) using a [drush makefile](https://github.com/unb-libraries/docker-drupal/blob/nginx/build/unblibdef.makefile) and performs a site-install using an [install profile](https://github.com/unb-libraries/docker-drupal/tree/nginx/build/unblibdef). Both of these can easily be overridden.
 
-If a persistent filesystem is used and a previous build and database is found, the image defined makefile is built and applied to the current instance, overwriting the existing filesystem.
+If a persistent filesystem is used and a previously deployed database is found, the image rebuilds the makefile and overwrites the current files using rsync. This makes it easy to perform upgrades and extend live instances.
 
-This upgrade system allows in-place upgrades only by updating the makefile, and is appropriate for Github post-commit hook driven rebuilds.
+This image does not contain a database (MySQL) server, although the docker-compose.yml file provided for convenience will deploy the default mysql image and attach to it with no configuration required.
+
+Leverages the [phusion/baseimage](https://registry.hub.docker.com/u/phusion/baseimage/) my_init system.
 
 ## Getting Started
 Not sure where to start? New to Docker? Check out the [unblibraries/drupal Wiki](https://github.com/unb-libraries/docker-drupal/wiki) for detailed instructions on deploying a local development instance. If are looking for something more production-ready, you probably don't need instructions. Just include this image in your Fleet unit file with the appropriate environment variables.
@@ -58,4 +60,4 @@ If key based access SSH is enabled on the server of an existing Drupal instance,
 - unblibraries/drupal is licensed under the MIT License:
   - [http://opensource.org/licenses/mit-license.html](http://opensource.org/licenses/mit-license.html)
 - Attribution is not required, but much appreciated:
-  - `Drupal Docker Container by UNB Libraries`
+  - `Drupal Docker Image by UNB Libraries`
