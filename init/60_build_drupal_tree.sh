@@ -22,7 +22,7 @@ then
   # Site needs building and site-install.
   rm -rf ${DRUPAL_ROOT}/*
   cd ${DRUPAL_ROOT}
-  drush make --yes "/tmp/drupal_build/$DRUPAL_BUILD_SLUG.makefile"
+  drush make --concurrency=${DRUSH_MAKE_CONCURRENCY} --yes "/tmp/drupal_build/$DRUPAL_BUILD_SLUG.makefile" ${DRUSH_MAKE_OPTIONS}
 
   # Create Database.
   mysql -uroot -p${MYSQL_ROOT_PASSWORD} -h ${MYSQL_PORT_3306_TCP_ADDR} -P ${MYSQL_PORT_3306_TCP_PORT} -e "DROP DATABASE IF EXISTS ${DRUPAL_SITE_ID}_db; CREATE DATABASE ${DRUPAL_SITE_ID}_db; GRANT ALL PRIVILEGES ON ${DRUPAL_SITE_ID}_db.* TO '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; FLUSH PRIVILEGES;"
