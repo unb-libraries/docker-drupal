@@ -37,6 +37,8 @@ If a MySQL container is on the same docker host, uses port 3306 and is linked to
 
 * `MYSQL_ROOT_PASSWORD` - (Required) The root password for the MySQL server.
 * `DRUPAL_DB_PASSWORD` - (Required) The password the drupal framework should assert to access the database.
+* `DRUPAL_ADMIN_ACCOUNT_NAME` - (Optional) The admin account name. If not set, 'admin' will be used.
+* `DRUPAL_ADMIN_ACCOUNT_PASS` - (Optional) The admin account password. If not set, 'admin' will be used.
 
 ### Overriding the Makefile and Install Profile
 * `DRUPAL_SITE_ID` - (Optional) A unique string slug, (8 characters maximum) uniquely identifying the site install. This is only necessary if you have multiple installs from this image to the same database or wish to override the default makefile and install profile.
