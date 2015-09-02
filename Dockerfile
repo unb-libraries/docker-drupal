@@ -23,8 +23,9 @@ RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && \
   ln -s /usr/local/src/drush/drush /usr/bin/drush && \
   composer install
 
-# Add Apache conf.
+# Add Apache and PHP conf.
 ADD conf/apache2/default.conf /etc/apache2/sites-available/000-default.conf
+ADD conf/php5/apache2/php.ini /etc/php5/apache2/php.ini
 
 # Deploy the default makefile and install profile to the container
 RUN mkdir -p ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}
@@ -34,9 +35,6 @@ ADD build/settings_override.php ${TMP_DRUPAL_BUILD_DIR}/settings_override.php
 ADD build/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.info ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.info
 ADD build/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.install ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.install
 ADD build/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.profile ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.profile
-
-# Add PHP conf.
-ADD conf/php5/apache2/php.ini /etc/php5/apache2/php.ini
 
 # Drush-make the site.
 ENV DRUSH_MAKE_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
