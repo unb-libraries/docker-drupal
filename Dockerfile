@@ -3,6 +3,7 @@ MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
 ENV DRUPAL_ADMIN_ACCOUNT_PASS admin
+ENV DRUPAL_CORE_CRON_FREQUENCY 3600
 ENV DRUPAL_ROOT $WEBTREE_WEBROOT
 ENV DRUPAL_SITE_ID unblibdef
 ENV DRUSH_MAKE_CONCURRENCY 5
@@ -42,5 +43,7 @@ RUN drush make --concurrency=${DRUSH_MAKE_CONCURRENCY} --yes ${DRUSH_MAKE_OPTION
   mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUSH_MAKE_TMPROOT}/profiles/
 
 CMD ["/sbin/my_init"]
+ADD services/ /etc/service/
 ADD init/ /etc/my_init.d/
-RUN chmod -v +x /etc/my_init.d/*.sh
+RUN chmod -v +x /etc/my_init.d/*.sh && \
+  chmod -v +x /etc/service/*/run
