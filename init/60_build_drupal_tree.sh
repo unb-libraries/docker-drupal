@@ -5,32 +5,21 @@
 MYSQL_PORT_3306_TCP_ADDR="${MYSQL_PORT_3306_TCP_ADDR:-$(echo $MYSQL_HOSTNAME)}"
 MYSQL_PORT_3306_TCP_PORT="${MYSQL_PORT_3306_TCP_PORT:-$(echo $MYSQL_PORT)}"
 
-# Determine the SITE_ID, which used to uniquely reference most site properties.
-DRUPAL_SITE_ID="${DRUPAL_SITE_ID:-unblibdef}"
-
-# Determine if the SITE_ID makefile and profile is deployed, otherwise use the default to build.
-if [ ! -e "/tmp/drupal_build/$DRUPAL_SITE_ID.makefile" ] || [ ! -e "/tmp/drupal_build/$DRUPAL_SITE_ID/$DRUPAL_SITE_ID.install" ] || [ ! -e "/tmp/drupal_build/$DRUPAL_SITE_ID/$DRUPAL_SITE_ID.info" ] || [ ! -e "/tmp/drupal_build/$DRUPAL_SITE_ID/$DRUPAL_SITE_ID.profile" ]
-then
-  DRUPAL_BUILD_SLUG='unblibdef'
-else
-  DRUPAL_BUILD_SLUG=$DRUPAL_SITE_ID
-fi
-
 # Check if this is a new deployment.
 if [[ ! -f /tmp/DRUPAL_DB_LIVE && ! -f /tmp/DRUPAL_FILES_LIVE ]];
 then
   # Site needs building and site-install.
   rm -rf ${DRUPAL_ROOT}/*
   cd ${DRUPAL_ROOT}
-  drush make --concurrency=${DRUSH_MAKE_CONCURRENCY} --yes "/tmp/drupal_build/$DRUPAL_BUILD_SLUG.makefile" ${DRUSH_MAKE_OPTIONS}
+  drush make --concurrency=${DRUSH_MAKE_CONCURRENCY} --yes "/tmp/drupal_build/$DRUPAL_SITE_ID.makefile" ${DRUSH_MAKE_OPTIONS}
 
   # Create Database.
   mysql -uroot -p${MYSQL_ROOT_PASSWORD} -h ${MYSQL_PORT_3306_TCP_ADDR} -P ${MYSQL_PORT_3306_TCP_PORT} -e "DROP DATABASE IF EXISTS ${DRUPAL_SITE_ID}_db; CREATE DATABASE ${DRUPAL_SITE_ID}_db; GRANT ALL PRIVILEGES ON ${DRUPAL_SITE_ID}_db.* TO '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; FLUSH PRIVILEGES;"
 
   # Perform site-install.
   cd ${DRUPAL_ROOT}
-  cp -r /tmp/drupal_build/$DRUPAL_BUILD_SLUG/ profiles/
-  drush site-install $DRUPAL_BUILD_SLUG -y --account-name=${DRUPAL_ADMIN_ACCOUNT_NAME} --account-pass=${DRUPAL_ADMIN_ACCOUNT_PASS} --db-url="mysqli://${DRUPAL_SITE_ID}_user:$DRUPAL_DB_PASSWORD@${MYSQL_PORT_3306_TCP_ADDR}:${MYSQL_PORT_3306_TCP_PORT}/${DRUPAL_SITE_ID}_db"
+  cp -r /tmp/drupal_build/$DRUPAL_SITE_ID/ profiles/
+  drush site-install $DRUPAL_SITE_ID -y --account-name=${DRUPAL_ADMIN_ACCOUNT_NAME} --account-pass=${DRUPAL_ADMIN_ACCOUNT_PASS} --db-url="mysqli://${DRUPAL_SITE_ID}_user:$DRUPAL_DB_PASSWORD@${MYSQL_PORT_3306_TCP_ADDR}:${MYSQL_PORT_3306_TCP_PORT}/${DRUPAL_SITE_ID}_db"
 
 # See if the instance appears to have previously been deployed
 elif [[ -f /tmp/DRUPAL_DB_LIVE && -f /tmp/DRUPAL_FILES_LIVE ]];
@@ -47,15 +36,15 @@ then
   cd /tmp/html
 
   # Make the site to a temporary build location
-  drush make --yes "/tmp/drupal_build/$DRUPAL_BUILD_SLUG.makefile"
+  drush make --yes "/tmp/drupal_build/$DRUPAL_SITE_ID.makefile"
 
   # Copy the install profile to the live dir. Since this isn't used in a existing deployment, this is mainly to be tidy.
-  cp -r /tmp/drupal_build/$DRUPAL_BUILD_SLUG/ /tmp/html/profiles/
+  cp -r /tmp/drupal_build/$DRUPAL_SITE_ID/ /tmp/html/profiles/
   cd ..
 
   # Rsync newly deployed site files on top of one one.
   chown ${WEBSERVER_USER_ID}:${WEBSERVER_USER_ID} -R /tmp/html
-  rsync --verbose --recursive --exclude=sites/default/files/ --exclude=sites/default/settings.php --exclude=profiles/$DRUPAL_BUILD_SLUG --perms --delete --omit-dir-times --chmod=o+r /tmp/html/ ${DRUPAL_ROOT}
+  rsync --verbose --recursive --exclude=sites/default/files/ --exclude=sites/default/settings.php --exclude=profiles/$DRUPAL_SITE_ID --perms --delete --omit-dir-times --chmod=o+r /tmp/html/ ${DRUPAL_ROOT}
 
   # Apply database updates, if they exist.
   drush --yes --root=${DRUPAL_ROOT} --uri=default updb
