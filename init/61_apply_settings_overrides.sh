@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Apply settings overrides
-OVERRIDE_SOURCE_FILE='/tmp/drupal_build/settings_override.php'
+OVERRIDE_SOURCE_FILE="${TMP_DRUPAL_BUILD_DIR}/settings_override.php"
 OVERRIDE_TARGET_FILE="${DRUPAL_ROOT}/sites/default/settings.php"
 if [ -e $OVERRIDE_SOURCE_FILE ]; then
 while read -u 10 CONF_LINE; do

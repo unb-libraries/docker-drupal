@@ -45,8 +45,8 @@ If a MySQL container is on the same docker host, uses port 3306 and is linked to
 
 By passing `DRUPAL_SITE_ID` and ADDing :
 
-* A makefile named `DRUPAL_SITE_ID.makefile` to `/tmp/drupal_build/DRUPAL_SITE_ID.makefile`
-* A full install profile named `DRUPAL_SITE_ID` to  `/tmp/drupal_build/DRUPAL_SITE_ID/`
+* A makefile named `DRUPAL_SITE_ID.makefile` to `$TMP_DRUPAL_BUILD_DIR/DRUPAL_SITE_ID.makefile`
+* A full install profile named `DRUPAL_SITE_ID` to `$TMP_DRUPAL_BUILD_DIR/DRUPAL_SITE_ID/`
 
 The build process can be controlled to create any configuration desired.
 

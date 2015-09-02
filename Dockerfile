@@ -8,6 +8,7 @@ ENV DRUPAL_SITE_ID unblibdef
 ENV DRUSH_MAKE_CONCURRENCY 5
 ENV DRUSH_MAKE_OPTIONS="--shallow-clone"
 ENV DRUSH_VERSION 7.x
+ENV TMP_DRUPAL_BUILD_DIR /tmp/drupal_build
 ENV WEBSERVER_USER_ID 33
 
 RUN apt-get update && \
@@ -26,13 +27,13 @@ RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && \
 ADD conf/apache2/default.conf /etc/apache2/sites-available/000-default.conf
 
 # Deploy the default makefile and install profile to the container
-RUN mkdir -p /tmp/drupal_build/${DRUPAL_SITE_ID}
-ADD build/${DRUPAL_SITE_ID}.makefile /tmp/drupal_build/${DRUPAL_SITE_ID}.makefile
-ADD build/settings_override.php /tmp/drupal_build/settings_override.php
+RUN mkdir -p ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}
+ADD build/${DRUPAL_SITE_ID}.makefile ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}.makefile
+ADD build/settings_override.php ${TMP_DRUPAL_BUILD_DIR}/settings_override.php
 
-ADD build/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.info /tmp/drupal_build/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.info
-ADD build/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.install /tmp/drupal_build/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.install
-ADD build/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.profile /tmp/drupal_build/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.profile
+ADD build/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.info ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.info
+ADD build/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.install ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.install
+ADD build/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.profile ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.profile
 
 # Add PHP conf.
 ADD conf/php5/apache2/php.ini /etc/php5/apache2/php.ini
