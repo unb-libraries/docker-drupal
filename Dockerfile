@@ -38,6 +38,11 @@ ADD build/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.profile ${TMP_DRUPAL_BUILD_DIR}/${
 # Add PHP conf.
 ADD conf/php5/apache2/php.ini /etc/php5/apache2/php.ini
 
+# Drush-make the site.
+ENV DRUSH_MAKE_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
+RUN drush make --concurrency=${DRUSH_MAKE_CONCURRENCY} --yes ${DRUSH_MAKE_OPTIONS} "${TMP_DRUPAL_BUILD_DIR}/$DRUPAL_SITE_ID.makefile" ${DRUSH_MAKE_TMPROOT} && \
+  mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUSH_MAKE_TMPROOT}/profiles/
+
 CMD ["/sbin/my_init"]
 ADD init/ /etc/my_init.d/
 RUN chmod -v +x /etc/my_init.d/*.sh
