@@ -25,6 +25,10 @@ then
   # Site Needs Upgrade
   echo "Database Exists and Files Found. DRUPAL_REBUILD_ON_REDEPLOY=$DRUPAL_REBUILD_ON_REDEPLOY"
 
+  # Ensure the database details are still valid.
+  sed -i "s|'host' => '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}',|'host' => '$MYSQL_PORT_3306_TCP_ADDR',|g" ${DRUPAL_ROOT}/sites/default/settings.php
+  sed -i "s|'port' => '[0-9]\{2,4\}',|'port' => '$MYSQL_PORT_3306_TCP_PORT',|g" ${DRUPAL_ROOT}/sites/default/settings.php
+
   if [[ "$DRUPAL_REBUILD_ON_REDEPLOY" == "TRUE" ]];
   then
     echo "Updating Existing Site.."
@@ -35,10 +39,6 @@ then
     # Apply database updates, if they exist.
     drush --yes --root=${DRUPAL_ROOT} --uri=default updb
   fi
-
-  # Ensure the database details are still valid.
-  sed -i "s|'host' => '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}',|'host' => '$MYSQL_PORT_3306_TCP_ADDR',|g" ${DRUPAL_ROOT}/sites/default/settings.php
-  sed -i "s|'port' => '[0-9]\{2,4\}',|'port' => '$MYSQL_PORT_3306_TCP_PORT',|g" ${DRUPAL_ROOT}/sites/default/settings.php
 
 else
   # Inconsistency detected, do nothing to avoid data loss.
