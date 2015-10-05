@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+env:
+  - COMPOSE_VERSION=1.4.0 DRUPAL_VERSION=apache
+
+before_install:
+  - curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+before_script:
+  - docker pull mysql:5.6
+  - docker pull unblibraries/drupal:${DRUPAL_VERSION}
+  - 'sed -i "/image: mysql/a \ \ privileged: true" docker-compose.yml'
+  - 'sed -i "/build: drupal/a \ \ privileged: true" docker-compose.yml'
+
+script:
+  - docker-compose build
+  - docker-compose up -d
+  - travis/testRootObject.sh
