@@ -19,5 +19,5 @@ before_script:
 
 script:
   - docker-compose build
-  - docker-compose up -d
+  - docker-compose up
   - travis/testUserPage.sh
