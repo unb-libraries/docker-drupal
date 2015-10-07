@@ -15,6 +15,7 @@ before_script:
   - docker pull unblibraries/drupal:${DRUPAL_VERSION}
   - 'sed -i "/image: mysql/a \ \ privileged: true" docker-compose.yml'
   - 'sed -i "/build: drupal/a \ \ privileged: true" docker-compose.yml'
+  - sudo service docker restart ; sleep 10
 
 script:
   - docker-compose build
