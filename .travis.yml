@@ -20,4 +20,4 @@ before_script:
 script:
   - docker-compose build
   - docker-compose up -d
-  - travis/testRootObject.sh
+  - travis/testUserPage.sh
