@@ -10,7 +10,7 @@ if [[ ! -f /tmp/DRUPAL_DB_LIVE && ! -f /tmp/DRUPAL_FILES_LIVE ]];
 then
   echo "Copying webtree.."
   rm -rf ${DRUPAL_ROOT}/*
-  rsync -a -vvv ${DRUSH_MAKE_TMPROOT}/ ${DRUPAL_ROOT}/
+  rsync -a --progress ${DRUSH_MAKE_TMPROOT}/ ${DRUPAL_ROOT}/
 
   echo "Creating Database.."
   mysql -uroot -p${MYSQL_ROOT_PASSWORD} -h ${MYSQL_PORT_3306_TCP_ADDR} -P ${MYSQL_PORT_3306_TCP_PORT} -e "DROP DATABASE IF EXISTS ${DRUPAL_SITE_ID}_db; CREATE DATABASE ${DRUPAL_SITE_ID}_db; GRANT ALL PRIVILEGES ON ${DRUPAL_SITE_ID}_db.* TO '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; FLUSH PRIVILEGES;"
@@ -34,7 +34,7 @@ then
     echo "Updating Existing Site.."
 
     echo "Copying webtree.."
-    rsync -a -vvv --no-perms --no-owner --no-group --delete --exclude=sites/default/files/ --exclude=sites/default/settings.php ${DRUSH_MAKE_TMPROOT}/ ${DRUPAL_ROOT}/
+    rsync -a --progress --no-perms --no-owner --no-group --delete --exclude=sites/default/files/ --exclude=sites/default/settings.php ${DRUSH_MAKE_TMPROOT}/ ${DRUPAL_ROOT}/
 
     echo "Running UPDB.."
     drush --yes --root=${DRUPAL_ROOT} --uri=default updb
