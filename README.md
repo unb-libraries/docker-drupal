@@ -1,4 +1,4 @@
-# unblibraries/drupal
+# unblibraries/drupal [![Build Status](https://travis-ci.org/unb-libraries/docker-drupal.svg?branch=apache)](https://travis-ci.org/unb-libraries/docker-drupal)
 Simple, extensible Drupal docker image, suitable for both development and production.
 
 Serves content via [apache](https://github.com/unb-libraries/docker-drupal/tree/apache) or [nginx](https://github.com/unb-libraries/docker-drupal/tree/nginx).
