@@ -18,6 +18,7 @@ then
   echo "Performing Site Install.."
   cd ${DRUPAL_ROOT}
   /usr/bin/env PHP_OPTIONS="-d sendmail_path=`which true`" drush site-install $DRUPAL_SITE_ID -y --verbose --account-name=${DRUPAL_ADMIN_ACCOUNT_NAME} --account-pass=${DRUPAL_ADMIN_ACCOUNT_PASS} --db-url="mysqli://${DRUPAL_SITE_ID}_user:$DRUPAL_DB_PASSWORD@${MYSQL_PORT_3306_TCP_ADDR}:${MYSQL_PORT_3306_TCP_PORT}/${DRUPAL_SITE_ID}_db"
+  rm -f ${DRUPAL_ROOT}/install.php
 
 # See if the instance appears to have previously been deployed
 elif [[ -f /tmp/DRUPAL_DB_LIVE && -f /tmp/DRUPAL_FILES_LIVE ]];
@@ -38,8 +39,9 @@ then
 
     echo "Running UPDB.."
     drush --yes --root=${DRUPAL_ROOT} --uri=default updb
-  fi
 
+  fi
+  rm -f ${DRUPAL_ROOT}/install.php
 else
   # Inconsistency detected, do nothing to avoid data loss.
   echo "Something seems odd with the Database and Filesystem, cowardly refusing to do anything"
