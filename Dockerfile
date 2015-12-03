@@ -14,7 +14,7 @@ ENV TMP_DRUPAL_BUILD_DIR /tmp/drupal_build
 ENV WEBSERVER_USER_ID 33
 
 RUN apt-get update && \
-  DEBIAN_FRONTEND="noninteractive" apt-get install -y git curl \
+  DEBIAN_FRONTEND="noninteractive" apt-get install -y git curl unzip \
   mysql-client rsync && \
   apt-get clean
 
