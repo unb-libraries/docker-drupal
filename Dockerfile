@@ -12,6 +12,7 @@ ENV DRUSH_MAKE_OPTIONS="--shallow-clone"
 ENV DRUSH_VERSION 7.x
 ENV TMP_DRUPAL_BUILD_DIR /tmp/drupal_build
 ENV WEBSERVER_USER_ID 33
+ENV DRUPAL_REVERT_FEATURES FALSE
 
 RUN apt-get update && \
   DEBIAN_FRONTEND="noninteractive" apt-get install -y git curl unzip \
