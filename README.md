@@ -3,7 +3,7 @@ Simple, extensible Drupal docker image, suitable for both development and produc
 
 Serves content via [apache](https://github.com/unb-libraries/docker-drupal/tree/apache) or [nginx](https://github.com/unb-libraries/docker-drupal/tree/nginx).
 
-The image builds [Drupal](https://www.drupal.org/) using a [drush makefile](https://github.com/unb-libraries/docker-drupal/blob/nginx/build/unblibdef.makefile) and performs a site-install using an [install profile](https://github.com/unb-libraries/docker-drupal/tree/nginx/build/unblibdef). Both of these can easily be overridden.
+The image builds [Drupal](https://www.drupal.org/) using a [drush makefile](https://github.com/unb-libraries/docker-drupal/blob/nginx/build/unblibdef.yml) and performs a site-install using an [install profile](https://github.com/unb-libraries/docker-drupal/tree/nginx/build/unblibdef). Both of these can easily be overridden.
 
 If a persistent filesystem is used and a previously deployed database is found, the image rebuilds the makefile and overwrites the current files using rsync. This makes it easy to perform upgrades and extend live instances.
 
@@ -45,7 +45,7 @@ If a MySQL container is on the same docker host, uses port 3306 and is linked to
 
 By passing `DRUPAL_SITE_ID` and ADDing :
 
-* A makefile named `DRUPAL_SITE_ID.makefile` to `$TMP_DRUPAL_BUILD_DIR/DRUPAL_SITE_ID.makefile`
+* A makefile named `DRUPAL_SITE_ID.yml` to `$TMP_DRUPAL_BUILD_DIR/DRUPAL_SITE_ID.yml`
 * A full install profile named `DRUPAL_SITE_ID` to `$TMP_DRUPAL_BUILD_DIR/DRUPAL_SITE_ID/`
 
 The build process can be controlled to create any configuration desired.

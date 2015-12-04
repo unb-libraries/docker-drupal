@@ -9,6 +9,7 @@ ENV DRUPAL_ROOT $WEBTREE_WEBROOT
 ENV DRUPAL_SITE_ID unblibdef
 ENV DRUSH_MAKE_CONCURRENCY 5
 ENV DRUSH_MAKE_OPTIONS="--shallow-clone"
+ENV DRUSH_MAKE_FORMAT yml
 ENV DRUSH_VERSION 7.x
 ENV TMP_DRUPAL_BUILD_DIR /tmp/drupal_build
 ENV WEBSERVER_USER_ID 33
@@ -32,7 +33,7 @@ ADD conf/php5/apache2/php.ini /etc/php5/apache2/php.ini
 
 # Deploy the default makefile and install profile to the container
 RUN mkdir -p ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}
-ADD build/${DRUPAL_SITE_ID}.makefile ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}.makefile
+ADD build/${DRUPAL_SITE_ID}.${DRUSH_MAKE_FORMAT} ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}.${DRUSH_MAKE_FORMAT}
 ADD build/settings_override.php ${TMP_DRUPAL_BUILD_DIR}/settings_override.php
 
 ADD build/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.info ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.info
@@ -41,7 +42,7 @@ ADD build/${DRUPAL_SITE_ID}/${DRUPAL_SITE_ID}.profile ${TMP_DRUPAL_BUILD_DIR}/${
 
 # Drush-make the site.
 ENV DRUSH_MAKE_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
-RUN drush make --concurrency=${DRUSH_MAKE_CONCURRENCY} --yes ${DRUSH_MAKE_OPTIONS} "${TMP_DRUPAL_BUILD_DIR}/$DRUPAL_SITE_ID.makefile" ${DRUSH_MAKE_TMPROOT} && \
+RUN drush make --concurrency=${DRUSH_MAKE_CONCURRENCY} --yes ${DRUSH_MAKE_OPTIONS} "${TMP_DRUPAL_BUILD_DIR}/$DRUPAL_SITE_ID.${DRUSH_MAKE_FORMAT}" ${DRUSH_MAKE_TMPROOT} && \
   mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUSH_MAKE_TMPROOT}/profiles/
 
 CMD ["/sbin/my_init"]
