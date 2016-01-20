@@ -8,14 +8,14 @@ MYSQL_PORT_3306_TCP_PORT="${MYSQL_PORT_3306_TCP_PORT:-$(echo $MYSQL_PORT)}"
 # Check if this is a new deployment.
 if [[ ! -f /tmp/DRUPAL_DB_LIVE && ! -f /tmp/DRUPAL_FILES_LIVE ]];
 then
-  echo "Copying webtree.."
+  # Tidy up target webroot and transfer the pre-built drupal tree.
   rm -rf ${DRUPAL_ROOT}/*
   rsync -a --progress ${DRUSH_MAKE_TMPROOT}/ ${DRUPAL_ROOT}/
 
-  echo "Creating Database.."
+  # Create Database.
   mysql -uroot -p${MYSQL_ROOT_PASSWORD} -h ${MYSQL_PORT_3306_TCP_ADDR} -P ${MYSQL_PORT_3306_TCP_PORT} -e "DROP DATABASE IF EXISTS ${DRUPAL_SITE_ID}_db; CREATE DATABASE ${DRUPAL_SITE_ID}_db; GRANT ALL PRIVILEGES ON ${DRUPAL_SITE_ID}_db.* TO '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; FLUSH PRIVILEGES;"
 
-  echo "Performing Site Install.."
+  # Perform site-install.
   cd ${DRUPAL_ROOT}
   /usr/bin/env PHP_OPTIONS="-d sendmail_path=`which true`" drush site-install $DRUPAL_SITE_ID -y --verbose --account-name=${DRUPAL_ADMIN_ACCOUNT_NAME} --account-pass=${DRUPAL_ADMIN_ACCOUNT_PASS} --db-url="mysqli://${DRUPAL_SITE_ID}_user:$DRUPAL_DB_PASSWORD@${MYSQL_PORT_3306_TCP_ADDR}:${MYSQL_PORT_3306_TCP_PORT}/${DRUPAL_SITE_ID}_db"
   rm -f ${DRUPAL_ROOT}/install.php
@@ -34,10 +34,10 @@ then
   then
     echo "Updating Existing Site.."
 
-    echo "Copying webtree.."
+    # Transfer the pre-built drupal tree.
     rsync -a --progress --no-perms --no-owner --no-group --delete --exclude=sites/default/files/ --exclude=sites/default/settings.php --exclude=install.php ${DRUSH_MAKE_TMPROOT}/ ${DRUPAL_ROOT}/
 
-    echo "Running UPDB.."
+    # Apply database updates, if they exist.
     drush --yes --root=${DRUPAL_ROOT} --uri=default updb
 
   fi
