@@ -35,7 +35,7 @@ then
     echo "Updating Existing Site.."
 
     echo "Copying webtree.."
-    rsync -a --progress --no-perms --no-owner --no-group --delete --exclude=sites/default/files/ --exclude=sites/default/settings.php ${DRUSH_MAKE_TMPROOT}/ ${DRUPAL_ROOT}/
+    rsync -a --progress --no-perms --no-owner --no-group --delete --exclude=sites/default/files/ --exclude=sites/default/settings.php --exclude=install.php ${DRUSH_MAKE_TMPROOT}/ ${DRUPAL_ROOT}/
 
     echo "Running UPDB.."
     drush --yes --root=${DRUPAL_ROOT} --uri=default updb
