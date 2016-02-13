@@ -13,7 +13,7 @@ This image builds/serves Drupal 7.x via apache. Other configurations are availab
 |               | apache        | nginx         |
 | ------------- | ------------- | ------------- |
 | 7.x  | apache-7.x                                                                    | [nginx-7.x](https://github.com/unb-libraries/docker-drupal/tree/nginx-7.x)  |
-| 8.x  | [apache-8.x](https://github.com/unb-libraries/docker-drupal/tree/apache-8.x)  | [nginx-8.x](https://github.com/unb-libraries/docker-drupal/tree/nginx-8.x)  |                                                                           |
+| 8.x  | [apache-8.x](https://github.com/unb-libraries/docker-drupal/tree/apache-8.x)  | [nginx-8.x](https://github.com/unb-libraries/docker-drupal/tree/nginx-8.x)  |
 
 ## Getting Started
 Not sure where to start? New to Docker? Check out the [unblibraries/drupal Wiki](https://github.com/unb-libraries/docker-drupal/wiki) for detailed instructions on deploying a local development instance. If are looking for something more production-ready, you probably don't need instructions. Just include this image in your Fleet unit file with the appropriate environment variables.
