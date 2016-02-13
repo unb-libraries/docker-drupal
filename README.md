@@ -1,15 +1,19 @@
-# unblibraries/drupal [![Build Status](https://travis-ci.org/unb-libraries/docker-drupal.svg?branch=apache)](https://travis-ci.org/unb-libraries/docker-drupal)
-Simple, extensible Drupal docker image, suitable for both development and production.
+# unblibraries/drupal:apache-7.x [![Build Status](https://travis-ci.org/unb-libraries/docker-drupal.svg?branch=apache-7.x)](https://travis-ci.org/unb-libraries/docker-drupal)
+Simple, extensible Drupal docker image, suitable for local development and production.
 
-Serves content via [apache](https://github.com/unb-libraries/docker-drupal/tree/apache) or [nginx](https://github.com/unb-libraries/docker-drupal/tree/nginx).
-
-The image builds [Drupal](https://www.drupal.org/) using a [drush makefile](https://github.com/unb-libraries/docker-drupal/blob/nginx/build/unblibdef.yml) and performs a site-install using an [install profile](https://github.com/unb-libraries/docker-drupal/tree/nginx/build/unblibdef). Both of these can easily be overridden.
+The image serves content via [apache](https://github.com/unb-libraries/docker-drupal/tree/apache), and builds [Drupal](https://www.drupal.org/) 7.x using a [drush makefile](https://github.com/unb-libraries/docker-drupal/blob/apache-7.x/build/unblibdef.yml) and performs a site-install using an [install profile](https://github.com/unb-libraries/docker-drupal/tree/apache-7.x/build/unblibdef). Both of these can easily be overridden.
 
 If a persistent filesystem is used and a previously deployed database is found, the image rebuilds the makefile and overwrites the current files using rsync. This makes it easy to perform upgrades and extend live instances.
 
-This image does not contain a database (MySQL) server, although the docker-compose.yml file provided for convenience will deploy the default mysql image and attach to it with no configuration required.
+This image does not contain a database (MySQL) server, although the [docker-compose.yml](https://github.com/unb-libraries/docker-drupal/blob/apache-7.x/docker-compose.yml) file provided for convenience will deploy Drupal with a MySQL server with no configuration required, if you require a quick start.
 
-Leverages the [phusion/baseimage](https://registry.hub.docker.com/u/phusion/baseimage/) my_init system.
+## Other images
+This image builds/serves Drupal 7.x via apache. Other configurations are available:
+
+|               | apache        | nginx         |
+| ------------- | ------------- | ------------- |
+| 7.x  | apache-7.x                                                                    | [nginx-7.x](https://github.com/unb-libraries/docker-drupal/tree/nginx-7.x)  |
+| 8.x  | [apache-8.x](https://github.com/unb-libraries/docker-drupal/tree/apache-8.x)  | [nginx-8.x](https://github.com/unb-libraries/docker-drupal/tree/nginx-8.x)  |                                                                           |
 
 ## Getting Started
 Not sure where to start? New to Docker? Check out the [unblibraries/drupal Wiki](https://github.com/unb-libraries/docker-drupal/wiki) for detailed instructions on deploying a local development instance. If are looking for something more production-ready, you probably don't need instructions. Just include this image in your Fleet unit file with the appropriate environment variables.
