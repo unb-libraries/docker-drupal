@@ -18,7 +18,8 @@ ENV WEBSERVER_USER_ID 33
 RUN apt-get update && \
   DEBIAN_FRONTEND="noninteractive" apt-get install -y git curl unzip \
   mysql-client rsync && \
-  apt-get clean
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 
 # Install Drush
 RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && \
