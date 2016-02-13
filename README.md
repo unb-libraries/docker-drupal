@@ -1,4 +1,4 @@
-# unblibraries/drupal:apache-7.x [![Build Status](https://travis-ci.org/unb-libraries/docker-drupal.svg?branch=apache-7.x)](https://travis-ci.org/unb-libraries/docker-drupal)
+# unblibraries/drupal:apache-7.x [![](https://badge.imagelayers.io/unblibraries/drupal:apache-7.x.svg)](https://imagelayers.io/?images=unblibraries/drupal:apache-7.x 'Get your own badge on imagelayers.io') [![Build Status](https://travis-ci.org/unb-libraries/docker-drupal.svg?branch=apache-7.x)](https://travis-ci.org/unb-libraries/docker-drupal)
 Simple, extensible Drupal docker image, suitable for local development and production.
 
 The image serves content via [apache](https://github.com/unb-libraries/docker-drupal/tree/apache), and builds [Drupal](https://www.drupal.org/) 7.x using a [drush makefile](https://github.com/unb-libraries/docker-drupal/blob/apache-7.x/build/unblibdef.yml) and performs a site-install using an [install profile](https://github.com/unb-libraries/docker-drupal/tree/apache-7.x/build/unblibdef). Both of these can easily be overridden.
