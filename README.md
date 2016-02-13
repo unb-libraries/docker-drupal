@@ -28,7 +28,7 @@ docker run \
        -e MYSQL_ROOT_PASSWORD= \
        -v /local/dir:/usr/share/nginx \
        -p 80:80 \
-       unblibraries/drupal
+       unblibraries/drupal:apache-7.x
 ```
 
 ## Runtime/Environment Variables
