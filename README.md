@@ -8,12 +8,12 @@ If a persistent filesystem is used and a previously deployed database is found, 
 This image does not contain a database (MySQL) server, although the [docker-compose.yml](https://github.com/unb-libraries/docker-drupal/blob/apache-7.x/docker-compose.yml) file provided for convenience will deploy Drupal with a MySQL server with no configuration required, if you require a quick start.
 
 ## Other images
-This image builds/serves Drupal 7.x via apache. Other configurations are available:
+This branch is available on [dockerhub](https://hub.docker.com/r/unblibraries/drupal/) as `unblibraries/drupal:apache-7.x`, and builds/serves Drupal 7.x via apache. Other configurations are available:
 
 |               | apache        | nginx         |
 | ------------- | ------------- | ------------- |
-| 7.x  | apache-7.x                                                                    | [nginx-7.x](https://github.com/unb-libraries/docker-drupal/tree/nginx-7.x)  |
-| 8.x  | [apache-8.x](https://github.com/unb-libraries/docker-drupal/tree/apache-8.x)  | [nginx-8.x](https://github.com/unb-libraries/docker-drupal/tree/nginx-8.x)  |
+| 7.x  | unblibraries/drupal:apache-7.x                                                                    | [unblibraries/drupal:nginx-7.x](https://github.com/unb-libraries/docker-drupal/tree/nginx-7.x)  |
+| 8.x  | [unblibraries/drupal:apache-8.x](https://github.com/unb-libraries/docker-drupal/tree/apache-8.x)  | [unblibraries/drupal:nginx-8.x](https://github.com/unb-libraries/docker-drupal/tree/nginx-8.x)  |
 
 ## Getting Started
 Not sure where to start? New to Docker? Check out the [unblibraries/drupal Wiki](https://github.com/unb-libraries/docker-drupal/wiki) for detailed instructions on deploying a local development instance. If are looking for something more production-ready, you probably don't need instructions. Just include this image in your Fleet unit file with the appropriate environment variables.
