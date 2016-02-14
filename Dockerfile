@@ -1,4 +1,4 @@
-FROM unblibraries/apache-php
+FROM unblibraries/apache-php:alpine
 MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
@@ -6,31 +6,27 @@ ENV DRUPAL_ADMIN_ACCOUNT_PASS admin
 ENV DRUPAL_CORE_CRON_FREQUENCY 3600
 ENV DRUPAL_REBUILD_ON_REDEPLOY TRUE
 ENV DRUPAL_REVERT_FEATURES FALSE
-ENV DRUPAL_ROOT $WEBTREE_WEBROOT
+ENV DRUPAL_ROOT $APP_WEBROOT
 ENV DRUPAL_SITE_ID unblibdef
 ENV DRUSH_MAKE_CONCURRENCY 5
 ENV DRUSH_MAKE_FORMAT yml
 ENV DRUSH_MAKE_OPTIONS="--shallow-clone"
 ENV DRUSH_VERSION 7.x
 ENV TMP_DRUPAL_BUILD_DIR /tmp/drupal_build
-ENV WEBSERVER_USER_ID 33
 
-RUN apt-get update && \
-  DEBIAN_FRONTEND="noninteractive" apt-get install -y git curl unzip \
-  mysql-client rsync && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
+RUN apk --update add php-pdo php-pdo_mysql php-pcntl php-dom php-posix php-ctype php-gd php-xml git unzip mysql-client rsync && \
+  rm -f /var/cache/apk/*
 
 # Install Drush
 RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && \
   cd /usr/local/src/drush && \
   git checkout ${DRUSH_VERSION} && \
   ln -s /usr/local/src/drush/drush /usr/bin/drush && \
+  rm -rf /usr/local/src/drush/.git && \
   composer install
 
 # Add Apache and PHP conf.
-ADD conf/apache2/default.conf /etc/apache2/sites-available/000-default.conf
-ADD conf/php5/apache2/php.ini /etc/php5/apache2/php.ini
+ADD conf/php/php.ini /etc/php/php.ini
 
 # Deploy the default makefile and install profile to the container
 RUN mkdir -p ${TMP_DRUPAL_BUILD_DIR}
@@ -41,8 +37,5 @@ ENV DRUSH_MAKE_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
 RUN drush make --concurrency=${DRUSH_MAKE_CONCURRENCY} --yes ${DRUSH_MAKE_OPTIONS} "${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}.${DRUSH_MAKE_FORMAT}" ${DRUSH_MAKE_TMPROOT} && \
   mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUSH_MAKE_TMPROOT}/profiles/
 
-CMD ["/sbin/my_init"]
-ADD services/ /etc/service/
-ADD init/ /etc/my_init.d/
-RUN chmod -v +x /etc/my_init.d/*.sh && \
-  chmod -v +x /etc/service/*/run
+ADD scripts /scripts
+RUN chmod -R 755 /scripts

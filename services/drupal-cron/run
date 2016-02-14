@@ -1,7 +1,0 @@
-#!/bin/bash
-
-while :
-do
-  sleep ${DRUPAL_CORE_CRON_FREQUENCY}
-  /sbin/setuser www-data drush --root=${DRUPAL_ROOT} --uri=default --yes core-cron
-done
