@@ -9,7 +9,7 @@ mysql:
   expose:
    - "3306"
 drupal:
-  image: unblibraries/drupal:alpine-apache-7.x
+  image: alpine-nginx-7.x
   links:
     - mysql:mysql
   expose:

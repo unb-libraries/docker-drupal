@@ -1,14 +1,14 @@
-# unblibraries/drupal:alpine-apache-7.x [![](https://badge.imagelayers.io/unblibraries/drupal:alpine-apache-7.x.svg)](https://imagelayers.io/?images=unblibraries/drupal:alpine-apache-7.x 'Get your own badge on imagelayers.io') [![Build Status](https://travis-ci.org/unb-libraries/docker-drupal.svg?branch=alpine-apache-7.x)](https://travis-ci.org/unb-libraries/docker-drupal)
+# unblibraries/drupal:alpine-nginx-7.x [![](https://badge.imagelayers.io/unblibraries/drupal:alpine-nginx-7.x.svg)](https://imagelayers.io/?images=unblibraries/drupal:alpine-nginx-7.x 'Get your own badge on imagelayers.io') [![Build Status](https://travis-ci.org/unb-libraries/docker-drupal.svg?branch=alpine-nginx-7.x)](https://travis-ci.org/unb-libraries/docker-drupal)
 Simple, extensible Drupal docker image, suitable for local development and production.
 
-The image serves content via [apache](https://github.com/unb-libraries/docker-drupal/tree/apache), and builds [Drupal](https://www.drupal.org/) 7.x using a [drush makefile](https://github.com/unb-libraries/docker-drupal/blob/apache-7.x/build/unblibdef.yml) and performs a site-install using an [install profile](https://github.com/unb-libraries/docker-drupal/tree/apache-7.x/build/unblibdef). Both of these can easily be overridden.
+The image serves content via nginx, and builds [Drupal](https://www.drupal.org/) 7.x using a [drush makefile](https://github.com/unb-libraries/docker-drupal/blob/alpine-nginx-7.x/build/unblibdef.yml) and performs a site-install using an [install profile](https://github.com/unb-libraries/docker-drupal/tree/alpine-nginx-7.x/build/unblibdef). Both of these can easily be overridden.
 
 If a persistent filesystem is used and a previously deployed database is found, the image rebuilds the makefile and overwrites the current files using rsync. This makes it easy to perform upgrades and extend live instances.
 
-This image does not contain a database (MySQL) server, although the [docker-compose.yml](https://github.com/unb-libraries/docker-drupal/blob/apache-7.x/docker-compose.yml) file provided for convenience will deploy Drupal with a MySQL server with no configuration required, if you require a quick start.
+This image does not contain a database (MySQL) server, although the [docker-compose.yml](https://github.com/unb-libraries/docker-drupal/blob/alpine-nginx-7.x/docker-compose.yml) file provided for convenience will deploy Drupal with a MySQL server with no configuration required, if you require a quick start.
 
 ## Other images
-This branch is available on [dockerhub](https://hub.docker.com/r/unblibraries/drupal/) as `unblibraries/drupal:apache-7.x`, and builds/serves Drupal 7.x via apache. Other configurations are available:
+This branch is available on [dockerhub](https://hub.docker.com/r/unblibraries/drupal/) as `unblibraries/drupal:nginx-7.x`, and builds/serves Drupal 7.x via nginx. Other configurations are available:
 
 |               | apache        | nginx         |
 | ------------- | ------------- | ------------- |
@@ -26,9 +26,9 @@ docker run \
        -e MYSQL_HOSTNAME= \
        -e MYSQL_PORT= \
        -e MYSQL_ROOT_PASSWORD= \
-       -v /local/dir:/usr/share/nginx \
+       -v /local/dir:/app/html \
        -p 80:80 \
-       unblibraries/drupal:alpine-apache-7.x
+       unblibraries/drupal:alpine-nginx-7.x
 ```
 
 ## Runtime/Environment Variables

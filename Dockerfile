@@ -1,4 +1,4 @@
-FROM unblibraries/apache-php:alpine
+FROM unblibraries/nginx-php:alpine
 MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
@@ -25,8 +25,9 @@ RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && \
   rm -rf /usr/local/src/drush/.git && \
   composer install
 
-# Add Apache and PHP conf.
+# Add nginx and PHP conf.
 ADD conf/php/php.ini /etc/php/php.ini
+ADD conf/nginx/app.conf /etc/nginx/conf.d/app.conf
 
 # Deploy the default makefile and install profile to the container
 RUN mkdir -p ${TMP_DRUPAL_BUILD_DIR}
