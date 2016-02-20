@@ -17,7 +17,7 @@ before_script:
 
 script:
   - docker-compose build
-  - docker-compose up
+  - docker-compose up -d
   - travis/testUserPage.sh
 
 notifications:
