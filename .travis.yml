@@ -12,7 +12,8 @@ before_install:
 
 before_script:
   - docker pull mysql:5.6
-  - docker pull unblibraries/drupal:alpine-nginx-php
+  - docker pull unblibraries/nginx-php:alpine
+  - sed -i "s|image: unblibraries/drupal:alpine-nginx-7.x|build: .|g" docker-compose.yml
 
 script:
   - docker-compose build
