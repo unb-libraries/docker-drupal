@@ -3,7 +3,7 @@ services:
   - docker
 
 env:
-  - COMPOSE_VERSION=1.4.0 DRUPAL_VERSION=apache
+  - COMPOSE-VERSION=1.4.0
 
 before_install:
   - curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
@@ -12,9 +12,7 @@ before_install:
 
 before_script:
   - docker pull mysql:5.6
-  - docker pull unblibraries/drupal:${DRUPAL_VERSION}
-  - 'sed -i "/image: mysql/a \ \ privileged: true" docker-compose.yml'
-  - 'sed -i "/build: drupal/a \ \ privileged: true" docker-compose.yml'
+  - docker pull unblibraries/drupal:alpine-nginx-php
 
 script:
   - docker-compose build
