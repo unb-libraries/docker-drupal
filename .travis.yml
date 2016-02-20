@@ -19,6 +19,7 @@ script:
   - docker-compose build
   - docker-compose up -d
   - travis/testUserPage.sh
+  - docker exec dockerdrupal_drupal_1 drush --root=/app/html --uri=default en --yes simpletest
   - docker exec dockerdrupal_drupal_1 /usr/bin/php /app/html/scripts/run-tests.sh --verbose --php /usr/bin/php --class UserLoginTestCase
 
 notifications:
