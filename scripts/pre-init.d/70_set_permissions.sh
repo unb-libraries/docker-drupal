@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # Set-up secure permissions.
 chown root:root -R ${DRUPAL_ROOT}

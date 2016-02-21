@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # Apply settings overrides
 OVERRIDE_SOURCE_FILE="${TMP_DRUPAL_BUILD_DIR}/settings_override.php"
