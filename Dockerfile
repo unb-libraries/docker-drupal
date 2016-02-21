@@ -26,17 +26,17 @@ RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && \
   composer install
 
 # Add nginx and PHP conf.
-ADD conf/php/php.ini /etc/php/php.ini
-ADD conf/nginx/app.conf /etc/nginx/conf.d/app.conf
+COPY conf/php/php.ini /etc/php/php.ini
+COPY conf/nginx/app.conf /etc/nginx/conf.d/app.conf
 
 # Deploy the default makefile and install profile to the container
 RUN mkdir -p ${TMP_DRUPAL_BUILD_DIR}
-ADD build/ ${TMP_DRUPAL_BUILD_DIR}
+COPY build/ ${TMP_DRUPAL_BUILD_DIR}
 
 # Drush-make the site.
 ENV DRUSH_MAKE_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
 RUN drush make --concurrency=${DRUSH_MAKE_CONCURRENCY} --yes ${DRUSH_MAKE_OPTIONS} "${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}.${DRUSH_MAKE_FORMAT}" ${DRUSH_MAKE_TMPROOT} && \
   mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUSH_MAKE_TMPROOT}/profiles/
 
-ADD scripts /scripts
+COPY scripts /scripts
 RUN chmod -R 755 /scripts
