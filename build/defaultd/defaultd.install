@@ -1,0 +1,13 @@
+<?php
+/**
+ * @file
+ * Install, update and uninstall functions for the default docker profile.
+ */
+
+ /**
+  * Implements hook_install().
+  */
+function defaultd_install() {
+  include_once DRUPAL_ROOT . '/profiles/standard/standard.install';
+  standard_install();
+}

@@ -1,6 +1,6 @@
-name = unblibdef
-description = Install unblibdef.
-version = VERSION
+name = defaultd
+description = Install default docker profile.
+version = 1.0
 core = 7.x
 
 # Required By Standard Install
