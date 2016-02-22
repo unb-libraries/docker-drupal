@@ -36,7 +36,8 @@ COPY build/ ${TMP_DRUPAL_BUILD_DIR}
 # Drush-make the site.
 ENV DRUSH_MAKE_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
 RUN drush make --concurrency=${DRUSH_MAKE_CONCURRENCY} --yes ${DRUSH_MAKE_OPTIONS} "${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}.${DRUSH_MAKE_FORMAT}" ${DRUSH_MAKE_TMPROOT} && \
-  mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUSH_MAKE_TMPROOT}/profiles/
+  mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUSH_MAKE_TMPROOT}/profiles/ && \
+  rm -rf ~/.drush/*
 
 COPY scripts /scripts
 RUN chmod -R 755 /scripts
