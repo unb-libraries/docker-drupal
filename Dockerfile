@@ -9,9 +9,8 @@ ENV DRUPAL_REVERT_FEATURES FALSE
 ENV DRUPAL_ROOT $APP_WEBROOT
 ENV DRUPAL_SITE_ID defaultd
 ENV DRUSH_MAKE_CONCURRENCY 5
-ENV DRUSH_MAKE_FORMAT yml
 ENV DRUSH_MAKE_OPTIONS="--shallow-clone"
-ENV DRUSH_VERSION 7.x
+ENV DRUSH_VERSION 8.0.x
 ENV TMP_DRUPAL_BUILD_DIR /tmp/drupal_build
 
 RUN apk --update add php-pdo php-pdo_mysql php-pcntl php-dom php-posix php-ctype php-gd php-xml git unzip mysql-client rsync && \
@@ -35,7 +34,7 @@ COPY build/ ${TMP_DRUPAL_BUILD_DIR}
 
 # Drush-make the site.
 ENV DRUSH_MAKE_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
-RUN drush make --concurrency=${DRUSH_MAKE_CONCURRENCY} --yes ${DRUSH_MAKE_OPTIONS} "${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}.${DRUSH_MAKE_FORMAT}" ${DRUSH_MAKE_TMPROOT} && \
+RUN drush make --concurrency=${DRUSH_MAKE_CONCURRENCY} --yes ${DRUSH_MAKE_OPTIONS} "${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}.yml" ${DRUSH_MAKE_TMPROOT} && \
   mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUSH_MAKE_TMPROOT}/profiles/ && \
   rm -rf ~/.drush/*
 

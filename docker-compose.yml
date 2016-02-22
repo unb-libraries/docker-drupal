@@ -9,7 +9,7 @@ mysql:
   expose:
    - "3306"
 drupal:
-  image: unblibraries/drupal:alpine-nginx-7.x
+  image: unblibraries/drupal:alpine-nginx-8.x
   links:
     - mysql:mysql
   expose:
@@ -17,5 +17,6 @@ drupal:
   ports:
     - "80:80"
   environment:
+    DEPLOY_ENV: dev
     MYSQL_ROOT_PASSWORD: drupal
     DRUPAL_DB_PASSWORD: drupal
