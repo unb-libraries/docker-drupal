@@ -25,8 +25,9 @@ RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && \
   composer install
 
 # Add nginx and PHP conf.
-COPY conf/php/php.ini /etc/php/php.ini
 COPY conf/nginx/app.conf /etc/nginx/conf.d/app.conf
+COPY conf/php/php.ini /etc/php/php.ini
+COPY conf/php/php-fpm.conf /etc/php/php-fpm.conf
 
 # Deploy the default makefile and install profile to the container
 RUN mkdir -p ${TMP_DRUPAL_BUILD_DIR}
