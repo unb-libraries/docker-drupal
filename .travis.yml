@@ -21,9 +21,10 @@ script:
   - travis/waitForDrupalDeploy.sh
   - travis/testDrupal.sh
   - docker-compose stop
-  - sleep 10
+  - sleep 30
   - docker-compose up -d
   - travis/waitForDrupalDeploy.sh
+  - travis/testDrupal.sh
   - travis/testPersistentContent.sh
 
 after_success:
