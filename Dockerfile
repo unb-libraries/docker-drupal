@@ -3,7 +3,6 @@ MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
 ENV DRUPAL_ADMIN_ACCOUNT_PASS admin
-ENV DRUPAL_CORE_CRON_FREQUENCY 3600
 ENV DRUPAL_REBUILD_ON_REDEPLOY TRUE
 ENV DRUPAL_REVERT_FEATURES FALSE
 ENV DRUPAL_ROOT $APP_WEBROOT
@@ -42,4 +41,5 @@ RUN drush make --concurrency=${DRUSH_MAKE_CONCURRENCY} --yes ${DRUSH_MAKE_OPTION
   rm -rf ~/.drush/*
 
 COPY scripts /scripts
-RUN chmod -R 755 /scripts
+COPY scripts/drupalCron.sh /etc/periodic/15min/drupalCron.sh
+RUN chmod -R 755 /scripts; chmod +x /etc/periodic/15min/drupalCron.sh
