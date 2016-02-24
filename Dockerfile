@@ -42,4 +42,3 @@ RUN drush make --concurrency=${DRUSH_MAKE_CONCURRENCY} --yes ${DRUSH_MAKE_OPTION
 
 COPY scripts /scripts
 COPY scripts/drupalCron.sh /etc/periodic/15min/drupalCron.sh
-RUN chmod -R 755 /scripts; chmod +x /etc/periodic/15min/drupalCron.sh
