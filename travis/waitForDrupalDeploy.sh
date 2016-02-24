@@ -1,7 +1,7 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 set -euo pipefail
 
-function testIslandoraRootObject() {
+function testDrupalUserPage() {
   curl -I --fail http://127.0.0.1/user
   return $?
 }
@@ -11,13 +11,13 @@ maxRetries=5
 retryInterval=60
 until [ ${retry} -ge ${maxRetries} ]
 do
-  testIslandoraRootObject && break
+  testDrupalUserPage && break
   retry=$[${retry}+1]
-  echo "Retrying [${retry}/${maxRetries}] in ${retryInterval}(s) "
+  echo "Drupal has not deployed. Waiting [${retry}/${maxRetries}] in ${retryInterval}(s) "
   sleep ${retryInterval}
 done
 
 if [ ${retry} -ge ${maxRetries} ]; then
-  echo "Failed after ${maxRetries} attempts!"
+  echo "Connecting to Drupal failed after ${maxRetries} attempts!"
   exit 1
 fi
