@@ -20,6 +20,11 @@ script:
   - docker-compose up -d
   - travis/waitForDrupalDeploy.sh
   - travis/testDrupal.sh
+  - docker-compose stop
+  - sleep 10
+  - docker-compose up -d
+  - travis/waitForDrupalDeploy.sh
+  - travis/testPersistentContent.sh
 
 after_success:
   - travis/triggerDockerHubBuild.sh
