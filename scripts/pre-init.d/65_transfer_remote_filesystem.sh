@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
-
 # Transfer data from a remote site to the local instance.
-#
+
 # Ensure that all details are provided and this is the a first time deployment. Otherwise, skip this.
 if [[ -n "$DRUSH_TRANSFER_KEY" && -n "$DRUSH_TRANSFER_USER" && -n "$DRUSH_TRANSFER_HOST" && -n "$DRUSH_TRANSFER_PATH" && -n "$DRUSH_TRANSFER_URI" && ! -f /tmp/DRUPAL_DB_LIVE && ! -f /tmp/DRUPAL_FILES_LIVE ]] ; then
 

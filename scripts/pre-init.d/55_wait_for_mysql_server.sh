@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# Check if MySQL vars are set and then test the connection.
 
 # Here, we default to using the address from a linked container named 'mysql', falling back to using the
 # details provided through MYSQL_HOSTNAME and MYSQL_PORT environment variables.

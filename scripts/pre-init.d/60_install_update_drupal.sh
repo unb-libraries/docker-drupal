@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# Move files to app root and site-install/update.
 
 # Here, we default to using the address from a linked container named 'mysql', falling back to using the
 # details provided through MYSQL_HOSTNAME and MYSQL_PORT environment variables.
