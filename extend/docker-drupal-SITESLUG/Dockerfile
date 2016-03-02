@@ -1,7 +1,8 @@
-FROM unblibraries/drupal:alpine-nginx-8.x
+FROM unblibraries/drupal:alpine-nginx-7.x
 MAINTAINER EXTEND_USER_STRING
 
 ENV DRUPAL_SITE_ID EXTEND_SITESLUG
+ENV LOCAL_USER_GROUP EXTEND_LOCAL_GROUP
 
 # Add nginx and PHP conf.
 COPY conf/nginx/app.conf /etc/nginx/conf.d/app.conf

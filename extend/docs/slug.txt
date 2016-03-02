@@ -1,0 +1,1 @@
+A site slug is a (maximum eight character) unique identifier for your new image. Choose a name that reflects the purpose of this new instance (i.e. bookhub)
