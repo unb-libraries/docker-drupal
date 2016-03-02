@@ -11,6 +11,9 @@ random_slug=$(env LC_CTYPE=C tr -dc "a-z0-9" < /dev/urandom | head -c 8)
 read -rp "Enter an 8 Character (or less) Site Slug [default=$random_slug]: " site_slug
 site_slug=${site_slug:-$random_slug}
 
+forbidden_slug_values=("minimal" "standard" "testing")
+if [[ " ${forbidden_slug_values[@]} " =~ " ${site_slug} " ]]; then echo 'The Site Slug is a forbidden value!'; exit 1; fi
+
 if [ ${#site_slug} -eq 0 ]; then echo 'The Site Slug is empty'; exit 1; fi
 if [ ${#site_slug} -gt 8 ]; then echo 'The Site Slug is greater than 8 characters'; exit 1; fi
 if [[ "$TITLE" =~ [^a-zA-Z0-9] ]]; then echo 'The Site Slug contains non-ascii characters'; exit 1; fi
