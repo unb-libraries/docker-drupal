@@ -71,4 +71,6 @@ find "$deploy_dir" -type f -print0 | xargs -0 sed -i '' -e "s|EXTEND_DEPLOY_BASE
 find "$deploy_dir" -type f -print0 | xargs -0 sed -i '' -e "s|EXTEND_DEPLOY_DIR|$deploy_dir|g"
 find "$deploy_dir" -type f -print0 | xargs -0 sed -i '' -e "s|EXTEND_LOCAL_GROUP|$local_user_group|g"
 
-echo "Extension complete! cd $deploy_dir; ./deploy.sh"
+# NOTIFY SUCCESS
+echo "Extension complete!"
+echo "cd $deploy_dir; ./deploy.sh"
