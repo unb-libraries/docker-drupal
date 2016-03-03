@@ -1,11 +1,8 @@
 mysql:
   image: mysql
   command: mysqld --skip-name-resolve
-  environment:
-    MYSQL_ROOT_PASSWORD: drupal
-    MYSQL_USER: drupal
-    MYSQL_PASSWORD: drupal
-    MYSQL_DATABASE: drupal
+  env_file:
+    - ./mysql.env
   expose:
    - "3306"
 drupal-EXTEND_SITESLUG:
@@ -18,8 +15,5 @@ drupal-EXTEND_SITESLUG:
     - "8080:80"
   volumes:
     - EXTEND_DEPLOY_DIR/data:/app/html
-  environment:
-    DEPLOY_ENV: dev
-    MYSQL_ROOT_PASSWORD: drupal
-    DRUPAL_DB_PASSWORD: drupal
-    DRUPAL_REVERT_FEATURES: 'TRUE'
+  env_file:
+    - ./drupal.env
