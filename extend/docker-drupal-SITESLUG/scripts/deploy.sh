@@ -21,8 +21,8 @@ if [ -n "$DOCKER_HOST" ]; then
   read docker_host_port < <(cat docker-compose.yml | grep ':80"'  | awk '{print $2}' | sed 's|"||g' | sed 's|:80||g')
   docker_web_uri="http://$docker_host_ip:$docker_host_port"
   dev_web_uri="DEV_WEB_URI=$docker_web_uri"
-  sed -i '' -e '/DEV_WEB_URI/d' ./drupal.env
-  echo "$dev_web_uri" >> drupal.env
+  sed -i '' -e '/DEV_WEB_URI/d' ./env/drupal.env
+  echo "$dev_web_uri" >> ./env/drupal.env
 fi
 
 # Ensure we are extending the latest image.
