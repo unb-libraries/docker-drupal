@@ -11,7 +11,7 @@ sudo is necessary (only during initial setup )for some of these steps. If a pass
   sudo chmod +x /usr/local/bin/docker-machine-nfs
 > docker-machine-nfs docker-machine-drupal --nfs-config="-maproot=0"
 > docker-machine env docker-machine-drupal
-> git clone -b alpine-nginx-7.x git@github.com:unb-libraries/docker-drupal.git
+> git clone -b alpine-nginx-8.x git@github.com:unb-libraries/docker-drupal.git
 > cd docker-drupal/extend
 > ./extendImage.sh
 ```

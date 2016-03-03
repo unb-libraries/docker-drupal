@@ -1,4 +1,4 @@
-FROM unblibraries/drupal:alpine-nginx-7.x
+FROM unblibraries/drupal:alpine-nginx-8.x
 MAINTAINER EXTEND_USER_STRING
 
 ENV DRUPAL_SITE_ID EXTEND_SITESLUG

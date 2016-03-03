@@ -58,9 +58,10 @@ mv "$deploy_dir/docker-drupal-$site_slug/scripts/deploy.sh" "$deploy_dir/"
 # Alter Profile to Use site_slug
 mv "$deploy_dir/docker-drupal-$site_slug/build/defaultd" "$deploy_dir/docker-drupal-$site_slug/build/$site_slug"
 mv "$deploy_dir/docker-drupal-$site_slug/build/defaultd.yml" "$deploy_dir/docker-drupal-$site_slug/build/$site_slug.yml"
-mv "$deploy_dir/docker-drupal-$site_slug/build/$site_slug/defaultd.info" "$deploy_dir/docker-drupal-$site_slug/build/$site_slug/$site_slug.info"
+mv "$deploy_dir/docker-drupal-$site_slug/build/$site_slug/defaultd.info.yml" "$deploy_dir/docker-drupal-$site_slug/build/$site_slug/$site_slug.info.yml"
 mv "$deploy_dir/docker-drupal-$site_slug/build/$site_slug/defaultd.install" "$deploy_dir/docker-drupal-$site_slug/build/$site_slug/$site_slug.install"
 mv "$deploy_dir/docker-drupal-$site_slug/build/$site_slug/defaultd.profile" "$deploy_dir/docker-drupal-$site_slug/build/$site_slug/$site_slug.profile"
+mv "$deploy_dir/docker-drupal-$site_slug/build/$site_slug/defaultd.links.menu.yml" "$deploy_dir/docker-drupal-$site_slug/build/$site_slug/$site_slug.links.menu.yml"
 find "$deploy_dir/docker-drupal-$site_slug/build/" -type f -print0 | xargs -0 sed -i '' -e "s|defaultd|$site_slug|g"
 
 # FIND-REPLACE-STRINGS
