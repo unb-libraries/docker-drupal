@@ -26,7 +26,7 @@ if [ -n "$DOCKER_HOST" ]; then
 fi
 
 # Ensure we are extending the latest image.
-docker pull unblibraries/drupal:alpine-nginx-7.x
+docker pull unblibraries/drupal:alpine-nginx-8.x
 docker pull mysql
 
 # Stop, kill and remove any current containers.
