@@ -2,7 +2,7 @@ mysql:
   image: mysql
   command: mysqld --skip-name-resolve
   env_file:
-    - ./mysql.env
+    - ./env/mysql.env
   expose:
    - "3306"
 drupal-EXTEND_SITESLUG:
@@ -16,4 +16,4 @@ drupal-EXTEND_SITESLUG:
   volumes:
     - EXTEND_DEPLOY_DIR/data:/app/html
   env_file:
-    - ./drupal.env
+    - ./env/drupal.env

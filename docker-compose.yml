@@ -1,13 +1,11 @@
 mysql:
   image: mysql
   command: mysqld --skip-name-resolve
-  environment:
-    MYSQL_ROOT_PASSWORD: drupal
-    MYSQL_USER: drupal
-    MYSQL_PASSWORD: drupal
-    MYSQL_DATABASE: drupal
+  env_file:
+    - ./env/mysql.env
   expose:
    - "3306"
+
 drupal:
   image: unblibraries/drupal:alpine-nginx-8.x
   links:
@@ -16,7 +14,5 @@ drupal:
    - "80"
   ports:
     - "80:80"
-  environment:
-    DEPLOY_ENV: dev
-    MYSQL_ROOT_PASSWORD: drupal
-    DRUPAL_DB_PASSWORD: drupal
+  env_file:
+    - ./env/drupal.env
