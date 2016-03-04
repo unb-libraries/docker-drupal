@@ -42,6 +42,5 @@ EOT
     $DRUSH_BIN @live cache-rebuild
     $DRUSH_BIN sql-sync @live @self
     $DRUSH_BIN cache-rebuild
-    $DRUSH_BIN cr
   fi
 fi
