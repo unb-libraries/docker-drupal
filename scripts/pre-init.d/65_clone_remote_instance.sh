@@ -39,6 +39,7 @@ EOT
     $DRUSH_BIN rsync @live:%themes @self:%themes --omit-dir-times --no-p --no-o
     rm -rf "${DRUPAL_ROOT}/sites/all/libraries/*"
     $DRUSH_BIN rsync @live:%libraries @self:%libraries --omit-dir-times --no-p --no-o
+    $DRUSH_BIN @live cc all
     $DRUSH_BIN sql-sync @live @self
     $DRUSH_BIN cc all
     $DRUSH_BIN @none dl registry_rebuild
