@@ -33,16 +33,15 @@ EOT
     cd "${DRUPAL_ROOT}"
     $DRUSH_BIN @live status
     $DRUSH_BIN rsync @live:%files @self:%files --omit-dir-times --no-p --no-o --exclude-paths="css:js:styles:imagecache:ctools:tmp"
-    rm -rf "${DRUPAL_ROOT}/sites/all/modules/*"
+    rm -rf "${DRUPAL_ROOT}/modules/*"
     $DRUSH_BIN rsync @live:%modules @self:%modules --omit-dir-times --no-p --no-o
-    rm -rf "${DRUPAL_ROOT}/sites/all/themes/*"
+    rm -rf "${DRUPAL_ROOT}/themes/*"
     $DRUSH_BIN rsync @live:%themes @self:%themes --omit-dir-times --no-p --no-o
-    rm -rf "${DRUPAL_ROOT}/sites/all/libraries/*"
-    $DRUSH_BIN rsync @live:sites/all/libraries @self:sites/all/libraries --omit-dir-times --no-p --no-o
-    $DRUSH_BIN @live cc all
+    rm -rf "${DRUPAL_ROOT}/libraries/*"
+    $DRUSH_BIN rsync @live:libraries @self:libraries --omit-dir-times --no-p --no-o
+    $DRUSH_BIN @live cache-rebuild
     $DRUSH_BIN sql-sync @live @self
-    $DRUSH_BIN cc all
-    $DRUSH_BIN @none dl registry_rebuild
-    $DRUSH_BIN rr
+    $DRUSH_BIN cache-rebuild
+    $DRUSH_BIN cr
   fi
 fi
