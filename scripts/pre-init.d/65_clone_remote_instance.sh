@@ -28,14 +28,17 @@ EOT
   apk --update add openssh-client
 
   # If we can access the site and drush reports a normal status, then transfer the data.
-  if [[ $(drush @live status --alias-path=/tmp/drush-aliases) =~ "Successful" ]]; then
+  if drush @live status --alias-path=/tmp/drush-aliases | grep -q "Successful"; then
     DRUSH_BIN='drush --yes --verbose --alias-path=/tmp/drush-aliases --uri=default'
-    cd ${DRUPAL_ROOT}
+    cd "${DRUPAL_ROOT}"
     $DRUSH_BIN @live status
     $DRUSH_BIN rsync @live:%files @self:%files --omit-dir-times --no-p --no-o --exclude-paths="css:js:styles:imagecache:ctools:tmp"
+    rm -rf "${DRUPAL_ROOT}/sites/all/modules/*"
     $DRUSH_BIN rsync @live:%modules @self:%modules --omit-dir-times --no-p --no-o
+    rm -rf "${DRUPAL_ROOT}/sites/all/themes/*"
     $DRUSH_BIN rsync @live:%themes @self:%themes --omit-dir-times --no-p --no-o
     $DRUSH_BIN sql-sync @live @self
-    $DRUSH_BIN cc all
+    $DRUSH_BIN @none dl registry_rebuild
+    $DRUSH_BIN rr
   fi
 fi
