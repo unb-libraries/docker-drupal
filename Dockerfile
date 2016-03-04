@@ -12,7 +12,7 @@ ENV DRUSH_MAKE_OPTIONS="--shallow-clone"
 ENV DRUSH_VERSION 8.0.x
 ENV TMP_DRUPAL_BUILD_DIR /tmp/drupal_build
 
-RUN apk --update add php-pdo php-pdo_mysql php-pcntl php-dom php-posix php-ctype php-gd php-xml git unzip mysql-client rsync && \
+RUN apk --update add php-pdo php-pdo_mysql php-pcntl php-dom php-posix php-ctype php-gd php-xml php-opcache git unzip mysql-client rsync && \
   rm -f /var/cache/apk/*
 
 # Install Drush
