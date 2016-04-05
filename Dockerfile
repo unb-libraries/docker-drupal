@@ -9,7 +9,7 @@ ENV DRUPAL_ROOT $APP_WEBROOT
 ENV DRUPAL_SITE_ID defaultd
 ENV DRUSH_MAKE_CONCURRENCY 5
 ENV DRUSH_MAKE_OPTIONS="--shallow-clone"
-ENV DRUSH_VERSION 8.0.x
+ENV DRUSH_VERSION 8.x
 ENV TMP_DRUPAL_BUILD_DIR /tmp/drupal_build
 
 RUN apk --update add php-pdo php-pdo_mysql php-pcntl php-dom php-posix php-ctype php-gd php-xml php-opcache git unzip mysql-client rsync && \
