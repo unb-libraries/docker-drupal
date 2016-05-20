@@ -1,4 +1,4 @@
-FROM unblibraries/nginx-php:alpine
+FROM unblibraries/nginx-php:alpine-php7
 MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
@@ -13,7 +13,8 @@ ENV DRUSH_VERSION 8.x
 ENV TERM dumb
 ENV TMP_DRUPAL_BUILD_DIR /tmp/drupal_build
 
-RUN apk --update add php-pdo php-pdo_mysql php-pcntl php-dom php-posix php-ctype php-gd php-xml php-opcache git unzip mysql-client rsync && \
+RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+RUN apk --update add php7-mysqlnd@testing php7-session@testing php7-pdo@testing php7-pdo_mysql@testing php7-pcntl@testing php7-dom@testing php7-posix@testing php7-ctype@testing php7-gd@testing php7-xml@testing php7-opcache@testing git unzip mysql-client rsync && \
   rm -f /var/cache/apk/*
 
 # Install Drush
@@ -26,8 +27,9 @@ RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && \
 
 # Add nginx and PHP conf.
 COPY conf/nginx/app.conf /etc/nginx/conf.d/app.conf
-COPY conf/php/php.ini /etc/php/php.ini
-COPY conf/php/php-fpm.conf /etc/php/php-fpm.conf
+COPY conf/php/php.ini /etc/php7/php.ini
+COPY conf/php/php-fpm.conf /etc/php7/php-fpm.conf
+COPY conf/php/www.conf /etc/php7/php-fpm.d/www.conf
 
 # Deploy the default makefile and install profile to the container
 RUN mkdir -p ${TMP_DRUPAL_BUILD_DIR}

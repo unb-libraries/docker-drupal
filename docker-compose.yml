@@ -7,7 +7,7 @@ mysql:
    - "3306"
 
 drupal:
-  image: unblibraries/drupal:alpine-nginx-8.x
+  image: unblibraries/drupal:alpine-nginx-php7-8.x
   links:
     - mysql:mysql
   expose:
