@@ -27,6 +27,7 @@ script:
   - travis/waitForDrupalDeploy.sh
   - travis/testDrupal.sh
   - travis/testPersistentContent.sh
+  - docker exec -i -t dockerdrupal_drupal_1 /scripts/runTests.sh
 
 after_success:
   - travis/triggerDockerHubBuild.sh
