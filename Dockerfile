@@ -34,6 +34,8 @@ COPY conf/php/www.conf /etc/php7/php-fpm.d/www.conf
 # Deploy the default makefile and install profile to the container
 RUN mkdir -p ${TMP_DRUPAL_BUILD_DIR}
 COPY build/ ${TMP_DRUPAL_BUILD_DIR}
+COPY tests/behat.yml ${TMP_DRUPAL_BUILD_DIR}/behat.yml
+COPY tests/features ${TMP_DRUPAL_BUILD_DIR}/features
 
 # Drush-make the site.
 ENV DRUSH_MAKE_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
