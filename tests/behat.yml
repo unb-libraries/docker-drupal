@@ -18,4 +18,7 @@ default:
       drupal:
         drupal_root: '/app/html'
       region_map:
-        footer: "#footer"
+        left sidebar: "#sidebar-first"
+        content: "#content"
+      selectors:
+        error_message_selector: '.messages--error'
