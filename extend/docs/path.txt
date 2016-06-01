@@ -1,4 +1,0 @@
-
-Next, specify a path to deploy your extended image. The path should not already exist.
-
-On OSX, specify a path under your home directory, otherwise docker-machine shares will not work.

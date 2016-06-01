@@ -1,1 +1,0 @@
-This script will create an extension of the base Drupal image and deploy it into another path on your system.
