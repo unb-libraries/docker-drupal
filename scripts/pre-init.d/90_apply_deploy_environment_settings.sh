@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 if [ "$DEPLOY_ENV" = "dev" ]; then
+  drush --root=${DRUPAL_ROOT} --uri=default --yes --destination=modules/contrib dl devel
   drush --root=${DRUPAL_ROOT} --uri=default --yes en devel field_ui views_ui
   curl https://drupalconsole.com/installer -L -o /usr/local/bin/drupal && chmod +x /usr/local/bin/drupal && /usr/local/bin/drupal init && /usr/local/bin/drupal check
   mkdir -p ${DRUSH_MAKE_TMPROOT}/modules/contrib
