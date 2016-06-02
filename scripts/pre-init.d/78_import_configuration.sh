@@ -5,7 +5,7 @@ if [ "$DRUPAL_SITE_UUID" != "FALSE" ]; then
 fi
 
 # Configuration
-if [ "$DRUPAL_DEPLOY_CONFIGURATION" != "FALSE" ] && [ -d "$DRUPAL_CONFIGURATION_DIR" ] && [ "$(rm $DRUPAL_CONFIGURATION_DIR/.gitkeep)" ] && [ "$(ls -A $DRUPAL_CONFIGURATION_DIR)" ]; then
+if [ "$DRUPAL_DEPLOY_CONFIGURATION" != "FALSE" ] && [ -d "$DRUPAL_CONFIGURATION_DIR" ] && [ "$(ls $DRUPAL_CONFIGURATION_DIR)" ]; then
   drush --root=${DRUPAL_ROOT} --uri=default --yes ev '\Drupal::entityManager()->getStorage("shortcut_set")->load("default")->delete();'
   /scripts/configImport.sh
 fi
