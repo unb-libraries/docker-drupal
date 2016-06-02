@@ -30,16 +30,16 @@ RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && \
   composer install
 
 # Add nginx and PHP conf.
-COPY conf/nginx/app.conf /etc/nginx/conf.d/app.conf
-COPY conf/php/php.ini /etc/php7/php.ini
-COPY conf/php/php-fpm.conf /etc/php7/php-fpm.conf
-COPY conf/php/www.conf /etc/php7/php-fpm.d/www.conf
+COPY ./conf/nginx/app.conf /etc/nginx/conf.d/app.conf
+COPY ./conf/php/php.ini /etc/php7/php.ini
+COPY ./conf/php/php-fpm.conf /etc/php7/php-fpm.conf
+COPY ./conf/php/www.conf /etc/php7/php-fpm.d/www.conf
 
 # Deploy the default makefile and install profile to the container
 RUN mkdir -p ${TMP_DRUPAL_BUILD_DIR}
-COPY build/ ${TMP_DRUPAL_BUILD_DIR}
-COPY tests/behat.yml ${TMP_DRUPAL_BUILD_DIR}/behat.yml
-COPY tests/features ${TMP_DRUPAL_BUILD_DIR}/features
+COPY ./build/ ${TMP_DRUPAL_BUILD_DIR}
+COPY ./tests/behat.yml ${TMP_DRUPAL_BUILD_DIR}/behat.yml
+COPY ./tests/features ${TMP_DRUPAL_BUILD_DIR}/features
 
 # Drush-make the site.
 ENV DRUSH_MAKE_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
@@ -49,5 +49,5 @@ RUN drush make --concurrency=${DRUSH_MAKE_CONCURRENCY} --yes ${DRUSH_MAKE_OPTION
   mv ${TMP_DRUPAL_BUILD_DIR}/settings ${DRUSH_MAKE_TMPROOT}/sites/all/ && \
   rm -rf ~/.drush/*
 
-COPY scripts /scripts
-COPY scripts/drupalCron.sh /etc/periodic/15min/drupalCron
+COPY ./scripts /scripts
+COPY ./scripts/drupalCron.sh /etc/periodic/15min/drupalCron
