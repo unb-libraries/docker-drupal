@@ -8,5 +8,3 @@ if [ "$DEPLOY_ENV" = "dev" ]; then
 elif [ "$DEPLOY_ENV" = "prod" ]; then
   drush --root=${DRUPAL_ROOT} --uri=default --yes pm-uninstall devel field_ui views_ui dblog
 fi
-
-sed -i "s|DEPLOY_ENV|$DEPLOY_ENV|g" /etc/nginx/conf.d/app.conf
