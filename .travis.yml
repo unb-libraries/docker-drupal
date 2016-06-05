@@ -9,7 +9,7 @@ env:
     - DOCKER_CORE_VERSION=1.10.1-0~trusty
     - DOCKER_IMAGE_NAME=unblibraries/drupal
     - DOCKER_IMAGE_PARENT=unblibraries/nginx-php:alpine-php7
-    - DOCKER_IMAGE_TAG=nginx-php7-8.x
+    - DOCKER_IMAGE_TAG=alpine-nginx-php7-8.x
     - ENDPOINT_NAME=Nginx
 
 before_install:
