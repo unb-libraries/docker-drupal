@@ -37,8 +37,6 @@ docker run \
        unblibraries/drupal:alpine-nginx-7.x
 ```
 
-If ```MYSQL_HOSTNAME``` or ```MYSQL_PORT``` are unset, the container will attempt to determine these from a ```--link```ed MySQL container (specifically : environment variables ```MYSQL_PORT_3306_TCP_ADDR```, ```MYSQL_PORT_3306_TCP_ADDR```).
-
 ## Other Runtime/Environment Variables
 Full documentation of environment variables is [available in the wiki](https://github.com/unb-libraries/docker-drupal/wiki/C.-Environment-Variables).
 
