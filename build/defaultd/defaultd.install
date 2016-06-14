@@ -15,8 +15,8 @@ function defaultd_install() {
   include_once DRUPAL_ROOT . '/core/profiles/standard/standard.install';
   standard_install();
 
-  // Avoid issue mentioned in https://www.drupal.org/node/2583113 .
-  \Drupal::entityManager()->getStorage("shortcut_set")->load("default")->delete();
+  // If importing config on initial install, avoid issue mentioned in https://www.drupal.org/node/2583113.
+  // \Drupal::entityManager()->getStorage("shortcut_set")->load("default")->delete();
 
   // Can add code in here to make nodes, terms, etc.
 }
