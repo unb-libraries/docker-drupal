@@ -5,8 +5,8 @@ services:
 env:
   global:
     - APP_WEBROOT=/app/html
-    - DOCKER_COMPOSE_VERSION=1.7.1
-    - DOCKER_CORE_VERSION=1.10.1-0~trusty
+    - DOCKER_COMPOSE_VERSION=1.8.0
+    - DOCKER_CORE_VERSION=1.12.0-0~trusty
     - DOCKER_IMAGE_NAME=unblibraries/drupal
     - DOCKER_IMAGE_PARENT=unblibraries/nginx-php:alpine-php7
     - DOCKER_IMAGE_TAG=alpine-nginx-php7-8.x
