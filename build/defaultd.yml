@@ -8,8 +8,4 @@ defaults:
 projects:
   drupal:
     type: core
-    version: 8.1.1
-    patch:
-      # Prevent error upon uninstalling simpletest.
-      # https://www.drupal.org/node/2723345#comment-11179177
-      - https://www.drupal.org/files/issues/2723345-6.patch
+    version: 8.1.8
