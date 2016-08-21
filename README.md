@@ -13,6 +13,9 @@ docker-compose up -d; docker-compose logs
 
 And that's it! Don't have docker/docker-compose installed? See the [wiki pages](https://github.com/unb-libraries/docker-drupal/wiki/2.-Setting-Up-Prerequisites). New to Docker? Completely lost and not sure where to start? Check out the [unblibraries/drupal Wiki](https://github.com/unb-libraries/docker-drupal/wiki) for detailed instructions on deploying a local Drupal instance.
 
+## How To Use
+This image offers little benefit on its own, and shines when serving as the base of an extension. Although little documentation exists, [an example of how we extend this image for a production site](https://github.com/unb-libraries/loyalistresearchnet.org) should provide enough for you to get started.
+
 ## Repository Tags
 This image was previously available in many configurations and formats, which became a tremendous maintenance burden. As of June 17 2016, there is currently only one supported branch. The other branches have been deprecated and will not be updated. They will most likely become broken! If you wish to contribute to the project and maintain these other configurations, please contact us.
 
