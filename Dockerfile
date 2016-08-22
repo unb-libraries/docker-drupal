@@ -1,6 +1,10 @@
 FROM unblibraries/nginx-php:alpine-php7
 MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
+LABEL ca.unb.lib.generator="drupal8"
+LABEL vcs-ref="alpine-nginx-php7-8.x"
+LABEL vcs-url="https://github.com/unb-libraries/docker-drupal"
+
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
 ENV DRUPAL_CONFIGURATION_DIR ${APP_ROOT}/configuration
 ENV DRUPAL_CONFIGURATION_EXPORT_SKIP devel
