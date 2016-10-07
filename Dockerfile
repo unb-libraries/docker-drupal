@@ -33,6 +33,13 @@ RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && \
   rm -rf /usr/local/src/drush/.git && \
   composer install
 
+# Install Drupal Console
+RUN php -r "readfile('https://drupalconsole.com/installer');" > drupal.phar && \
+  mv drupal.phar /usr/local/bin/drupal && \
+  chmod +x /usr/local/bin/drupal && \
+  drupal init --override && \
+  drupal check
+
 # Add nginx and PHP conf.
 COPY ./conf/nginx/app.conf /etc/nginx/conf.d/app.conf
 COPY conf/php/app-php.ini /etc/php7/conf.d/zz_app.ini
