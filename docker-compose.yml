@@ -10,7 +10,7 @@ services:
      - "3306"
 
   drupal:
-    image: unblibraries/drupal:alpine-nginx-php7-8.x
+    build: .
     links:
       - mysql:mysql
     expose:

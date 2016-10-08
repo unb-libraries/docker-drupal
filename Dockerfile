@@ -54,7 +54,12 @@ COPY ./tests/features ${TMP_DRUPAL_BUILD_DIR}/features
 
 # Drush-make the site.
 ENV DRUSH_MAKE_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
-RUN drush make --concurrency=${DRUSH_MAKE_CONCURRENCY} --yes ${DRUSH_MAKE_OPTIONS} "${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID}.yml" ${DRUSH_MAKE_TMPROOT} && \
+RUN mkdir ${DRUSH_MAKE_TMPROOT} && \
+  cp ${TMP_DRUPAL_BUILD_DIR}/composer.json ${DRUSH_MAKE_TMPROOT} && \
+  cp -r ${TMP_DRUPAL_BUILD_DIR}/scripts ${DRUSH_MAKE_TMPROOT} && \
+  cp -r ${TMP_DRUPAL_BUILD_DIR}/drush ${DRUSH_MAKE_TMPROOT} && \
+  cd ${DRUSH_MAKE_TMPROOT} && \
+  composer install && \
   mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUSH_MAKE_TMPROOT}/profiles/ && \
   mkdir -p ${DRUSH_MAKE_TMPROOT}/sites/all && \
   mv ${TMP_DRUPAL_BUILD_DIR}/settings ${DRUSH_MAKE_TMPROOT}/sites/all/ && \
