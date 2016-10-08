@@ -45,7 +45,7 @@ COPY ./conf/nginx/app.conf /etc/nginx/conf.d/app.conf
 COPY conf/php/app-php.ini /etc/php7/conf.d/zz_app.ini
 COPY conf/php/app-php-fpm.conf /etc/php7/php-fpm.d/zz_app.conf
 
-# Deploy the default makefile and install profile to the container
+# Add the build and install profiles to the container
 RUN mkdir -p ${TMP_DRUPAL_BUILD_DIR}
 COPY ./build/ ${TMP_DRUPAL_BUILD_DIR}
 COPY ./tests/behat.yml ${TMP_DRUPAL_BUILD_DIR}/behat.yml
