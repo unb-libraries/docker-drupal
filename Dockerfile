@@ -65,7 +65,7 @@ RUN mkdir ${DRUSH_MAKE_TMPROOT} && \
   mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUSH_MAKE_TMPROOT}/profiles/ && \
   mkdir -p ${DRUSH_MAKE_TMPROOT}/sites/all && \
   mv ${TMP_DRUPAL_BUILD_DIR}/settings ${DRUSH_MAKE_TMPROOT}/sites/all/ && \
-  rm -rf ~/.drush/*
+  composer clear-cache
 
 COPY ./scripts /scripts
 COPY ./scripts/drupalCron.sh /etc/periodic/15min/drupalCron
