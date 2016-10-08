@@ -10,7 +10,10 @@ services:
      - "3306"
 
   drupal:
-    build: .
+    build:
+      context: .
+      args:
+        - DRUPAL_COMPOSER_DEV=dev
     links:
       - mysql:mysql
     expose:

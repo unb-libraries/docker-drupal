@@ -5,10 +5,13 @@ LABEL ca.unb.lib.generator="drupal8"
 LABEL vcs-ref="alpine-nginx-php7-8.x-composer"
 LABEL vcs-url="https://github.com/unb-libraries/docker-drupal"
 
+ARG DRUPAL_COMPOSER_DEV=no-dev
+
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
 ENV DRUPAL_CONFIGURATION_DIR ${APP_ROOT}/configuration
 ENV DRUPAL_CONFIGURATION_EXPORT_SKIP devel
 ENV DRUPAL_DEPLOY_CONFIGURATION FALSE
+ENV DRUPAL_COMPOSER_DEV=$DRUPAL_COMPOSER_DEV
 ENV DRUPAL_REBUILD_ON_REDEPLOY TRUE
 ENV DRUPAL_REVERT_FEATURES FALSE
 ENV DRUPAL_ROOT $APP_WEBROOT
@@ -58,7 +61,7 @@ RUN mkdir ${DRUSH_MAKE_TMPROOT} && \
   cp -r ${TMP_DRUPAL_BUILD_DIR}/scripts ${DRUSH_MAKE_TMPROOT} && \
   cp -r ${TMP_DRUPAL_BUILD_DIR}/drush ${DRUSH_MAKE_TMPROOT} && \
   cd ${DRUSH_MAKE_TMPROOT} && \
-  composer install && \
+  composer install --${DRUPAL_COMPOSER_DEV} && \
   mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUSH_MAKE_TMPROOT}/profiles/ && \
   mkdir -p ${DRUSH_MAKE_TMPROOT}/sites/all && \
   mv ${TMP_DRUPAL_BUILD_DIR}/settings ${DRUSH_MAKE_TMPROOT}/sites/all/ && \
