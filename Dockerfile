@@ -25,21 +25,6 @@ RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/
 RUN apk --update add php7-mysqlnd@testing php7-session@testing php7-pdo@testing php7-pdo_mysql@testing php7-pcntl@testing php7-dom@testing php7-posix@testing php7-ctype@testing php7-gd@testing php7-xml@testing php7-opcache@testing php7-mbstring@testing git unzip mysql-client rsync && \
   rm -f /var/cache/apk/*
 
-# Install Drush
-RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && \
-  cd /usr/local/src/drush && \
-  git checkout ${DRUSH_VERSION} && \
-  ln -s /usr/local/src/drush/drush /usr/bin/drush && \
-  rm -rf /usr/local/src/drush/.git && \
-  composer install
-
-# Install Drupal Console
-RUN php -r "readfile('https://drupalconsole.com/installer');" > drupal.phar && \
-  mv drupal.phar /usr/local/bin/drupal && \
-  chmod +x /usr/local/bin/drupal && \
-  drupal init --override && \
-  drupal check
-
 # Add nginx and PHP conf.
 COPY ./conf/nginx/app.conf /etc/nginx/conf.d/app.conf
 COPY conf/php/app-php.ini /etc/php7/conf.d/zz_app.ini
@@ -59,6 +44,8 @@ RUN mkdir ${DRUSH_MAKE_TMPROOT} && \
   cp -r ${TMP_DRUPAL_BUILD_DIR}/drush ${DRUSH_MAKE_TMPROOT} && \
   cd ${DRUSH_MAKE_TMPROOT} && \
   composer install --${DRUPAL_COMPOSER_DEV} && \
+  ln -s /app/html/vendor/bin/drush /usr/bin/drush && \
+  ln -s /app/html/vendor/bin/drupal /usr/bin/drupal && \
   mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUSH_MAKE_TMPROOT}/profiles/ && \
   mkdir -p ${DRUSH_MAKE_TMPROOT}/sites/all && \
   mv ${TMP_DRUPAL_BUILD_DIR}/settings ${DRUSH_MAKE_TMPROOT}/sites/all/ && \
