@@ -9,7 +9,7 @@ env:
     - DOCKER_CORE_VERSION=1.12.0-0~trusty
     - DOCKER_IMAGE_NAME=unblibraries/drupal
     - DOCKER_IMAGE_PARENT=unblibraries/nginx-php:alpine-php7
-    - DOCKER_IMAGE_TAG=alpine-nginx-php7-8.x
+    - DOCKER_IMAGE_TAG=alpine-nginx-php7-8.x-composer
     - ENDPOINT_NAME=Nginx
 
 before_install:
@@ -21,7 +21,6 @@ before_install:
 before_script:
   - docker pull mysql:5.6
   - docker pull "$DOCKER_IMAGE_PARENT"
-  - 'sed -i "s|image: $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG|build: .|g" docker-compose.yml'
 
 script:
   - docker-compose build
