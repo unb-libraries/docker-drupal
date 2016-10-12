@@ -35,20 +35,10 @@ COPY ./build/ ${TMP_DRUPAL_BUILD_DIR}
 COPY ./tests/behat.yml ${TMP_DRUPAL_BUILD_DIR}/behat.yml
 COPY ./tests/features ${TMP_DRUPAL_BUILD_DIR}/features
 
-# Drush-make the site.
-ENV DRUSH_MAKE_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
-RUN mkdir ${DRUSH_MAKE_TMPROOT} && \
-  cp ${TMP_DRUPAL_BUILD_DIR}/composer.json ${DRUSH_MAKE_TMPROOT} && \
-  cp -r ${TMP_DRUPAL_BUILD_DIR}/scripts ${DRUSH_MAKE_TMPROOT} && \
-  cp -r ${TMP_DRUPAL_BUILD_DIR}/drush ${DRUSH_MAKE_TMPROOT} && \
-  cd ${DRUSH_MAKE_TMPROOT} && \
-  composer install --${DRUPAL_COMPOSER_DEV} && \
-  ln -s /app/html/vendor/bin/drush /usr/bin/drush && \
-  ln -s /app/html/vendor/bin/drupal /usr/bin/drupal && \
-  mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUSH_MAKE_TMPROOT}/profiles/ && \
-  mkdir -p ${DRUSH_MAKE_TMPROOT}/sites/all && \
-  mv ${TMP_DRUPAL_BUILD_DIR}/settings ${DRUSH_MAKE_TMPROOT}/sites/all/ && \
-  composer clear-cache
-
+# Copy scripts to container.
 COPY ./scripts /scripts
 COPY ./scripts/drupalCron.sh /etc/periodic/15min/drupalCron
+
+# Build Drupal tree.
+ENV DRUPAL_BUILD_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
+RUN /scripts/buildDrupalTree.sh
