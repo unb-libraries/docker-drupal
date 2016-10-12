@@ -2,7 +2,7 @@ FROM unblibraries/nginx-php:alpine-php7
 MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
 LABEL ca.unb.lib.generator="drupal8"
-LABEL vcs-ref="alpine-nginx-php7-8.x-composer"
+LABEL vcs-ref="alpine-nginx-php7-8.x"
 LABEL vcs-url="https://github.com/unb-libraries/docker-drupal"
 
 ARG DRUPAL_COMPOSER_DEV=no-dev
