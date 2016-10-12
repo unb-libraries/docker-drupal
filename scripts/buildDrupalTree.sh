@@ -10,4 +10,3 @@ ln -s /app/html/vendor/bin/drupal /usr/bin/drupal
 mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUPAL_BUILD_TMPROOT}/profiles/
 mkdir -p ${DRUPAL_BUILD_TMPROOT}/sites/all
 mv ${TMP_DRUPAL_BUILD_DIR}/settings ${DRUPAL_BUILD_TMPROOT}/sites/all/
-composer clear-cache
