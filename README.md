@@ -17,7 +17,9 @@ And that's it! Don't have docker/docker-compose installed? See the [wiki pages](
 This image offers little benefit on its own, and shines when serving as the base of an extension. Although little documentation exists, [an example of how we extend this image for a production site](https://github.com/unb-libraries/loyalistresearchnet.org) should provide enough for you to get started.
 
 ## Repository Tags
-This image was previously available in many configurations and formats, which became a tremendous maintenance burden. As of June 17 2016, there is currently only one supported branch. The other branches have been deprecated and will not be updated. They will most likely become broken! If you wish to contribute to the project and maintain these other configurations, please contact us.
+This image was previously available in many configurations and formats, which became a tremendous maintenance burden.There is currently only two supported branches - both Drupal 8 and PHP7. One uses makefiles to build the Drupal repo (may be deprecated), the other Composer.
+
+The other branches have been deprecated and will not be updated. They will most likely become broken! If you wish to contribute to the project and maintain these other configurations, please contact us.
 
 
 |                    Tag                    | Drupal | PHP   | Size                                                                                                                                                                                               | Status                                                                                                                                                    |
