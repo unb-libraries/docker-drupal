@@ -1,12 +1,12 @@
-# unblibraries/drupal [![](https://images.microbadger.com/badges/image/unblibraries/drupal:alpine-nginx-php7-8.x.svg)](http://microbadger.com/images/unblibraries/drupal:alpine-nginx-php7-8.x "Get your own image badge on microbadger.com") [![Build Status](https://travis-ci.org/unb-libraries/docker-drupal.svg?branch=alpine-nginx-php7-8.x)](https://travis-ci.org/unb-libraries/docker-drupal)
+# unblibraries/drupal [![](https://images.microbadger.com/badges/image/unblibraries/drupal:alpine-nginx-php7-8.x-composer.svg)](http://microbadger.com/images/unblibraries/drupal:alpine-nginx-php7-8.x-composer "Get your own image badge on microbadger.com") [![Build Status](https://travis-ci.org/unb-libraries/docker-drupal.svg?branch=alpine-nginx-php7-8.x-composer)](https://travis-ci.org/unb-libraries/docker-drupal)
 
 A lightweight extensible Drupal docker image, suitable for a development-to-production workflow.
 
 ## Quick Start
-This image does not contain a database (MySQL) server, although the [docker-compose.yml](https://github.com/unb-libraries/docker-drupal/blob/alpine-nginx-php7-8.x/docker-compose.yml) file provided for convenience will deploy Drupal with a MySQL server with no additional configuration required. Looking for a really quick start?
+This image does not contain a database (MySQL) server, although the [docker-compose.yml](https://github.com/unb-libraries/docker-drupal/blob/alpine-nginx-php7-8.x-composer/docker-compose.yml) file provided for convenience will deploy Drupal with a MySQL server with no additional configuration required. Looking for a really quick start?
 
 ```
-git clone -b alpine-nginx-php7-8.x git@github.com:unb-libraries/docker-drupal.git docker-drupal
+git clone -b alpine-nginx-php7-8.x-composer git@github.com:unb-libraries/docker-drupal.git docker-drupal
 cd docker-drupal
 docker-compose up -d; docker-compose logs
 ```
