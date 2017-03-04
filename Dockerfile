@@ -20,7 +20,8 @@ ENV DRUPAL_TESTING_TOOLS FALSE
 ENV TERM dumb
 ENV TMP_DRUPAL_BUILD_DIR /tmp/drupal_build
 
-RUN apk -U upgrade && apk --update add php7-mysqlnd php7-session php7-pdo php7-pdo_mysql php7-pcntl php7-dom php7-posix php7-ctype php7-gd php7-xml php7-opcache php7-mbstring git unzip mysql-client rsync && \
+RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+RUN apk -U upgrade && apk --update add php7-mysqlnd@testing php7-session@testing php7-pdo@testing php7-pdo_mysql@testing php7-pcntl@testing php7-dom@testing php7-posix@testing php7-ctype@testing php7-gd@testing php7-xml@testing php7-opcache@testing php7-mbstring@testing git unzip mysql-client rsync && \
   rm -f /var/cache/apk/*
 
 # Add nginx and PHP conf.
