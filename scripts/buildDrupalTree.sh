@@ -23,7 +23,7 @@ ln -s ${DRUPAL_BUILD_TMPROOT}/vendor/bin/drupal /usr/bin/drupal
 mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUPAL_BUILD_TMPROOT}/profiles/
 
 # Copy config from standard install profile for current version of Drupal.
-cp -r ${DRUPAL_BUILD_TMPROOT}/core/profiles/minimal/config ${DRUPAL_BUILD_TMPROOT}/profiles/${DRUPAL_SITE_ID}/
+cp -r ${DRUPAL_BUILD_TMPROOT}/core/profiles/standard/config ${DRUPAL_BUILD_TMPROOT}/profiles/${DRUPAL_SITE_ID}/
 
 # Move settings files into build location.
 mkdir -p ${DRUPAL_BUILD_TMPROOT}/sites/all
