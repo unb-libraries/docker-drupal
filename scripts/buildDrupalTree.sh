@@ -3,10 +3,14 @@
 # Copy build files into a temporary build location.
 mkdir ${DRUPAL_BUILD_TMPROOT}
 cp ${TMP_DRUPAL_BUILD_DIR}/composer.json ${DRUPAL_BUILD_TMPROOT}
+
+# Change to the build directory
 cd ${DRUPAL_BUILD_TMPROOT}
 
 # Get latest composer/ScriptHandler.php.
-mkdir -p scripts/composer && curl -O https://raw.githubusercontent.com/drupal-composer/drupal-project/8.x/scripts/composer/ScriptHandler.php && mv ScriptHandler.php scripts/composer
+mkdir -p scripts/composer
+curl -O https://raw.githubusercontent.com/drupal-composer/drupal-project/8.x/scripts/composer/ScriptHandler.php
+mv ScriptHandler.php scripts/composer/
 
 # Build instance.
 composer install --${COMPOSER_DEPLOY_DEV}
