@@ -17,14 +17,13 @@ And that's it! Don't have docker/docker-compose installed? See the [wiki pages](
 This image offers little benefit on its own, and shines when serving as the base of an extension. Although little documentation exists, [an example of how we extend this image for a production site](https://github.com/unb-libraries/loyalistresearchnet.org) should provide enough for you to get started.
 
 ## Repository Tags
-This image was previously available in many configurations and formats, which became a tremendous maintenance burden.There is currently only two supported branches - both Drupal 8 and PHP7. One uses makefiles to build the Drupal repo (may be deprecated), the other Composer.
+This image was previously available in many configurations and formats, which became a tremendous maintenance burden.There is currently only one supported branch - Drupal 8 and PHP7 built by Composer.
 
 The other branches have been deprecated and will not be updated. They will most likely become broken! If you wish to contribute to the project and maintain these other configurations, please contact us.
 
 
 |                    Tag                    | Drupal | PHP   | Size                                                                                                                                                                                               | Status                                                                                                                                                    |
 |:-----------------------------------------:|--------|-------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| unblibraries/drupal:alpine-nginx-php7-8.x |   8.x  | 7.0.x | [![](https://images.microbadger.com/badges/image/unblibraries/drupal:alpine-nginx-php7-8.x.svg)](http://microbadger.com/images/unblibraries/drupal:alpine-nginx-php7-8.x "Get your own image badge on microbadger.com") | [![Build Status](https://travis-ci.org/unb-libraries/docker-drupal.svg?branch=alpine-nginx-php7-8.x)](https://travis-ci.org/unb-libraries/docker-drupal) |
 | unblibraries/drupal:alpine-nginx-php7-8.x-composer |   8.x  | 7.0.x | [![](https://images.microbadger.com/badges/image/unblibraries/drupal:alpine-nginx-php7-8.x-composer.svg)](http://microbadger.com/images/unblibraries/drupal:alpine-nginx-php7-8.x-composer "Get your own image badge on microbadger.com") | [![Build Status](https://travis-ci.org/unb-libraries/docker-drupal.svg?branch=alpine-nginx-php7-8.x-composer)](https://travis-ci.org/unb-libraries/docker-drupal) |
 
 
