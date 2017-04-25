@@ -6,35 +6,24 @@ env:
   global:
     - APP_WEBROOT=/app/html
     - DOCKER_COMPOSE_VERSION=1.9.0
-    - DOCKER_CORE_VERSION=1.12.3-0~trusty
+    - DOCKER_DRUPAL_CONTAINER_NAME=docker.drupal.base
     - DOCKER_IMAGE_NAME=unblibraries/drupal
     - DOCKER_IMAGE_PARENT=unblibraries/nginx-php:alpine-php7
     - DOCKER_IMAGE_TAG=alpine-nginx-php7-8.x-composer
     - ENDPOINT_NAME=Nginx
+    - MYSQL_VERSION=5.6
+    - NGINX_PORT=80
+    - TEST_PERSISTENCE_TYPES=article
 
 before_install:
-  - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine="${DOCKER_CORE_VERSION}"
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
+  - git clone -b travis git://github.com/unb-libraries/docker-drupal-scripts.git travis/upstream
+  - travis/upstream/installDockerCompose.sh
 
 before_script:
-  - docker pull mysql:5.6
-  - docker pull "$DOCKER_IMAGE_PARENT"
+  - travis/upstream/pullUpstreamImages.sh
 
 script:
-  - docker-compose build
-  - docker-compose up -d
-  - travis/waitForDeploy.sh
-  - travis/testDrupal.sh
-  - travis/generatePersistentContent.sh
-  - docker-compose stop
-  - sleep 30
-  - docker-compose up -d
-  - travis/waitForDeploy.sh
-  - travis/testDrupal.sh
-  - travis/testPersistentContent.sh
-  - docker exec -i -t dockerdrupal_drupal_1 /scripts/runTests.sh
+  - travis/upstream/runCoreTests.sh
 
 after_success:
   - travis/triggerDockerHubBuild.sh

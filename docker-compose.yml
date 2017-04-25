@@ -14,6 +14,7 @@ services:
       context: .
       args:
         - DRUPAL_COMPOSER_DEV=dev
+    container_name: docker.drupal.base
     links:
       - mysql:mysql
     expose:
