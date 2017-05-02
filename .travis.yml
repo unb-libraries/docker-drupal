@@ -26,7 +26,7 @@ script:
   - travis/upstream/runCoreTests.sh
 
 after_success:
-  - travis/triggerDockerHubBuild.sh
+  - travis/upstream/triggerDockerHubBuild.sh
 
 notifications:
   slack:
