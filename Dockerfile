@@ -21,7 +21,7 @@ ENV RSYNC_FLAGS --stats
 ENV TERM dumb
 ENV TMP_DRUPAL_BUILD_DIR /tmp/drupal_build
 
-RUN apk --update add php7-mysqlnd php7-session php7-pdo php7-pdo_mysql php7-pcntl php7-dom php7-posix php7-ctype php7-gd php7-xml php7-opcache php7-mbstring php7-tokenizer git unzip mysql-client rsync && \
+RUN apk --update add php7-mysqlnd php7-session php7-pdo php7-pdo_mysql php7-pcntl php7-dom php7-posix php7-ctype php7-gd php7-xml php7-opcache php7-mbstring php7-tokenizer php7-simplexml git unzip mysql-client rsync && \
   rm -f /var/cache/apk/*
 
 # Add nginx and PHP conf.
