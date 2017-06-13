@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
-# Set-up secure permissions.
-chown root:root -R ${DRUPAL_ROOT}
-chown ${NGINX_RUN_USER}:${NGINX_RUN_GROUP} -R ${DRUPAL_ROOT}/sites/default/files
+# Prevent web daemon from modifying drupal tree files.
+find ${DRUPAL_ROOT} -not -path "${DRUPAL_ROOT}/sites/default/*" -exec chown root:root {} \;
+
+# Prevent web daemon from changing files .htaccess
 chown root:root ${DRUPAL_ROOT}/sites/default/files/.htaccess
