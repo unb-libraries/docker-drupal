@@ -21,13 +21,16 @@ ENV RSYNC_FLAGS --stats
 ENV TERM dumb
 ENV TMP_DRUPAL_BUILD_DIR /tmp/drupal_build
 
-RUN apk --update add php7-mysqlnd php7-session php7-pdo php7-pdo_mysql php7-pcntl php7-dom php7-posix php7-ctype php7-gd php7-xml php7-opcache php7-mbstring php7-tokenizer php7-simplexml php7-xmlwriter git unzip mysql-client rsync && \
+RUN apk --update add php7-mysqlnd php7-session php7-pdo php7-pdo_mysql \
+  php7-pcntl php7-dom php7-posix php7-ctype php7-gd php7-xml php7-opcache \
+  php7-mbstring php7-tokenizer php7-simplexml php7-xmlwriter git unzip \
+  mysql-client rsync && \
   rm -f /var/cache/apk/*
 
 # Add nginx and PHP conf.
 COPY ./conf/nginx/app.conf /etc/nginx/conf.d/app.conf
-COPY conf/php/app-php.ini /etc/php7/conf.d/zz_app.ini
-COPY conf/php/app-php-fpm.conf /etc/php7/php-fpm.d/zz_app.conf
+COPY ./conf/php/app-php.ini /etc/php7/conf.d/zz_app.ini
+COPY ./conf/php/app-php-fpm.conf /etc/php7/php-fpm.d/zz_app.conf
 
 # Add the build and install profiles to the container
 RUN mkdir -p ${TMP_DRUPAL_BUILD_DIR}
