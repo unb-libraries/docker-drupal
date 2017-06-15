@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+# Dev/NoDev
+DRUPAL_COMPOSER_DEV="${1:-no-dev}"
+
 # Copy build files into a temporary build location.
 mkdir ${DRUPAL_BUILD_TMPROOT}
 cp ${TMP_DRUPAL_BUILD_DIR}/composer.json ${DRUPAL_BUILD_TMPROOT}

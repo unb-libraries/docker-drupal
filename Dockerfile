@@ -44,4 +44,4 @@ COPY ./scripts/drupalCron.sh /etc/periodic/15min/drupalCron
 
 # Build Drupal tree.
 ENV DRUPAL_BUILD_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
-RUN /scripts/buildDrupalTree.sh
+RUN /scripts/buildDrupalTree.sh {$DRUPAL_COMPOSER_DEV}
