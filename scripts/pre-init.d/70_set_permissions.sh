@@ -9,3 +9,6 @@ fi
 
 # Prevent web daemon from changing files .htaccess
 chown root:root ${DRUPAL_ROOT}/sites/default/files/.htaccess
+
+# Set config sync perms.
+chown ${NGINX_RUN_USER}:${NGINX_RUN_GROUP} -R ${DRUPAL_ROOT}/config/sync
