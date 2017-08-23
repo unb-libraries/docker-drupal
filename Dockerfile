@@ -20,28 +20,31 @@ ENV DRUPAL_TESTING_TOOLS FALSE
 ENV RSYNC_FLAGS --stats
 ENV TERM dumb
 ENV TMP_DRUPAL_BUILD_DIR /tmp/drupal_build
+ENV DRUPAL_BUILD_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
 
+# Install required packages, libraries.
 RUN apk --update add php7-mysqlnd php7-session php7-pdo php7-pdo_mysql \
   php7-pcntl php7-dom php7-posix php7-ctype php7-gd php7-xml php7-opcache \
   php7-mbstring php7-tokenizer php7-simplexml php7-xmlwriter git unzip \
   mysql-client rsync && \
   rm -f /var/cache/apk/*
 
-# Add nginx and PHP conf.
-COPY ./conf/nginx/app.conf /etc/nginx/conf.d/app.conf
-COPY ./conf/php/app-php.ini /etc/php7/conf.d/zz_app.ini
-COPY ./conf/php/app-php-fpm.conf /etc/php7/php-fpm.d/zz_app.conf
+# Add package conf, create build location.
+COPY ./conf /conf
+RUN cp /conf/nginx/app.conf /etc/nginx/conf.d/app.conf && \
+  cp /conf/php/app-php.ini /etc/php7/conf.d/zz_app.ini && \
+  cp /conf/php/app-php-fpm.conf /etc/php7/php-fpm.d/zz_app.conf && \
+  rm -rf /conf && \
+  mkdir -p ${TMP_DRUPAL_BUILD_DIR}
 
-# Add the build and install profiles to the container
-RUN mkdir -p ${TMP_DRUPAL_BUILD_DIR}
+# Copy profile, settings to container.
 COPY ./build/ ${TMP_DRUPAL_BUILD_DIR}
+
+# Tests.
 COPY ./tests/behat.yml ${TMP_DRUPAL_BUILD_DIR}/behat.yml
 COPY ./tests/features ${TMP_DRUPAL_BUILD_DIR}/features
 
-# Copy scripts to container.
+# Copy scripts to container, build tree.
 COPY ./scripts /scripts
-COPY ./scripts/drupalCron.sh /etc/periodic/15min/drupalCron
-
-# Build Drupal tree.
-ENV DRUPAL_BUILD_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
-RUN /scripts/buildDrupalTree.sh ${DRUPAL_COMPOSER_DEV}
+RUN /scripts/buildDrupalTree.sh ${DRUPAL_COMPOSER_DEV} && \
+  cp /scripts/drupalCron.sh /etc/periodic/15min/drupalCron
