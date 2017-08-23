@@ -17,6 +17,7 @@ mv ScriptHandler.php scripts/composer/
 
 # Build instance.
 composer install --${DRUPAL_COMPOSER_DEV}
+rm -rf /root/.composer/cache
 
 # Configure scaffolding files.
 ln -s ${DRUPAL_BUILD_TMPROOT}/vendor/bin/drush /usr/bin/drush
