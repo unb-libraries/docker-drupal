@@ -16,7 +16,7 @@ curl -O https://raw.githubusercontent.com/drupal-composer/drupal-project/8.x/scr
 mv ScriptHandler.php scripts/composer/
 
 # Build instance.
-composer install --no-ansi --prefer-dist --${DRUPAL_COMPOSER_DEV}
+composer install --no-ansi --${DRUPAL_COMPOSER_DEV}
 rm -rf /root/.composer/cache
 
 # Configure scaffolding files.
