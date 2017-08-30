@@ -14,7 +14,7 @@ docker-compose up -d; docker-compose logs
 And that's it! Don't have docker/docker-compose installed? See the [wiki pages](https://github.com/unb-libraries/docker-drupal/wiki/2.-Setting-Up-Prerequisites). New to Docker? Completely lost and not sure where to start? Check out the [unblibraries/drupal Wiki](https://github.com/unb-libraries/docker-drupal/wiki) for detailed instructions on deploying a local Drupal instance.
 
 ## How To Use
-This image offers little benefit on its own, and shines when serving as the base of an extension. Although little documentation exists, [an example of how we extend this image for a production site](https://github.com/unb-libraries/loyalistresearchnet.org) should provide enough for you to get started.
+This image offers little benefit on its own, and shines when serving as the base of an extension. Although little documentation exists, [an example of how we extend this image for a production site](https://github.com/unb-libraries/unbherbarium.lib.unb.ca) should provide enough for you to get started.
 
 ## Repository Tags
 This image was previously available in many configurations and formats, which became a tremendous maintenance burden.There is currently only one supported branch - Drupal 8 and PHP7 built by Composer.
