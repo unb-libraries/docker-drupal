@@ -23,6 +23,7 @@ composer install --no-ansi --prefer-dist --${DRUPAL_COMPOSER_DEV}
 echo "Installing Drush $DRUSH_INSTALL_VERSION"
 cd /app
 COMPOSER_HOME=/opt/drush COMPOSER_BIN_DIR=/usr/bin COMPOSER_VENDOR_DIR=/opt/drush/$DRUSH_INSTALL_VERSION composer require drush/drush:$DRUSH_INSTALL_VERSION --no-ansi --prefer-dist
+mv /usr/bin/drush.php /usr/bin/drush
 cd /opt/drush/$DRUSH_INSTALL_VERSION/drush/drush
 composer update
 
