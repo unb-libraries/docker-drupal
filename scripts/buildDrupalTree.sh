@@ -16,12 +16,18 @@ curl -O https://raw.githubusercontent.com/drupal-composer/drupal-project/8.x/scr
 mv ScriptHandler.php scripts/composer/
 
 # Build instance.
+echo "Building - 'composer install --prefer-dist --${DRUPAL_COMPOSER_DEV}'"
 composer install --no-ansi --prefer-dist --${DRUPAL_COMPOSER_DEV}
-rm -rf /root/.composer/cache
 
-# Configure scaffolding files.
-ln -s ${DRUPAL_BUILD_TMPROOT}/vendor/bin/drush /usr/bin/drush
-ln -s ${DRUPAL_BUILD_TMPROOT}/vendor/bin/drupal /usr/bin/drupal
+# Install Drush globally.
+echo "Installing Drush $DRUSH_INSTALL_VERSION"
+cd /app
+COMPOSER_HOME=/opt/drush COMPOSER_BIN_DIR=/usr/bin COMPOSER_VENDOR_DIR=/opt/drush/$DRUSH_INSTALL_VERSION composer require drush/drush:$DRUSH_INSTALL_VERSION --no-ansi --prefer-dist
+cd /opt/drush/$DRUSH_INSTALL_VERSION/drush/drush
+composer update
+
+# Remove composer cache
+rm -rf /root/.composer/cache
 
 # Move profile from repo to build root.
 mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUPAL_BUILD_TMPROOT}/profiles/
