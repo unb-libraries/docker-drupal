@@ -24,7 +24,7 @@ The other branches have been deprecated and will not be updated. They will most 
 
 |                    Tag                    | Drupal | PHP   | Size                                                                                                                                                                                               | Status                                                                                                                                                    |
 |:-----------------------------------------:|--------|-------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| unblibraries/drupal:alpine-nginx-php7-8.x-composer |   8.x  | 7.0.x | [![](https://images.microbadger.com/badges/image/unblibraries/drupal:alpine-nginx-php7-8.x-composer.svg)](http://microbadger.com/images/unblibraries/drupal:alpine-nginx-php7-8.x-composer "Get your own image badge on microbadger.com") | [![Build Status](https://travis-ci.org/unb-libraries/docker-drupal.svg?branch=alpine-nginx-php7-8.x-composer)](https://travis-ci.org/unb-libraries/docker-drupal) |
+| unblibraries/drupal:alpine-nginx-php7-8.x-composer |   8.x  | 7.1.x | [![](https://images.microbadger.com/badges/image/unblibraries/drupal:alpine-nginx-php7-8.x-composer.svg)](http://microbadger.com/images/unblibraries/drupal:alpine-nginx-php7-8.x-composer "Get your own image badge on microbadger.com") | [![Build Status](https://travis-ci.org/unb-libraries/docker-drupal.svg?branch=alpine-nginx-php7-8.x-composer)](https://travis-ci.org/unb-libraries/docker-drupal) |
 
 
 ## General Use
@@ -37,7 +37,7 @@ docker run \
        -e MYSQL_ROOT_PASSWORD= \
        -v /local/dir:/app/html \
        -p 80:80 \
-       unblibraries/drupal:alpine-nginx-php7-8.x
+       unblibraries/drupal:alpine-nginx-php7-8.x-composer
 ```
 
 ## Other Runtime/Environment Variables
