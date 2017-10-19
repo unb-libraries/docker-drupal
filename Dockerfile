@@ -17,6 +17,7 @@ ENV DRUPAL_ROOT $APP_WEBROOT
 ENV DRUPAL_SITE_ID defaultd
 ENV DRUPAL_SITE_UUID FALSE
 ENV DRUPAL_TESTING_TOOLS FALSE
+ENV DRUPAL_BEHAT_TESTING_ROOT ${APP_ROOT}/behat
 ENV DRUSH_INSTALL_VERSION 8.1.14
 
 ENV RSYNC_FLAGS --stats
@@ -42,11 +43,10 @@ RUN cp /conf/nginx/app.conf /etc/nginx/conf.d/app.conf && \
 # Copy profile, settings to container.
 COPY ./build/ ${TMP_DRUPAL_BUILD_DIR}
 
-# Tests.
-COPY ./tests/behat.yml ${TMP_DRUPAL_BUILD_DIR}/behat.yml
-COPY ./tests/features ${TMP_DRUPAL_BUILD_DIR}/features
-
 # Copy scripts to container, build tree.
 COPY ./scripts /scripts
 RUN /scripts/buildDrupalTree.sh ${DRUPAL_COMPOSER_DEV} && \
   cp /scripts/drupalCron.sh /etc/periodic/15min/drupalCron
+
+# Tests.
+COPY ./tests ${DRUPAL_BEHAT_TESTING_ROOT}

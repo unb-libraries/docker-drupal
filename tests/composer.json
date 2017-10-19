@@ -1,0 +1,20 @@
+{
+  "name": "unb-libraries/drupal-behat-testing-libraries",
+  "description": "Libraries for testing local Drupal instances with Behat",
+  "type": "library",
+  "require": {
+    "behat/mink": "~1.7.0",
+    "behat/mink-goutte-driver": "~1.2.0",
+    "drupal/drupal-extension": "~3.3.0",
+    "jcalderonzumba/gastonjs": "~1.1.0",
+    "jcalderonzumba/mink-phantomjs-driver": "~0.3.3",
+    "mikey179/vfsStream": "~1.6.0"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "UNB Libraries",
+      "email": "libsupport@unb.ca"
+    }
+  ]
+}

@@ -1,8 +1,7 @@
 #!/usr/bin/env sh
 if [ "$DRUPAL_TESTING_TOOLS" != "FALSE" ]; then
-  cd ${DRUPAL_ROOT}
-  ln -s ${TMP_DRUPAL_BUILD_DIR}/behat.yml ${DRUPAL_ROOT}/
-  ln -s ${TMP_DRUPAL_BUILD_DIR}/features ${DRUPAL_ROOT}/features
+  cd ${DRUPAL_BEHAT_TESTING_ROOT}
+  composer install --prefer-dist
   ./vendor/bin/behat --init
-  chmod -R g+w features/
+  chmod -R g+w ${DRUPAL_BEHAT_TESTING_ROOT}
 fi

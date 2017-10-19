@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
-cd ${DRUPAL_ROOT}
+cd ${DRUPAL_BEHAT_TESTING_ROOT}
 ./vendor/bin/behat
