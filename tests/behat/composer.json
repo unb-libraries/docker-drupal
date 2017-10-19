@@ -1,6 +1,6 @@
 {
-  "name": "unb-libraries/drupal-behat-testing-libraries",
-  "description": "Libraries for testing local Drupal instances with Behat",
+  "name": "unb-libraries/drupal-behat-test-libs",
+  "description": "Libraries for testing drupal instances with Behat",
   "type": "library",
   "require": {
     "behat/mink": "~1.7.0",
