@@ -26,6 +26,7 @@
     },
     "require-dev": {
         "drupal/devel": "~1.0-beta1",
+        "phpunit/phpunit": "5.7.21",
         "symfony/css-selector": "~2.8"
     },
     "conflict": {
