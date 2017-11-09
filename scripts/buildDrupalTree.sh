@@ -23,12 +23,8 @@ echo "Building - 'composer install --prefer-dist --${DRUPAL_COMPOSER_DEV}'"
 composer install --no-ansi --prefer-dist --${DRUPAL_COMPOSER_DEV}
 
 # Install Drush globally.
-echo "Installing Drush $DRUSH_INSTALL_VERSION"
-cd /app
-COMPOSER_HOME=/opt/drush COMPOSER_BIN_DIR=/usr/bin COMPOSER_VENDOR_DIR=/opt/drush/$DRUSH_INSTALL_VERSION composer require drush/drush:$DRUSH_INSTALL_VERSION --no-ansi --prefer-dist
-mv /usr/bin/drush.php /usr/bin/drush
-cd /opt/drush/$DRUSH_INSTALL_VERSION/drush/drush
-composer update
+ln -s ${DRUPAL_BUILD_TMPROOT}/vendor/bin/drush /usr/bin/drush
+ln -s ${DRUPAL_BUILD_TMPROOT}/vendor/bin/drupal /usr/bin/drupal
 
 # Move profile from repo to build root.
 mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUPAL_BUILD_TMPROOT}/profiles/
