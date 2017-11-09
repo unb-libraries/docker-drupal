@@ -42,10 +42,12 @@ RUN cp /conf/nginx/app.conf /etc/nginx/conf.d/app.conf && \
 # Copy profile, settings to container.
 COPY ./build/ ${TMP_DRUPAL_BUILD_DIR}
 
+# Tests.
+COPY ./tests ${DRUPAL_TESTING_ROOT}
+
 # Copy scripts to container, build tree.
 COPY ./scripts /scripts
 RUN /scripts/buildDrupalTree.sh ${DRUPAL_COMPOSER_DEV} && \
+  /scripts/installDevTools.sh ${DRUPAL_COMPOSER_DEV} && \
+  /scripts/clearComposerCache.sh && \
   cp /scripts/drupalCron.sh /etc/periodic/15min/drupalCron
-
-# Tests.
-COPY ./tests ${DRUPAL_TESTING_ROOT}
