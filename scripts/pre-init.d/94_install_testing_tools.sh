@@ -4,4 +4,5 @@ if [ "$DRUPAL_TESTING_TOOLS" != "FALSE" ]; then
   cd ${DRUPAL_TESTING_ROOT}/behat
   composer install --prefer-dist
   ./vendor/bin/behat --init
+  rm -rf ~/.composer/cache
 fi

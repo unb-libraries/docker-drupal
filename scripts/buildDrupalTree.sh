@@ -28,7 +28,7 @@ cd /opt/drush/$DRUSH_INSTALL_VERSION/drush/drush
 composer update
 
 # Remove composer cache
-rm -rf /root/.composer/cache
+rm -rf ~/.composer/cache
 
 # Move profile from repo to build root.
 mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUPAL_BUILD_TMPROOT}/profiles/
