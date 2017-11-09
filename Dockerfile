@@ -49,5 +49,4 @@ COPY ./tests ${DRUPAL_TESTING_ROOT}
 COPY ./scripts /scripts
 RUN /scripts/buildDrupalTree.sh ${DRUPAL_COMPOSER_DEV} && \
   /scripts/installDevTools.sh ${DRUPAL_COMPOSER_DEV} && \
-  /scripts/clearComposerCache.sh && \
   cp /scripts/drupalCron.sh /etc/periodic/15min/drupalCron
