@@ -13,6 +13,10 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/unb-libraries/drupal-development-libraries.git"
         }
     ],
     "require": {
@@ -26,9 +30,7 @@
         "webmozart/path-util": "^2.3"
     },
     "require-dev": {
-        "drupal/devel": "~1.0-beta1",
-        "phpunit/phpunit": "5.7.21",
-        "symfony/css-selector": "~2.8"
+        "unb-libraries/drupal-development-libraries": "^8.0.0"
     },
     "conflict": {
         "drupal/drupal": "*"
