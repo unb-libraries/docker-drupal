@@ -18,15 +18,7 @@ then
 # See if the instance appears to have previously been deployed
 elif [[ -f /tmp/DRUPAL_DB_LIVE && -f /tmp/DRUPAL_FILES_LIVE ]];
 then
-  # Site Needs Upgrade
-  echo "Database Exists and Files Found. DRUPAL_REBUILD_ON_REDEPLOY=$DRUPAL_REBUILD_ON_REDEPLOY"
-  if [[ "$DRUPAL_REBUILD_ON_REDEPLOY" == "TRUE" ]];
-  then
-    echo "Updating Database of Existing Instance.."
-
-    # Apply database updates, if they exist.
-    drush --yes --root=${DRUPAL_ROOT} --uri=default updb
-  fi
+  # Previously installed, make sure install is removed.
   rm -f ${DRUPAL_ROOT}/install.php
 else
   # Inconsistency detected, do nothing to avoid data loss.
