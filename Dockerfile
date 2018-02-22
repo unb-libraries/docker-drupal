@@ -50,3 +50,6 @@ ARG DRUPAL_COMPOSER_DEV=no-dev
 RUN /scripts/buildDrupalTree.sh ${DRUPAL_COMPOSER_DEV} && \
   /scripts/installDevTools.sh ${DRUPAL_COMPOSER_DEV} && \
   cp /scripts/drupalCron.sh /etc/periodic/15min/drupalCron
+
+# Volumes
+VOLUME /app/html/sites/default
