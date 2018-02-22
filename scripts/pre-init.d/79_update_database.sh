@@ -3,6 +3,6 @@
 if [[ -f /tmp/DRUPAL_DB_LIVE && -f /tmp/DRUPAL_FILES_LIVE ]];
 then
   # Apply database updates, if they exist.
-  echo "Applying database updates to instance.."
+  echo "Applying database updates to existing instance.."
   drush --yes --root=${DRUPAL_ROOT} --uri=default updb
 fi
