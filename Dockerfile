@@ -17,7 +17,7 @@ ENV DRUPAL_SITE_ID defaultd
 ENV DRUPAL_SITE_UUID FALSE
 ENV DRUPAL_TESTING_TOOLS FALSE
 ENV DRUPAL_TESTING_ROOT ${APP_ROOT}/tests
-ENV DRUPAL_UNIT_TEST_CLASSES "\Drupal\user\Tests\UserLoginTest \Drupal\node\Tests\PagePreviewTest \Drupal\file\Tests\FilePrivateTest"
+ENV DRUPAL_UNIT_TEST_CLASSES "\Drupal\Tests\user\Functional\UserLoginTest \Drupal\node\Tests\PagePreviewTest \Drupal\file\Tests\FilePrivateTest"
 
 ENV RSYNC_FLAGS --stats
 ENV TERM dumb
