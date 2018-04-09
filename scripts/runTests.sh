@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -e
 
 # Behat.
 cd "${DRUPAL_TESTING_ROOT}/behat"
@@ -12,7 +13,6 @@ fi
 ./vendor/bin/behat
 
 # PHP unit tests
-set -e
 EXEC_DRUSH="drush --yes --root=/app/html --uri=default"
 
 $EXEC_DRUSH en simpletest
