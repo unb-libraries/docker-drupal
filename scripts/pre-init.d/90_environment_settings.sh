@@ -8,5 +8,5 @@ if [ "$DEPLOY_ENV" == "local" ]; then
   drupal init -n
 
 elif [ "$DEPLOY_ENV" == "prod" ]; then
-  drush --root=${DRUPAL_ROOT} --uri=default --yes pm-uninstall devel field_ui views_ui dblog
+  drush --root=${DRUPAL_ROOT} --uri=default --yes pm-uninstall devel field_ui views_ui dblog  > /dev/null 2>&1
 fi
