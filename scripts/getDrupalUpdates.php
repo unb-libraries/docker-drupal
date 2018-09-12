@@ -36,7 +36,8 @@ foreach ($projects as $project) {
           $status_label = 'Up to date';
           break;
       }
-      $updates[$project['name']] = [
+      $updates[] = [
+        'name' => $project['name'],
         'existing_version' => $project['existing_version'],
         'recommended' => $project['recommended'],
         'status' => $status_label,
@@ -47,8 +48,5 @@ foreach ($projects as $project) {
 
 // Output needed updates.
 if (!empty($updates)) {
-  echo "name,existing_version,recommended,status\n";
-  foreach ($updates as $project_name => $project) {
-    echo "{$project_name},{$project['existing_version']},{$project['recommended']},{$project['status']}\n";
-  }
+  echo json_encode($updates);
 }
