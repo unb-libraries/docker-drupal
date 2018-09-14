@@ -2,51 +2,68 @@
 
 use \Drupal\update\UpdateManagerInterface;
 
-module_load_include('inc', 'update', 'update.report');
+class DrupalUpdates{
 
-$projects =[];
-if ($available = update_get_available(TRUE)) {
-  module_load_include('inc', 'update', 'compare');
-  $projects = update_calculate_project_data($available);
-  @template_preprocess_update_project_status($projects);
-}
+  public static function getModuleUpdates($security_only = FALSE) {
 
-$updates = [];
-foreach ($projects as $project) {
-  // If project needs update.
-  if (isset($project['recommended'])) {
-    if ($project['status'] != UpdateManagerInterface::CURRENT || $project['existing_version'] !== $project['recommended']) {
+    module_load_include('inc', 'update', 'update.report');
 
-      // Set the project status details.
-      $status_label = NULL;
-      switch ($project['status']) {
-        case UpdateManagerInterface::NOT_SECURE:
-          $status_label = 'Security update required!';
-          break;
-        case UpdateManagerInterface::REVOKED:
-          $status_label = 'Revoked!';
-          break;
-        case UpdateManagerInterface::NOT_SUPPORTED:
-          $status_label = 'Not supported!';
-          break;
-        case UpdateManagerInterface::NOT_CURRENT:
-          $status_label = 'Update available';
-          break;
-        case UpdateManagerInterface::CURRENT:
-          $status_label = 'Up to date';
-          break;
+    $projects =[];
+    if ($available = update_get_available(TRUE)) {
+      module_load_include('inc', 'update', 'compare');
+      $projects = update_calculate_project_data($available);
+      @template_preprocess_update_project_status($projects);
+    }
+
+    $updates = [];
+    foreach ($projects as $project) {
+      // If project needs update.
+      if (isset($project['recommended'])) {
+        if ($project['status'] != UpdateManagerInterface::CURRENT || $project['existing_version'] !== $project['recommended']) {
+
+          // Set the project status details.
+          $status_label = NULL;
+          switch ($project['status']) {
+            case UpdateManagerInterface::NOT_SECURE:
+              $status_label = 'Security update required!';
+              break;
+            case UpdateManagerInterface::REVOKED:
+              $status_label = 'Revoked!';
+              break;
+            case UpdateManagerInterface::NOT_SUPPORTED:
+              $status_label = 'Not supported!';
+              break;
+            case UpdateManagerInterface::NOT_CURRENT:
+              $status_label = 'Update available';
+              break;
+            case UpdateManagerInterface::CURRENT:
+              $status_label = 'Up to date';
+              break;
+          }
+
+          if (!$security_only || $project['status'] == UpdateManagerInterface::NOT_SECURE) {
+            $updates[] = [
+              'name' => $project['name'],
+              'existing_version' => $project['existing_version'],
+              'recommended' => $project['recommended'],
+              'status' => $status_label,
+            ];
+          }
+        }
       }
-      $updates[] = [
-        'name' => $project['name'],
-        'existing_version' => $project['existing_version'],
-        'recommended' => $project['recommended'],
-        'status' => $status_label,
-      ];
+    }
+
+    // Output needed updates.
+    if (!empty($updates)) {
+      echo json_encode($updates);
     }
   }
+
 }
 
-// Output needed updates.
-if (!empty($updates)) {
-  echo json_encode($updates);
-}
+DrupalUpdates::getModuleUpdates(
+  in_array(
+    '--security',
+    $_SERVER['argv']
+  )
+);
