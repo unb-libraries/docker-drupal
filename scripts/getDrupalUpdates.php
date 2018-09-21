@@ -18,7 +18,7 @@ class DrupalUpdates{
     $updates = [];
     foreach ($projects as $project) {
       // If project needs update.
-      if (isset($project['recommended'])) {
+      if (isset($project['recommended']) || $project['project_status'] == 'unsupported') {
         if ($project['status'] != UpdateManagerInterface::CURRENT || $project['existing_version'] !== $project['recommended']) {
 
           // Set the project status details.
@@ -41,7 +41,7 @@ class DrupalUpdates{
               break;
           }
 
-          if (!$security_only || $project['status'] == UpdateManagerInterface::NOT_SECURE) {
+          if (!$security_only || $project['status'] == UpdateManagerInterface::NOT_SECURE || $project['status'] == UpdateManagerInterface::NOT_SUPPORTED) {
             $updates[] = [
               'name' => $project['name'],
               'existing_version' => $project['existing_version'],
