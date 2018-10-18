@@ -9,6 +9,7 @@ class DrupalUpdates{
     module_load_include('inc', 'update', 'update.report');
 
     $projects =[];
+    update_refresh();
     if ($available = update_get_available(TRUE)) {
       module_load_include('inc', 'update', 'compare');
       $projects = update_calculate_project_data($available);
