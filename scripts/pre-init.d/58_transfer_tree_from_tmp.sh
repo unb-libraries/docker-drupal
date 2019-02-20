@@ -28,5 +28,5 @@ then
   fi
 else
   # Inconsistency detected, do nothing to avoid data loss.
-  echo "Something seems odd with the Database and Filesystem, cowardly refusing to do anything"
+  echo "[Error] Something seems odd with the Database and Filesystem, cowardly refusing to do anything."
 fi
