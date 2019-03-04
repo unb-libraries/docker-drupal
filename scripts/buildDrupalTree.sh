@@ -15,9 +15,6 @@ mkdir -p scripts/composer
 curl -O https://raw.githubusercontent.com/drupal-composer/drupal-project/8.x/scripts/composer/ScriptHandler.php
 mv ScriptHandler.php scripts/composer/
 
-# Install prestissimo
-composer global require hirak/prestissimo
-
 # Build instance.
 echo "Building - 'composer install --prefer-dist --${DRUPAL_COMPOSER_DEV}'"
 composer install --no-ansi --prefer-dist --${DRUPAL_COMPOSER_DEV}
