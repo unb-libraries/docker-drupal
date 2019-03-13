@@ -53,11 +53,7 @@ class DrupalUpdates{
         }
       }
     }
-
-    // Output needed updates.
-    if (!empty($updates)) {
-      echo json_encode($updates);
-    }
+    echo json_encode($updates);
   }
 
 }
