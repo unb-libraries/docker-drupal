@@ -18,6 +18,7 @@ ENV DRUPAL_SITE_UUID FALSE
 ENV DRUPAL_TESTING_TOOLS FALSE
 ENV DRUPAL_TESTING_ROOT ${APP_ROOT}/tests
 ENV DRUPAL_UNIT_TEST_CLASSES "\Drupal\node\Tests\PagePreviewTest \Drupal\file\Tests\FilePrivateTest"
+ENV DRUSH_COMMAND "sudo -u ${NGINX_RUN_USER} -g ${NGINX_RUN_GROUP} -- drush --root=${DRUPAL_ROOT} --uri=default --yes"
 
 ENV RSYNC_FLAGS --stats
 ENV TERM dumb
