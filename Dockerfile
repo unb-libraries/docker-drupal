@@ -28,7 +28,7 @@ ENV DRUPAL_BUILD_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
 RUN apk --no-cache add php7-mysqlnd php7-session php7-pdo php7-pdo_mysql \
   php7-pcntl php7-dom php7-posix php7-ctype php7-gd php7-xml php7-opcache \
   php7-mbstring php7-tokenizer php7-simplexml php7-xmlwriter git unzip \
-  php7-dom mysql-client rsync
+  php7-dom mysql-client rsync sudo
 
 # Add package conf, create build location.
 COPY ./conf /conf
