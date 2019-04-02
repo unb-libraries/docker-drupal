@@ -19,10 +19,6 @@ mv ScriptHandler.php scripts/composer/
 echo "Building - 'composer install --prefer-dist --${DRUPAL_COMPOSER_DEV}'"
 composer install --no-ansi --prefer-dist --${DRUPAL_COMPOSER_DEV}
 
-# Install Drush globally.
-ln -s ${DRUPAL_BUILD_TMPROOT}/vendor/bin/drush /usr/bin/drush
-ln -s ${DRUPAL_BUILD_TMPROOT}/vendor/bin/drupal /usr/bin/drupal
-
 # Move profile from repo to build root.
 mv ${TMP_DRUPAL_BUILD_DIR}/${DRUPAL_SITE_ID} ${DRUPAL_BUILD_TMPROOT}/profiles/
 
