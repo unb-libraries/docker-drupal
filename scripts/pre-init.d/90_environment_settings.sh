@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 if [ "$DEPLOY_ENV" == "local" ]; then
-  drush --root=${DRUPAL_ROOT} --uri=default --yes en devel field_ui views_ui
+  ${DRUSH} en devel field_ui views_ui
   mkdir -p ${DRUPAL_BUILD_TMPROOT}/modules/contrib
 
   # Enable Drupal Console
@@ -8,5 +8,5 @@ if [ "$DEPLOY_ENV" == "local" ]; then
   drupal init -n
 
 elif [ "$DEPLOY_ENV" == "prod" ]; then
-  drush --root=${DRUPAL_ROOT} --uri=default --yes pm-uninstall devel field_ui views_ui dblog  > /dev/null 2>&1
+  ${DRUSH} pm-uninstall devel field_ui views_ui dblog  > /dev/null 2>&1
 fi
