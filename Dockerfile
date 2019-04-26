@@ -5,6 +5,8 @@ LABEL ca.unb.lib.generator="drupal8"
 LABEL vcs-ref="alpine-nginx-php7-8.x"
 LABEL vcs-url="https://github.com/unb-libraries/docker-drupal"
 
+ARG DRUPAL_COMPOSER_DEV=no-dev
+
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
 ENV DRUPAL_CONFIGURATION_DIR ${APP_ROOT}/configuration
 ENV DRUPAL_CONFIGURATION_EXPORT_SKIP devel
@@ -40,18 +42,16 @@ RUN cp /conf/nginx/app.conf /etc/nginx/conf.d/app.conf && \
   rm -rf /conf && \
   mkdir -p ${TMP_DRUPAL_BUILD_DIR}
 
-# Copy profile, settings to container.
-COPY ./build/ ${TMP_DRUPAL_BUILD_DIR}
-
-# Tests.
-COPY ./tests ${DRUPAL_TESTING_ROOT}
-
-# Copy scripts to container, build tree.
+# Build tree.
 COPY ./scripts /scripts
-ARG DRUPAL_COMPOSER_DEV=no-dev
+COPY ./build/ ${TMP_DRUPAL_BUILD_DIR}
 RUN /scripts/buildDrupalTree.sh ${DRUPAL_COMPOSER_DEV} && \
   /scripts/installDevTools.sh ${DRUPAL_COMPOSER_DEV} && \
   cp /scripts/drupalCron.sh /etc/periodic/15min/drupalCron
+
+# Tests.
+COPY ./tests ${DRUPAL_TESTING_ROOT}
+RUN /scripts/installTestingTools.sh ${DRUPAL_COMPOSER_DEV}
 
 # Volumes
 VOLUME /app/html/sites/default

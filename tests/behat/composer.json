@@ -1,14 +1,16 @@
 {
   "name": "unb-libraries/drupal-behat-test-libs",
   "description": "Libraries for testing drupal instances with Behat",
-  "type": "library",
+  "type": "metapackage",
+  "minimum-stability": "stable",
+  "prefer-stable": true,
   "require": {
     "behat/mink": "~1.7.0",
     "behat/mink-goutte-driver": "~1.2.0",
     "drupal/drupal-extension": "~3.3.0",
     "jcalderonzumba/gastonjs": "~1.1.0",
     "jcalderonzumba/mink-phantomjs-driver": "~0.3.3",
-    "mikey179/vfsStream": "~1.6.0",
+    "mikey179/vfsstream": "~1.6.0",
     "symfony/symfony": "~3.4"
   },
   "license": "MIT",
