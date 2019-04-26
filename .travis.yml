@@ -9,7 +9,7 @@ env:
     - DOCKER_DRUPAL_CONTAINER_NAME=docker.drupal.base
     - DOCKER_IMAGE_NAME=unblibraries/drupal
     - DOCKER_IMAGE_PARENT=unblibraries/nginx-php:alpine-php7
-    - DOCKER_IMAGE_TAG=alpine-nginx-php7-8.x-composer
+    - DOCKER_IMAGE_TAG=8.x-1.x
     - ENDPOINT_NAME=Nginx
     - MYSQL_VERSION=5.6
     - NGINX_PORT=80
