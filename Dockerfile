@@ -23,7 +23,7 @@ ENV DRUPAL_UNIT_TEST_CLASSES "\Drupal\node\Tests\PagePreviewTest \Drupal\file\Te
 ENV DRUSH "sudo -u ${NGINX_RUN_USER} -g ${NGINX_RUN_GROUP} -E -- /app/html/vendor/bin/drush --root=${DRUPAL_ROOT} --uri=default --yes"
 ENV DRUSH_PHP /usr/bin/php
 
-ENV RSYNC_FLAGS --stats
+ENV RSYNC_FLAGS --quiet
 ENV TERM dumb
 ENV TMP_DRUPAL_BUILD_DIR /tmp/drupal_build
 ENV DRUPAL_BUILD_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
