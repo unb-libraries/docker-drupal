@@ -5,9 +5,9 @@
 rm -rf /tmp/DRUPAL_DB_LIVE
 rm -rf /tmp/DRUPAL_FILES_LIVE
 
-# Check if the Drupal database has been populated with data.
-RESULT=`mysqlshow -h ${MYSQL_HOSTNAME} -P ${MYSQL_PORT} --user=${DRUPAL_SITE_ID}_user --password=$DRUPAL_DB_PASSWORD | grep -v Wildcard | grep -o ${DRUPAL_SITE_ID}_db`
-if [ "$RESULT" == "${DRUPAL_SITE_ID}_db" ]; then
+# Check if the database has tables named *node*. If so, this is likely a live DB.
+RESULT=`mysqlshow -h ${MYSQL_HOSTNAME} -P ${MYSQL_PORT} --user=${DRUPAL_SITE_ID}_user --password=$DRUPAL_DB_PASSWORD ${DRUPAL_SITE_ID}_db | grep node`
+if [[ ! -z "$RESULT" ]]; then
   touch /tmp/DRUPAL_DB_LIVE
   echo "Triage : Found Drupal Database."
 fi
