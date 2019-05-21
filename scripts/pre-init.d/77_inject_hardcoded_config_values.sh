@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
-/scripts/setConfigValueFromExistingFiles.sh system.site uuid
+/scripts/setSiteUuidFromEnv.sh
 /scripts/setConfigValueFromExistingFiles.sh language.entity.en uuid
+
