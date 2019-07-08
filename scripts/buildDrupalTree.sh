@@ -31,3 +31,8 @@ cp -r ${DRUPAL_BUILD_TMPROOT}/core/profiles/standard/config ${DRUPAL_BUILD_TMPRO
 # Move settings files into build location.
 mkdir -p ${DRUPAL_BUILD_TMPROOT}/sites/all
 mv ${TMP_DRUPAL_BUILD_DIR}/settings ${DRUPAL_BUILD_TMPROOT}/sites/all/
+
+# If a custom services.yml is provided, copy it in
+if [[ -f "${TMP_DRUPAL_BUILD_DIR}/services.yml" ]]; then
+  mv "${TMP_DRUPAL_BUILD_DIR}/services.yml" "${DRUPAL_BUILD_TMPROOT}/sites/default/"
+fi
