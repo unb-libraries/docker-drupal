@@ -5,9 +5,6 @@
 DEFAULT_SERVICES_FILE="${DRUPAL_BUILD_TMPROOT}/sites/default/default.services.yml"
 OUTPUT_SERVICES_FILE="${DRUPAL_BUILD_TMPROOT}/sites/default/services.yml"
 OVERRIDE_SERVICES_PATH="${TMP_DRUPAL_BUILD_DIR}/services"
-
-ls $OVERRIDE_SERVICES_PATH
-
 FILES_TO_COMBINE="$DEFAULT_SERVICES_FILE"
 NEEDS_COMBINE="FALSE"
 
@@ -20,7 +17,7 @@ fi
 
 # Environment-specific services.
 ENV_SERVICES_YML="${OVERRIDE_SERVICES_PATH}/services.${DEPLOY_ENV}.yml"
-if [[ -f "${ENV_SERVICES_YMLL}" ]]; then
+if [[ -f "${ENV_SERVICES_YML}" ]]; then
   FILES_TO_COMBINE="$FILES_TO_COMBINE $ENV_SERVICES_YML"
   NEEDS_COMBINE="TRUE"
 fi
@@ -29,7 +26,11 @@ fi
 if [[ "$NEEDS_COMBINE" == "TRUE" ]]; then
   echo "Combining overrides of services YML files..."
   curl -L https://github.com/mikefarah/yq/releases/download/2.4.0/yq_linux_amd64 -o /usr/bin/yq; chmod +x /usr/bin/yq
-  /usr/bin/yq m -x ${FILES_TO_COMBINE} > "${OUTPUT_SERVICES_FILE}"
+  echo "Downloading yq binary..."
+  COMBINE_COMMAND="/usr/bin/yq m -x ${FILES_TO_COMBINE} > ${OUTPUT_SERVICES_FILE}"
+  echo "Executing [$COMBINE_COMMAND]"
+  ${COMBINE_COMMAND}
+  echo "Removing yq binary..."
   rm -rf /usr/bin/yq
 else
   echo "Using default services YML files..."
