@@ -1,0 +1,4 @@
+parameters:
+  twig.config:
+    cache: false
+    debug: true

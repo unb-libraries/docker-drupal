@@ -1,4 +1,6 @@
 <?php
-/*
-Include local dev-only settings here.
-*/
+
+/**
+ * @file
+ * Include dev-environment-only settings here.
+ */

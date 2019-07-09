@@ -1,6 +1,6 @@
 <?php
-/*
-Include prod-only settings here.
-*/
 
-$settings['config_readonly'] = TRUE;
+/**
+ * @file
+ * Include prod-only settings here.
+ */
