@@ -26,7 +26,7 @@ fi
 if [[ "$NEEDS_COMBINE" == "TRUE" ]]; then
   echo "Combining overrides of services YML files..."
   echo "Downloading yq binary..."
-  curl -L https://github.com/mikefarah/yq/releases/download/2.4.0/yq_linux_amd64 -o /usr/bin/yq; chmod +x /usr/bin/yq
+  curl -sL https://github.com/mikefarah/yq/releases/download/2.4.0/yq_linux_amd64 -o /usr/bin/yq; chmod +x /usr/bin/yq
   COMBINE_COMMAND="/usr/bin/yq m -x ${FILES_TO_COMBINE}"
   echo "Executing [$COMBINE_COMMAND]"
   ${COMBINE_COMMAND} > ${OUTPUT_SERVICES_FILE}
