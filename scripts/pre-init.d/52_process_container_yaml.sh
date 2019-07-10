@@ -25,11 +25,11 @@ fi
 # Write final output.
 if [[ "$NEEDS_COMBINE" == "TRUE" ]]; then
   echo "Combining overrides of services YML files..."
-  curl -L https://github.com/mikefarah/yq/releases/download/2.4.0/yq_linux_amd64 -o /usr/bin/yq; chmod +x /usr/bin/yq
   echo "Downloading yq binary..."
-  COMBINE_COMMAND="/usr/bin/yq m -x ${FILES_TO_COMBINE} > ${OUTPUT_SERVICES_FILE}"
+  curl -L https://github.com/mikefarah/yq/releases/download/2.4.0/yq_linux_amd64 -o /usr/bin/yq; chmod +x /usr/bin/yq
+  COMBINE_COMMAND="/usr/bin/yq m -x ${FILES_TO_COMBINE}"
   echo "Executing [$COMBINE_COMMAND]"
-  ${COMBINE_COMMAND}
+  ${COMBINE_COMMAND} > ${OUTPUT_SERVICES_FILE}
   echo "Removing yq binary..."
   rm -rf /usr/bin/yq
 else
