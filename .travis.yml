@@ -2,28 +2,28 @@ sudo: required
 services:
   - docker
 
+git:
+  depth: 1
+
 env:
   global:
-    - APP_WEBROOT=/app/html
-    - DOCKER_COMPOSE_VERSION=1.9.0
-    - DOCKER_DRUPAL_CONTAINER_NAME=docker.drupal.base
+    - DEPLOYMENT_FINISHED_MARKER=99_report_as_complete
     - DOCKER_IMAGE_NAME=unblibraries/drupal
-    - DOCKER_IMAGE_PARENT=unblibraries/nginx-php:alpine-php7
-    - DOCKER_IMAGE_TAG=8.x-1.x
-    - ENDPOINT_NAME=Nginx
-    - MYSQL_VERSION=5.6
-    - NGINX_PORT=80
-    - TEST_PERSISTENCE_TYPES=article
+    - DOCKER_IMAGE_TAG=alpine-nginx-php7-8.x-composer
+    - DOCKER_UPSTREAM_IMAGE=unblibraries/nginx-php:alpine-php7
+    - SERVICE_DEPLOY_PORT=80
+    - SERVICE_NAME=docker.drupal.base
+    - SERVICE_TEST_UP_PATH=/user
 
 before_install:
   - curl -sSL https://raw.githubusercontent.com/unb-libraries/CargoDock/drupal-8.x-1.x/travis/deploy.sh | sh
-  - CargoDock/travis/beforeInstall.sh
-
-before_script:
-  - CargoDock/travis/beforeScript.sh
+  - CargoDock/travis/installDockerCompose.sh
 
 script:
-  - CargoDock/travis/testInstance.sh
+  - CargoDock/travis/buildInstanceForTesting.sh
+  - CargoDock/travis/waitForDeploy.sh
+  - CargoDock/travis/checkStartupForErrors.sh
+  - docker exec -i -t ${SERVICE_NAME} /scripts/runTests.sh
 
 after_success:
   - travis/upstream/triggerDockerHubBuild.sh
