@@ -9,7 +9,7 @@ services:
     expose:
      - "3306"
 
-  drupal:
+  docker.drupal.base:
     build:
       context: .
       args:
