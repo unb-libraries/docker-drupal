@@ -16,14 +16,14 @@ env:
     - TEST_PERSISTENCE_TYPES=article
 
 before_install:
-  - git clone -b travis git://github.com/unb-libraries/docker-drupal-scripts.git travis/upstream
-  - travis/upstream/installDockerCompose.sh
+  - curl -sSL https://raw.githubusercontent.com/unb-libraries/CargoDock/drupal-8.x-1.x/travis/deploy.sh | sh
+  - CargoDock/travis/beforeInstall.sh
 
 before_script:
-  - travis/upstream/pullUpstreamImages.sh
+  - CargoDock/travis/beforeScript.sh
 
 script:
-  - travis/upstream/runCoreTests.sh
+  - CargoDock/travis/testInstance.sh
 
 after_success:
   - travis/upstream/triggerDockerHubBuild.sh
