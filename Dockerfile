@@ -2,6 +2,8 @@ FROM unblibraries/nginx-php:alpine-php7
 MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
 LABEL ca.unb.lib.generator="drupal8" \
+      com.microscaling.docker.dockerfile /Dockerfile \
+      com.microscaling.license MIT \
       org.label-schema.schema-version="1.0" \
       org.label-schema.vcs-ref="8.x-1.x" \
       org.label-schema.vcs-url="https://github.com/unb-libraries/docker-drupal" \
