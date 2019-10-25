@@ -1,9 +1,11 @@
 FROM unblibraries/nginx-php:alpine-php7
 MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
-LABEL ca.unb.lib.generator="drupal8"
-LABEL vcs-ref="alpine-nginx-php7-8.x"
-LABEL vcs-url="https://github.com/unb-libraries/docker-drupal"
+LABEL ca.unb.lib.generator="drupal8" \
+      org.label-schema.schema-version="1.0" \
+      org.label-schema.vcs-ref="8.x-1.x" \
+      org.label-schema.vcs-url="https://github.com/unb-libraries/docker-drupal" \
+      org.label-schema.vendor="University of New Brunswick Libraries"
 
 ARG DRUPAL_COMPOSER_DEV=no-dev
 
