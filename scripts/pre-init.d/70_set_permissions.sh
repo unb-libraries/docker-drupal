@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 # Prevent web daemon from modifying drupal tree files.
-find ${DRUPAL_ROOT} -not \( -path "${DRUPAL_ROOT}/sites/default/files" -prune \) -exec chown root:root {} \;
+find ${DRUPAL_ROOT} -not \( -path "${DRUPAL_ROOT}/sites/default/files" -prune \) -print0 | xargs -0 chown root:root --
 
 # Make sure local development sets file permissions.
 if [ "$DEPLOY_ENV" == "local" ]; then
