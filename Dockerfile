@@ -33,10 +33,29 @@ ENV TMP_DRUPAL_BUILD_DIR /tmp/drupal_build
 ENV DRUPAL_BUILD_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
 
 # Install required packages, libraries.
-RUN apk --no-cache add php7-mysqlnd php7-session php7-pdo php7-pdo_mysql \
-  php7-pcntl php7-dom php7-posix php7-ctype php7-gd php7-xml php7-opcache \
-  php7-mbstring php7-tokenizer php7-simplexml php7-xmlwriter git unzip \
-  php7-dom php7-fileinfo mysql-client rsync sudo
+RUN apk --no-cache add \
+  git \
+  mysql-client \
+  php7-ctype \
+  php7-dom \
+  php7-dom \
+  php7-fileinfo \
+  php7-gd \
+  php7-mbstring \
+  php7-mysqlnd \
+  php7-opcache \
+  php7-pcntl \
+  php7-pdo \
+  php7-pdo_mysql \
+  php7-posix \
+  php7-session \
+  php7-simplexml \
+  php7-tokenizer \
+  php7-xml \
+  php7-xmlwriter \
+  rsync \
+  sudo \
+  unzip
 
 # Add package conf, create build location.
 COPY ./conf /conf
