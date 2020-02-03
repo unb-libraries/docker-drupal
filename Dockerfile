@@ -24,7 +24,7 @@ ENV DRUPAL_SITE_UUID FALSE
 ENV DRUPAL_TESTING_ROOT ${APP_ROOT}/tests
 ENV DRUPAL_TESTING_TOOLS FALSE
 ENV DRUPAL_UNIT_TEST_MODULES ''
-ENV DRUSH "sudo -u ${NGINX_RUN_USER} -g ${NGINX_RUN_GROUP} -E -- /app/html/vendor/bin/drush --root=${DRUPAL_ROOT} --uri=default --yes"
+ENV DRUSH "doas -u ${NGINX_RUN_USER} -- /app/html/vendor/bin/drush --root=${DRUPAL_ROOT} --uri=default --yes"
 ENV DRUSH_PHP /usr/bin/php
 
 ENV RSYNC_FLAGS --quiet
@@ -33,7 +33,9 @@ ENV TMP_DRUPAL_BUILD_DIR /tmp/drupal_build
 ENV DRUPAL_BUILD_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
 
 # Install required packages, libraries.
+COPY ./scripts /scripts
 RUN apk --no-cache add \
+  doas \
   git \
   mysql-client \
   php7-ctype \
@@ -63,10 +65,10 @@ RUN cp /conf/nginx/app.conf /etc/nginx/conf.d/app.conf && \
   cp /conf/php/app-php.ini /etc/php7/conf.d/zz_app.ini && \
   cp /conf/php/app-php-fpm.conf /etc/php7/php-fpm.d/zz_app.conf && \
   rm -rf /conf && \
+  /scripts/setupDoasConf.sh && \
   mkdir -p ${TMP_DRUPAL_BUILD_DIR}
 
 # Build tree.
-COPY ./scripts /scripts
 COPY ./build/ ${TMP_DRUPAL_BUILD_DIR}
 RUN /scripts/buildDrupalTree.sh ${DRUPAL_COMPOSER_DEV} && \
   /scripts/installDevTools.sh ${DRUPAL_COMPOSER_DEV} && \
