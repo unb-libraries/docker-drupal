@@ -57,6 +57,7 @@ RUN apk --no-cache add \
   php7-xmlwriter \
   rsync \
   sudo \
+  tac \
   unzip
 
 # Add package conf, create build location.
