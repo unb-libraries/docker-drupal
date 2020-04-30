@@ -18,8 +18,6 @@ env:
 before_install:
   - curl -sSL https://raw.githubusercontent.com/unb-libraries/CargoDock/drupal-8.x-1.x/travis/deploy.sh | sh
   - echo "memory_limit=2G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-  - pecl channel-update pecl.php.net
-  - yes "" | pecl install yaml
   - CargoDock/travis/installDockerCompose.sh
 
 script:
