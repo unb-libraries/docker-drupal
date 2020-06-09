@@ -2,9 +2,9 @@
 # Add environment based container YAML to instance.
 
 # Defaults.
-DEFAULT_SERVICES_FILE="${DRUPAL_BUILD_TMPROOT}/sites/default/default.services.yml"
-OUTPUT_SERVICES_FILE="${DRUPAL_BUILD_TMPROOT}/sites/default/services.yml"
-OVERRIDE_SERVICES_PATH="${TMP_DRUPAL_BUILD_DIR}/services"
+DEFAULT_SERVICES_FILE="${DRUPAL_ROOT}/sites/default/default.services.yml"
+OUTPUT_SERVICES_FILE="${DRUPAL_ROOT}/sites/default/services.yml"
+OVERRIDE_SERVICES_PATH="/build/services"
 FILES_TO_COMBINE="$DEFAULT_SERVICES_FILE"
 NEEDS_COMBINE="FALSE"
 

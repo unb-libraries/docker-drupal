@@ -15,9 +15,6 @@ ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
 ENV DRUPAL_CONFIGURATION_DIR ${APP_ROOT}/configuration
 ENV DRUPAL_CONFIGURATION_EXPORT_SKIP devel
 ENV DRUPAL_DEPLOY_CONFIGURATION FALSE
-ENV DRUPAL_INSTALL_REMOVE_SHORTCUT TRUE
-ENV DRUPAL_REBUILD_ON_REDEPLOY TRUE
-ENV DRUPAL_REVERT_FEATURES FALSE
 ENV DRUPAL_ROOT $APP_WEBROOT
 ENV DRUPAL_RUN_CRON TRUE
 ENV DRUPAL_SITE_ID defaultd
@@ -30,8 +27,6 @@ ENV DRUSH_PHP /usr/bin/php
 
 ENV RSYNC_FLAGS --quiet
 ENV TERM dumb
-ENV TMP_DRUPAL_BUILD_DIR /tmp/drupal_build
-ENV DRUPAL_BUILD_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
 
 # Install required packages, libraries.
 COPY ./scripts /scripts
@@ -66,11 +61,10 @@ RUN cp /conf/nginx/app.conf /etc/nginx/conf.d/app.conf && \
   cp /conf/php/app-php.ini /etc/php7/conf.d/zz_app.ini && \
   cp /conf/php/app-php-fpm.conf /etc/php7/php-fpm.d/zz_app.conf && \
   rm -rf /conf && \
-  /scripts/setupDoasConf.sh && \
-  mkdir -p ${TMP_DRUPAL_BUILD_DIR}
+  /scripts/setupDoasConf.sh
 
 # Build tree.
-COPY ./build/ ${TMP_DRUPAL_BUILD_DIR}
+COPY ./build /build
 RUN /scripts/buildDrupalTree.sh ${DRUPAL_COMPOSER_DEV} && \
   /scripts/installDevTools.sh ${DRUPAL_COMPOSER_DEV} && \
   cp /scripts/drupalCron.sh /etc/periodic/15min/drupalCron

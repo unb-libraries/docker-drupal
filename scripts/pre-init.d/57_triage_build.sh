@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 # Triage the build to determine how to deploy.
 
-# Remove old file markers to eliminate false positives
+# Remove possible old file markers to eliminate false positives
 rm -rf /tmp/DRUPAL_DB_LIVE
 rm -rf /tmp/DRUPAL_FILES_LIVE
 
@@ -12,8 +12,8 @@ if [[ ! -z "$RESULT" ]]; then
   echo "Triage : Found Drupal Database."
 fi
 
-# Determine if the site was previously built by checking for a settings.php file.
-if [ -f ${DRUPAL_ROOT}/sites/default/settings.php ]; then
+# Determine if the site was previously built by checking the public file dir.
+if [ -f ${DRUPAL_ROOT}/sites/default/files/.htaccess ]; then
   touch /tmp/DRUPAL_FILES_LIVE
   echo "Triage : Found Drupal Filesystem."
 fi

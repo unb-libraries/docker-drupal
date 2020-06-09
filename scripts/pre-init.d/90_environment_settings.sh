@@ -2,10 +2,10 @@
 if [ "$DEPLOY_ENV" == "local" ]; then
   echo "Ensuring some modules are enabled for local development..."
   ${DRUSH} en devel field_ui views_ui
-  mkdir -p ${DRUPAL_BUILD_TMPROOT}/modules/contrib
+  mkdir -p ${DRUPAL_ROOT}/modules/contrib
 
   # Enable Drupal Console
-  cd ${DRUPAL_BUILD_TMPROOT}
+  cd ${DRUPAL_ROOT}
   echo "Enabling Drupal console..."
   drupal --quiet init -n
 
