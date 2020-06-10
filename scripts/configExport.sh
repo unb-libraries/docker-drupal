@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
+# Remove existing configuration.
 rm -rf ${DRUPAL_CONFIGURATION_DIR}/*
-chown ${NGINX_RUN_USER}:${NGINX_RUN_GROUP} ${DRUPAL_CONFIGURATION_DIR}
-${DRUSH} config-export --skip-modules=${DRUPAL_CONFIGURATION_EXPORT_SKIP} --destination=${DRUPAL_CONFIGURATION_DIR}
+
+# Write out config.
+drush --root=${DRUPAL_ROOT} --uri=default --yes config-export --destination=${DRUPAL_CONFIGURATION_DIR}
+rm -rf ${DRUPAL_CONFIGURATION_DIR}/*devel*

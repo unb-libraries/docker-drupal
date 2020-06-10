@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-echo "Deployment Complete."
+cat /scripts/data/complete.txt
