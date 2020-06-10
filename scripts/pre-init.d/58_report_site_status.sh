@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-
 if [[ ! -f /tmp/DRUPAL_DB_LIVE && ! -f /tmp/DRUPAL_FILES_LIVE ]];
 then
   echo "New installation detected..."
@@ -11,9 +10,6 @@ then
   # Ensure the database details are still valid.
   sed -i "s|'host' => '.*',|'host' => '$MYSQL_HOSTNAME',|g" ${DRUPAL_ROOT}/sites/default/settings.php
   sed -i "s|'port' => '[0-9]\{2,4\}',|'port' => '$MYSQL_PORT',|g" ${DRUPAL_ROOT}/sites/default/settings.php
-
-  # Ensure local settings are being applied.
-  grep -q -F 'sites/all/settings/base.settings.php' "${DRUPAL_ROOT}/sites/default/settings.php" || echo "require DRUPAL_ROOT . '/sites/all/settings/base.settings.php';" >> "${DRUPAL_ROOT}/sites/default/settings.php"
 else
   # Inconsistency detected, do nothing to avoid data loss.
   echo "[Error] Something seems odd with the Database and Filesystem..."

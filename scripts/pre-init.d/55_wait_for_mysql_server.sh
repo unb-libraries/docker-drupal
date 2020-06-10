@@ -13,12 +13,12 @@ if [[ -z "$MYSQL_PORT" ]]; then
 fi
 
 # Check to see if MySQL is accepting connections
-nc -zw10 ${MYSQL_HOSTNAME} ${MYSQL_PORT}
+nc -zw5 ${MYSQL_HOSTNAME} ${MYSQL_PORT}
 RETVAL=$?
 while [ $RETVAL -ne 0 ]
 do
-  nc -zw10 ${MYSQL_HOSTNAME} ${MYSQL_PORT}
+  nc -zw5 ${MYSQL_HOSTNAME} ${MYSQL_PORT}
   RETVAL=$?
   echo -e "\t Waiting for MySQL server on $MYSQL_HOSTNAME:$MYSQL_PORT..."
-  sleep 10
+  sleep 5
 done
