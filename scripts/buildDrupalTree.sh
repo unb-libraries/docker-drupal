@@ -29,6 +29,13 @@ cp -r ${DRUPAL_ROOT}/core/profiles/standard/config ${DRUPAL_ROOT}/profiles/${DRU
 mkdir -p ${DRUPAL_ROOT}/sites/all
 mv /build/settings ${DRUPAL_ROOT}/sites/all/
 
+# Set default permissions.
+find ${DRUPAL_ROOT} \! -user root \! -group root -not \( -path "${DRUPAL_ROOT}/sites/default/files" -prune \) -print0 | xargs -r0 chown root:root --
+
 # Install yq for yaml combination scripts.
 echo "Downloading yq binary..."
 curl -sL https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 -o /usr/bin/yq; chmod +x /usr/bin/yq
+
+# Ensure the configuration sync directory exists.
+mkdir -p ${DRUPAL_ROOT}/config/sync
+chown ${NGINX_RUN_USER}:${NGINX_RUN_USER} ${DRUPAL_ROOT}/config/sync
