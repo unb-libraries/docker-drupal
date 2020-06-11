@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 # Prevent the web daemon user from modifying drupal tree files.
-find ${DRUPAL_ROOT} \! -user root \! -group root -not \( -path "${DRUPAL_ROOT}/sites/default/files" -prune \) -print0 | xargs -r0 chown root:root --
+find ${DRUPAL_ROOT} -not \( -path "${DRUPAL_ROOT}/sites/default/files" -prune \) -not -user root -not -group root -print0 | xargs -r0 chown root:root --
