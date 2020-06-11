@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
-find ${DRUPAL_ROOT}/sites/default/files \! -user ${NGINX_RUN_USER} \! -group ${NGINX_RUN_GROUP} -print0 | xargs -r0 chown ${NGINX_RUN_USER}:${NGINX_RUN_GROUP} --
+# Instances with massive filesystems can choke on this command.
+if [ "$DRUPAL_CHOWN_PUBLIC_FILES_STARTUP" = "TRUE" ]; then
+  find ${DRUPAL_ROOT}/sites/default/files \! -user ${NGINX_RUN_USER} \! -group ${NGINX_RUN_GROUP} -print0 | xargs -r0 chown ${NGINX_RUN_USER}:${NGINX_RUN_GROUP} --
+fi
 
 # Exception : prevent the web daemon user from changing files directory .htaccess
 chown root:root ${DRUPAL_ROOT}/sites/default/files/.htaccess
