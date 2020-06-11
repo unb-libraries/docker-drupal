@@ -41,7 +41,7 @@ ln -s ${DRUPAL_ROOT}/vendor/bin/drush /usr/bin/drush
 ln -s ${DRUPAL_ROOT}/vendor/bin/drupal /usr/bin/drupal
 
 # Set default permissions.
-find ${DRUPAL_ROOT} \! -user root \! -group root -not \( -path "${DRUPAL_ROOT}/sites/default/files" -prune \) -print0 | xargs -r0 chown root:root --
+find ${DRUPAL_ROOT} -not \( -path "${DRUPAL_ROOT}/sites/default/files" -prune \) -not -user root -not -group root -print0 | xargs -r0 chown root:root --
 
 # Ensure the configuration sync directory exists.
 mkdir -p ${DRUPAL_ROOT}/config/sync
