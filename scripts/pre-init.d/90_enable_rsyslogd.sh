@@ -12,6 +12,9 @@ if [ "$LOGZIO_KEY" != "" ]; then
   sed -i "s|DEPLOY_ENV|$DEPLOY_ENV|g" /etc/rsyslog.d/21-logzio-nginx.conf
   sed -i "s|DEPLOY_URI|$DRUPAL_SITE_URI|g" /etc/rsyslog.d/21-logzio-nginx.conf
 
+  touch "$NGINX_LOG_FILE"
+  touch "$NGINX_ERROR_LOG_FILE"
+
   # Start rsyslogd.
   /usr/sbin/rsyslogd -f /etc/rsyslog.conf
 fi
