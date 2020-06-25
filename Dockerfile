@@ -6,6 +6,7 @@ ENV DEPLOY_ENV prod
 ENV DRUPAL_BASE_PROFILE minimal
 ENV RSYNC_FLAGS --quiet
 
-RUN apk --no-cache add redis
+RUN apk --no-cache add redis && \
+  rm -rf /build
 
 COPY scripts/ /scripts/
