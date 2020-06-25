@@ -41,4 +41,5 @@ mkdir -p ${DRUPAL_ROOT}/config/sync
 chown ${NGINX_RUN_USER}:${NGINX_RUN_USER} ${DRUPAL_ROOT}/config/sync
 
 # Move services to /app/services.
-mv /build/services /app/services
+mkdir -p /app/services
+cp -r /build/services/* /app/services
