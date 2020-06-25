@@ -4,7 +4,7 @@
 # Defaults.
 DEFAULT_SERVICES_FILE="${DRUPAL_ROOT}/sites/default/default.services.yml"
 OUTPUT_SERVICES_FILE="${DRUPAL_ROOT}/sites/default/services.yml"
-OVERRIDE_SERVICES_PATH="/build/services"
+OVERRIDE_SERVICES_PATH="/app/services"
 FILES_TO_COMBINE="$DEFAULT_SERVICES_FILE"
 NEEDS_COMBINE="FALSE"
 

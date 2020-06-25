@@ -39,3 +39,6 @@ curl -sL https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linu
 # Ensure the configuration sync directory exists.
 mkdir -p ${DRUPAL_ROOT}/config/sync
 chown ${NGINX_RUN_USER}:${NGINX_RUN_USER} ${DRUPAL_ROOT}/config/sync
+
+# Move services to /app/services.
+mv /build/services /app/services
