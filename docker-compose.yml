@@ -12,8 +12,6 @@ services:
   docker.drupal.base:
     build:
       context: .
-      args:
-        - DRUPAL_COMPOSER_DEV=dev
     container_name: docker.drupal.base
     links:
       - mysql:mysql
@@ -23,3 +21,5 @@ services:
       - "80:80"
     env_file:
       - ./env/drupal.env
+    volumes:
+      - ./tests:/app/tests

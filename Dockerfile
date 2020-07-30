@@ -9,8 +9,6 @@ LABEL ca.unb.lib.generator="drupal8" \
       org.label-schema.vcs-url="https://github.com/unb-libraries/docker-drupal" \
       org.label-schema.vendor="University of New Brunswick Libraries"
 
-ARG DRUPAL_COMPOSER_DEV=no-dev
-
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
 ENV DRUPAL_CONFIGURATION_DIR ${APP_ROOT}/configuration
 ENV DRUPAL_CONFIGURATION_EXPORT_SKIP devel
@@ -66,13 +64,8 @@ RUN cp /conf/nginx/app.conf /etc/nginx/conf.d/app.conf && \
 
 # Build tree.
 COPY ./build /build
-RUN /scripts/buildDrupalTree.sh ${DRUPAL_COMPOSER_DEV} && \
-  /scripts/installDevTools.sh ${DRUPAL_COMPOSER_DEV} && \
+RUN /scripts/buildDrupalTree.sh && \
   cp /scripts/drupalCron.sh /etc/periodic/15min/drupalCron
-
-# Tests.
-COPY ./tests ${DRUPAL_TESTING_ROOT}
-RUN /scripts/installTestingTools.sh ${DRUPAL_COMPOSER_DEV}
 
 # Volumes
 VOLUME /app/html/sites/default

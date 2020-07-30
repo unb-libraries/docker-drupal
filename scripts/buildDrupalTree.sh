@@ -1,7 +1,4 @@
 #!/usr/bin/env sh
-
-# Dev/NoDev
-DRUPAL_COMPOSER_DEV="${1:-no-dev}"
 YQ_VERSION="2.4.1"
 
 # Install prestissimo.
@@ -15,7 +12,7 @@ curl -o "${DRUPAL_ROOT}/scripts/composer/ScriptHandler.php" -O https://raw.githu
 # Build instance.
 cd "${DRUPAL_ROOT}"
 cp /build/composer.json .
-BUILD_COMMAND="composer install --no-ansi --prefer-dist --${DRUPAL_COMPOSER_DEV}"
+BUILD_COMMAND="composer install --no-ansi --prefer-dist"
 echo "Building - $BUILD_COMMAND"
 $BUILD_COMMAND
 
