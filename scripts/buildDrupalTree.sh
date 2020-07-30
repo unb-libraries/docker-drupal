@@ -1,11 +1,8 @@
 #!/usr/bin/env sh
 set -e
 
-# Dev/NoDev
-DRUPAL_COMPOSER_DEV="${1:-no-dev}"
-
 # Profile ID
-DRUPAL_BASE_PROFILE="${2:-minimal}"
+DRUPAL_BASE_PROFILE="${1:-minimal}"
 
 # Remove upstream assets
 rm -rf ${DRUPAL_ROOT}/profiles/defaultd
@@ -14,7 +11,7 @@ rm -rf ${DRUPAL_ROOT}/sites/all/settings
 # Build instance.
 cp /build/composer.json ${DRUPAL_ROOT}
 cd ${DRUPAL_ROOT}
-BUILD_COMMAND="composer update --no-suggest --prefer-dist --no-interaction --${DRUPAL_COMPOSER_DEV}"
+BUILD_COMMAND="composer update --no-suggest --prefer-dist --no-interaction --no-progress"
 echo "Updating Drupal [${BUILD_COMMAND}]"
 ${BUILD_COMMAND}
 
