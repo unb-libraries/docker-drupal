@@ -12,7 +12,7 @@ curl -o "${DRUPAL_ROOT}/scripts/composer/ScriptHandler.php" -O https://raw.githu
 # Build instance.
 cd "${DRUPAL_ROOT}"
 cp /build/composer.json .
-BUILD_COMMAND="composer install --no-ansi --prefer-dist"
+BUILD_COMMAND="composer install --no-ansi --prefer-dist --no-dev"
 echo "Building - $BUILD_COMMAND"
 $BUILD_COMMAND
 
