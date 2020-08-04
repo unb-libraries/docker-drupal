@@ -8,10 +8,17 @@ DRUPAL_BASE_PROFILE="${1:-minimal}"
 rm -rf ${DRUPAL_ROOT}/profiles/defaultd
 rm -rf ${DRUPAL_ROOT}/sites/all/settings
 
-# Build instance.
+# Set-up Composer
 cp /build/composer.json ${DRUPAL_ROOT}
 cd ${DRUPAL_ROOT}
-BUILD_COMMAND="composer update --no-suggest --prefer-dist --no-interaction --no-progress"
+
+# Get latest composer/ScriptHandler.php.
+mkdir -p scripts/composer
+curl -O https://raw.githubusercontent.com/drupal-composer/drupal-project/8.x/scripts/composer/ScriptHandler.php
+mv ScriptHandler.php scripts/composer/
+
+# Build application.
+BUILD_COMMAND="composer install --no-suggest --prefer-dist --no-interaction --no-progress"
 echo "Updating Drupal [${BUILD_COMMAND}]"
 ${BUILD_COMMAND}
 
