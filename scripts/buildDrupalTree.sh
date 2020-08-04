@@ -4,10 +4,6 @@ set -e
 # Profile ID
 DRUPAL_BASE_PROFILE="${1:-minimal}"
 
-# Remove upstream assets
-rm -rf ${DRUPAL_ROOT}/profiles/defaultd
-rm -rf ${DRUPAL_ROOT}/sites/all/settings
-
 # Set-up Composer
 cp /build/composer.json ${DRUPAL_ROOT}
 cd ${DRUPAL_ROOT}
@@ -18,7 +14,7 @@ curl -O https://raw.githubusercontent.com/drupal-composer/drupal-project/8.x/scr
 mv ScriptHandler.php scripts/composer/
 
 # Build application.
-BUILD_COMMAND="composer install --no-suggest --prefer-dist --no-interaction --no-progress"
+BUILD_COMMAND="composer install --no-suggest --prefer-dist --no-interaction --no-progress --no-dev"
 echo "Updating Drupal [${BUILD_COMMAND}]"
 ${BUILD_COMMAND}
 
