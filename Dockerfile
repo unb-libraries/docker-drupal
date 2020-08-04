@@ -50,6 +50,7 @@ RUN apk --no-cache add \
     php7-tokenizer \
     php7-xml \
     php7-xmlwriter \
+    redis \
     rsync \
     sudo \
     unzip && \
