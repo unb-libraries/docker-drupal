@@ -30,41 +30,30 @@ ENV TERM dumb
 # Install required packages, libraries.
 COPY ./scripts /scripts
 RUN apk --no-cache add \
-  doas \
-  git \
-  mysql-client \
-  php7-ctype \
-  php7-dom \
-  php7-dom \
-  php7-fileinfo \
-  php7-gd \
-  php7-mbstring \
-  php7-mysqlnd \
-  php7-opcache \
-  php7-pcntl \
-  php7-pdo \
-  php7-pdo_mysql \
-  php7-posix \
-  php7-session \
-  php7-simplexml \
-  php7-tokenizer \
-  php7-xml \
-  php7-xmlwriter \
-  rsync \
-  sudo \
-  unzip
-
-# Add package conf, create build location.
-COPY ./conf /conf
-RUN cp /conf/nginx/app.conf /etc/nginx/conf.d/app.conf && \
-  cp /conf/php/app-php.ini /etc/php7/conf.d/zz_app.ini && \
-  cp /conf/php/app-php-fpm.conf /etc/php7/php-fpm.d/zz_app.conf && \
-  rm -rf /conf && \
-  /scripts/setupDoasConf.sh
-
-# Build tree.
-COPY ./build /build
-RUN /scripts/buildDrupalTree.sh && \
+    doas \
+    git \
+    mysql-client \
+    php7-ctype \
+    php7-dom \
+    php7-dom \
+    php7-fileinfo \
+    php7-gd \
+    php7-mbstring \
+    php7-mysqlnd \
+    php7-opcache \
+    php7-pcntl \
+    php7-pdo \
+    php7-pdo_mysql \
+    php7-posix \
+    php7-session \
+    php7-simplexml \
+    php7-tokenizer \
+    php7-xml \
+    php7-xmlwriter \
+    rsync \
+    sudo \
+    unzip && \
+  /scripts/setupDoasConf.sh && \
   cp /scripts/drupalCron.sh /etc/periodic/15min/drupalCron
 
 # Volumes
