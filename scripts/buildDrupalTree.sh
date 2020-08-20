@@ -52,6 +52,6 @@ chown ${NGINX_RUN_USER}:${NGINX_RUN_USER} ${DRUPAL_ROOT}/config/sync
 
 # Move services to /app/services.
 if [ -d "/build/services" ]; then
-  cp -rf /build/services/* /app/services/
+  rsync -a --inplace --no-compress ${RSYNC_FLAGS} --remove-source-files /build/services /app/
 fi
 
