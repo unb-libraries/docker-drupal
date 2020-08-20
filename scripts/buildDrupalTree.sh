@@ -14,7 +14,7 @@ curl -O https://raw.githubusercontent.com/drupal-composer/drupal-project/8.x/scr
 mv ScriptHandler.php scripts/composer/
 
 # Build application.
-BUILD_COMMAND="composer install --no-suggest --prefer-dist --no-interaction --no-progress --no-dev"
+BUILD_COMMAND="${COMPOSER_INSTALL} --no-dev"
 echo "Updating Drupal [${BUILD_COMMAND}]"
 ${BUILD_COMMAND}
 
@@ -25,19 +25,19 @@ cp -r /app/html/sites/default /tmp/
 mkdir -p "${DRUPAL_ROOT}/profiles/${DRUPAL_SITE_ID}"
 
 # Copy config from core install profile for current version of Drupal.
-rsync -a --inplace --no-compress ${RSYNC_FLAGS} "${DRUPAL_ROOT}/core/profiles/${DRUPAL_BASE_PROFILE}/config" "${DRUPAL_ROOT}/profiles/${DRUPAL_SITE_ID}/"
+${RSYNC_COPY} --inplace --no-compress "${DRUPAL_ROOT}/core/profiles/${DRUPAL_BASE_PROFILE}/config" "${DRUPAL_ROOT}/profiles/${DRUPAL_SITE_ID}/"
 
 # Copy additional configs provided by this extension.
 ADDITIONAL_CONFIG_DIR="/scripts/data/profiles/${DRUPAL_BASE_PROFILE}/config"
 if [[ -d "$ADDITIONAL_CONFIG_DIR" ]]; then
-  rsync -a --inplace --no-compress ${RSYNC_FLAGS} ${ADDITIONAL_CONFIG_DIR} ${DRUPAL_ROOT}/profiles/${DRUPAL_SITE_ID}/
+  ${RSYNC_COPY} ${ADDITIONAL_CONFIG_DIR} ${DRUPAL_ROOT}/profiles/${DRUPAL_SITE_ID}/
 fi
 
 # Move local profile from repo to webroot, overwriting.
-rsync -a --inplace --no-compress ${RSYNC_FLAGS} --remove-source-files /build/${DRUPAL_SITE_ID} ${DRUPAL_ROOT}/profiles/
+${RSYNC_MOVE} /build/${DRUPAL_SITE_ID} ${DRUPAL_ROOT}/profiles/
 
 # Move settings files into webroot.
-rsync -a --inplace --no-compress ${RSYNC_FLAGS} --remove-source-files /build/settings ${DRUPAL_ROOT}/sites/all/
+${RSYNC_MOVE} /build/settings ${DRUPAL_ROOT}/sites/all/
 
 # Add drush and drupal console PATH locations.
 ln -s ${DRUPAL_ROOT}/vendor/bin/drush /usr/bin/drush
@@ -52,6 +52,5 @@ chown ${NGINX_RUN_USER}:${NGINX_RUN_USER} ${DRUPAL_ROOT}/config/sync
 
 # Move services to /app/services.
 if [ -d "/build/services" ]; then
-  rsync -a --inplace --no-compress ${RSYNC_FLAGS} --remove-source-files /build/services /app/
+  ${RSYNC_MOVE} /build/services /app/
 fi
-

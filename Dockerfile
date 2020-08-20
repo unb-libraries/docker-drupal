@@ -9,6 +9,7 @@ LABEL ca.unb.lib.generator="drupal8" \
       org.label-schema.vcs-url="https://github.com/unb-libraries/docker-drupal" \
       org.label-schema.vendor="University of New Brunswick Libraries"
 
+ENV COMPOSER_INSTALL "composer install --no-suggest --prefer-dist --no-interaction --no-progress"
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
 ENV DRUPAL_CONFIGURATION_DIR ${APP_ROOT}/configuration
 ENV DRUPAL_CONFIGURATION_EXPORT_SKIP devel
@@ -25,6 +26,9 @@ ENV DRUSH "doas -u ${NGINX_RUN_USER} -- /app/html/vendor/bin/drush --root=${DRUP
 ENV DRUSH_PHP /usr/bin/php
 
 ENV RSYNC_FLAGS --quiet
+ENV RSYNC_COPY "rsync -a --inplace --no-compress ${RSYNC_FLAGS}"
+ENV RSYNC_MOVE "${RSYNC_COPY} --remove-source-files"
+
 ENV TERM dumb
 
 # Install required packages, libraries.
