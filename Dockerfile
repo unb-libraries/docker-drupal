@@ -5,4 +5,5 @@ ENV DEPLOY_ENV prod
 ENV DRUPAL_BASE_PROFILE minimal
 ENV RSYNC_FLAGS --quiet
 
+COPY ./build /build
 COPY scripts/ /scripts/
