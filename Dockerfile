@@ -32,7 +32,7 @@ ENV RSYNC_MOVE "${RSYNC_COPY} --remove-source-files"
 ENV TERM dumb
 
 # Install required packages, libraries.
-COPY ./scripts /scripts
+COPY ./build /build
 RUN apk --no-cache add \
     doas \
     git \
@@ -58,8 +58,10 @@ RUN apk --no-cache add \
     rsync \
     sudo \
     unzip && \
+  ${RSYNC_MOVE} /build/scripts/ /scripts/ && \
   /scripts/setupDoasConf.sh && \
-  composer global require hirak/prestissimo zaporylie/composer-drupal-optimizations:^1.1 --prefer-dist --no-interaction --update-no-dev && rm -rf ~/.composer/cache && \
+  composer global require hirak/prestissimo zaporylie/composer-drupal-optimizations:^1.1 --prefer-dist --no-interaction --update-no-dev && \
+  rm -rf ~/.composer/cache && \
   cp /scripts/drupalCron.sh /etc/periodic/15min/drupalCron
 
 # Volumes
