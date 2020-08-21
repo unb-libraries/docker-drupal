@@ -1,9 +1,6 @@
 #!/usr/bin/env sh
 set -e
 
-# Profile ID
-DRUPAL_BASE_PROFILE="${1:-minimal}"
-
 # Set-up Composer
 cp /build/composer.json ${DRUPAL_ROOT}
 cd ${DRUPAL_ROOT}
@@ -20,21 +17,6 @@ ${BUILD_COMMAND}
 
 # Backup the settings directory for use with a fresh install.
 cp -r /app/html/sites/default /tmp/
-
-# Create the profile folder.
-mkdir -p "${DRUPAL_ROOT}/profiles/${DRUPAL_SITE_ID}"
-
-# Copy config from core install profile for current version of Drupal.
-${RSYNC_COPY} --inplace --no-compress "${DRUPAL_ROOT}/core/profiles/${DRUPAL_BASE_PROFILE}/config" "${DRUPAL_ROOT}/profiles/${DRUPAL_SITE_ID}/"
-
-# Copy additional configs provided by this extension.
-ADDITIONAL_CONFIG_DIR="/scripts/data/profiles/${DRUPAL_BASE_PROFILE}/config"
-if [[ -d "$ADDITIONAL_CONFIG_DIR" ]]; then
-  ${RSYNC_COPY} ${ADDITIONAL_CONFIG_DIR} ${DRUPAL_ROOT}/profiles/${DRUPAL_SITE_ID}/
-fi
-
-# Move local profile from repo to webroot, overwriting.
-${RSYNC_MOVE} /build/${DRUPAL_SITE_ID} ${DRUPAL_ROOT}/profiles/
 
 # Move settings files into webroot.
 ${RSYNC_MOVE} /build/settings ${DRUPAL_ROOT}/sites/all/
