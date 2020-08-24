@@ -1,4 +1,4 @@
-# unblibraries/drupal [![](https://images.microbadger.com/badges/image/unblibraries/drupal:8.x-2.x-slim.svg)](http://microbadger.com/images/unblibraries/drupal:8.x-2.x-slim "Get your own image badge on microbadger.com") [![Build Status](https://travis-ci.com/unb-libraries/docker-drupal.svg?branch=8.x-2.x-slim)](https://travis-ci.com/unb-libraries/docker-drupal)
+# unblibraries/drupal [![](https://images.microbadger.com/badges/image/unblibraries/drupal:8.x-3.x.svg)](http://microbadger.com/images/unblibraries/drupal:8.x-3.x "Get your own image badge on microbadger.com") [![Build Status](https://travis-ci.com/unb-libraries/docker-drupal.svg?branch=8.x-3.x)](https://travis-ci.com/unb-libraries/docker-drupal)
 
 A lightweight extensible Drupal docker image, suitable for a development-to-production workflow.
 
@@ -13,7 +13,7 @@ The other branches have been deprecated and will not be updated. They will most 
 
 |                    Tag                    | Drupal | PHP   | Size                                                                                                                                                                                               | Status                                                                                                                                                    |
 |:-----------------------------------------:|--------|-------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| unblibraries/drupal:8.x-2.x-slim |   8.x  | 7.3.x | [![](https://images.microbadger.com/badges/image/unblibraries/drupal:8.x-2.x-slim.svg)](http://microbadger.com/images/unblibraries/drupal:8.x-2.x-slim "Get your own image badge on microbadger.com") | [![Build Status](https://travis-ci.com/unb-libraries/docker-drupal.svg?branch=8.x-2.x-slim)](https://travis-ci.com/unb-libraries/docker-drupal) |
+| unblibraries/drupal:8.x-3.x |   8.x  | 7.3.x | [![](https://images.microbadger.com/badges/image/unblibraries/drupal:8.x-3.x.svg)](http://microbadger.com/images/unblibraries/drupal:8.x-3.x "Get your own image badge on microbadger.com") | [![Build Status](https://travis-ci.com/unb-libraries/docker-drupal.svg?branch=8.x-3.x)](https://travis-ci.com/unb-libraries/docker-drupal) |
 
 ## Licensing
 - As part of our 'open' ethos, UNB Libraries licenses its applications and workflows to be freely available to all whenever possible.
