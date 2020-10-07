@@ -60,7 +60,7 @@ RUN apk --no-cache add \
     unzip && \
   ${RSYNC_MOVE} /build/scripts/ /scripts/ && \
   /scripts/setupDoasConf.sh && \
-  composer global require hirak/prestissimo zaporylie/composer-drupal-optimizations:^1.1 --prefer-dist --no-interaction --update-no-dev && \
+  composer global require hirak/prestissimo zaporylie/composer-drupal-optimizations:^1.12 --prefer-dist --no-interaction --update-no-dev && \
   rm -rf ~/.composer/cache && \
   cp /scripts/drupalCron.sh /etc/periodic/15min/drupalCron
 
