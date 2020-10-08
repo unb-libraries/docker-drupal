@@ -11,7 +11,7 @@ curl -O https://raw.githubusercontent.com/drupal-composer/drupal-project/8.x/scr
 mv ScriptHandler.php scripts/composer/
 
 # Build application.
-BUILD_COMMAND="${COMPOSER_INSTALL} --no-dev"
+BUILD_COMMAND="php -d memory_limit=-1 /usr/local/bin/${COMPOSER_INSTALL} --no-dev"
 echo "Updating Drupal [${BUILD_COMMAND}]"
 ${BUILD_COMMAND}
 
