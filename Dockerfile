@@ -15,7 +15,6 @@ ENV DRUPAL_CONFIGURATION_DIR ${APP_ROOT}/configuration
 ENV DRUPAL_CONFIGURATION_EXPORT_SKIP devel
 ENV DRUPAL_DEPLOY_CONFIGURATION FALSE
 ENV DRUPAL_ROOT $APP_WEBROOT
-ENV DRUPAL_RUN_CRON TRUE
 ENV DRUPAL_SITE_ID defaultd
 ENV DRUPAL_SITE_UUID FALSE
 ENV DRUPAL_TESTING_ROOT ${APP_ROOT}/tests
@@ -61,8 +60,7 @@ RUN apk --no-cache add \
   ${RSYNC_MOVE} /build/scripts/ /scripts/ && \
   /scripts/setupDoasConf.sh && \
   composer global require hirak/prestissimo zaporylie/composer-drupal-optimizations:^1.1.2 --prefer-dist --no-interaction --update-no-dev && \
-  rm -rf ~/.composer/cache && \
-  cp /scripts/drupalCron.sh /etc/periodic/15min/drupalCron
+  rm -rf ~/.composer/cache
 
 # Volumes
 VOLUME /app/html/sites/default
