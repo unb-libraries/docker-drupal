@@ -1,5 +1,4 @@
-# unb-libraries/docker-drupal
-
+# unb-libraries/docker-drupal [![](https://github.com/unb-libraries/docker-drupal/workflows/build-test-deploy/badge.svg?branch=8.x-3.x)](https://github.com/unb-libraries/docker-drupal/actions?query=workflow%3Abuild-test-deploy)
 A lightweight extensible Drupal docker image, suitable for a development-to-production workflow.
 
 ## How To Use
