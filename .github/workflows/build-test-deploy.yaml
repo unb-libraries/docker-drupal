@@ -1,0 +1,79 @@
+name: build-test-deploy
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  slack-start:
+    name: Notify Slack of Testing Start
+    runs-on: ubuntu-latest
+    steps:
+      - uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          fields: workflow,commit,repo,author,action,message
+          custom_payload: |
+            {
+              attachments: [{
+                color: 'good',
+                text: `${process.env.AS_REPO}\nBuild Started (${process.env.AS_ACTION})\n${process.env.AS_MESSAGE}\n${process.env.AS_COMMIT} by ${process.env.AS_AUTHOR}`,
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
+
+  build-deploy-image:
+    name: Build and Deploy Image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: FranzDiebold/github-env-vars-action@v2.1.0
+      - uses: actions/checkout@v2
+      -
+        name: Set Image Tag
+        run: echo "BUILD_IMAGE_TAG=8.x-3.x-unblib" >> $GITHUB_ENV
+      -
+        name: Get current time
+        uses: gerred/actions/current-time@master
+        id: current-time
+      -
+        name: Build Docker Image
+        env:
+          TIMESTAMP: "${{ steps.current-time.outputs.time }}"
+        run: |
+          docker build \
+            --build-arg BUILD_DATE=$TIMESTAMP \
+            --build-arg VCS_REF=$CI_REF_NAME \
+            --build-arg VERSION=$BUILD_IMAGE_TAG \
+            --tag "ghcr.io/unb-libraries/drupal:$BUILD_IMAGE_TAG" \
+            .
+      -
+        name: Login to GHCR
+        run: echo $GH_CONTAINER_REGISTRY_TOKEN | docker login ghcr.io -u $GH_CONTAINER_REGISTRY_USER --password-stdin
+        env:
+          GH_CONTAINER_REGISTRY_TOKEN: ${{secrets.GH_CONTAINER_REGISTRY_TOKEN}}
+          GH_CONTAINER_REGISTRY_USER: ${{secrets.GH_CONTAINER_REGISTRY_USER}}
+      -
+        name: Push Image to GHCR
+        run: docker push "ghcr.io/unb-libraries/drupal:$BUILD_IMAGE_TAG"
+
+  slack-results:
+    name: Notify Slack of Build Results
+    runs-on: ubuntu-latest
+    needs: [build-deploy-image]
+    steps:
+      - uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          fields: workflow,job,commit,repo,ref,author,took,action,message
+          custom_payload: |
+            {
+              attachments: [{
+                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+                text: `${process.env.AS_REPO}\nBuild/Deploy ${{ job.status }} in ${process.env.AS_TOOK}\n${process.env.AS_ACTION}\n${process.env.AS_MESSAGE}\n${process.env.AS_COMMIT} by ${process.env.AS_AUTHOR}`,
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()

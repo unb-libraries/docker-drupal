@@ -1,4 +1,4 @@
-FROM unblibraries/drupal:8.x-3.x
+FROM ghcr.io/unb-libraries/drupal:8.x-3.x
 MAINTAINER UNB Libraries <libsupport@unb.ca>
 
 ENV NGINX_LOG_FILE /proc/self/fd/1
