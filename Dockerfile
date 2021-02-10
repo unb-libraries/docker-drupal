@@ -2,16 +2,12 @@ FROM unblibraries/nginx-php:alpine-php7
 MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
 LABEL ca.unb.lib.generator="drupal8" \
-  com.microscaling.docker.dockerfile="/Dockerfile" \
-  com.microscaling.license="MIT" \
   org.label-schema.build-date=$BUILD_DATE \
   org.label-schema.description="docker-drupal is the base drupal image at UNB Libraries." \
   org.label-schema.name="drupal" \
-  org.label-schema.schema-version="1.0" \
   org.label-schema.url="https://github.com/unb-libraries/docker-drupal" \
   org.label-schema.vcs-ref="8.x-3.x" \
   org.label-schema.vcs-url="https://github.com/unb-libraries/docker-drupal" \
-  org.label-schema.vendor="University of New Brunswick Libraries" \
   org.label-schema.version=$VERSION \
   org.opencontainers.image.source="https://github.com/unb-libraries/docker-drupal"
 
