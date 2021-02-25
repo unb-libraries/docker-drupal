@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
-# Drush cache rebuild.
 $DRUSH cr
+/scripts/truncateDrupalCacheTables.sh
 /scripts/flushRedisCache.sh
