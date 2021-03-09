@@ -62,7 +62,7 @@ RUN apk --no-cache add \
   ${RSYNC_MOVE} /build/scripts/ /scripts/ && \
   /scripts/setupDoasConf.sh && \
   composer global require hirak/prestissimo zaporylie/composer-drupal-optimizations:^1.1.2 --prefer-dist --no-interaction --update-no-dev && \
-  apk --no-cache add yq --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/ && \
+  apk --no-cache add yq --repository=http://dl-cdn.alpinelinux.org/alpine/v3.13/community/ && \
   rm -rf ~/.composer/cache
 
 # Volumes
