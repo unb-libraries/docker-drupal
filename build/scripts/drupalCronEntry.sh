@@ -2,6 +2,10 @@
 # Serves as an entrypoint for containers to run cron only.
 /scripts/pre-init.d/01_log_start_time.sh
 
+# Enable E-Mail
+/scripts/pre-init.d/19_configure_postfix.sh
+/scripts/pre-init.d/20_enable_postfix.sh
+
 # If they exist, remove references to newrelic.
 rm -f /etc/php7/conf.d/newrelic.ini
 
