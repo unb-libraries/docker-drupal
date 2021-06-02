@@ -1,7 +1,7 @@
 FROM ghcr.io/unb-libraries/nginx-php:1.x-7.x
 MAINTAINER UNB Libraries <libsupport@unb.ca>
 
-ENV COMPOSER_INSTALL "composer install --no-suggest --prefer-dist --no-interaction --no-progress"
+ENV COMPOSER_INSTALL "composer install --prefer-dist --no-interaction --no-progress"
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
 ENV DRUPAL_CONFIGURATION_DIR ${APP_ROOT}/configuration
 ENV DRUPAL_CONFIGURATION_EXPORT_SKIP devel
