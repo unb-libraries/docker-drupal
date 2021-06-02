@@ -7,7 +7,7 @@ cd ${DRUPAL_ROOT}
 
 # Get latest composer/ScriptHandler.php.
 mkdir -p scripts/composer
-curl -O https://raw.githubusercontent.com/drupal-composer/drupal-project/8.x/scripts/composer/ScriptHandler.php
+curl -O https://raw.githubusercontent.com/drupal-composer/drupal-project/9.x/scripts/composer/ScriptHandler.php
 mv ScriptHandler.php scripts/composer/
 
 # Build application.
