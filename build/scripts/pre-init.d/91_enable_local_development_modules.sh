@@ -4,5 +4,4 @@ if [ "$DEPLOY_ENV" == "local" ]; then
   cd ${DRUPAL_ROOT}
   ${COMPOSER_INSTALL}
   ${DRUSH} en devel
-  drupal site:mode dev
 fi
