@@ -1,4 +1,4 @@
-FROM ghcr.io/unb-libraries/nginx-php:1.x-7.x
+FROM ghcr.io/unb-libraries/nginx-php:1.x-7.x-composer2
 MAINTAINER UNB Libraries <libsupport@unb.ca>
 
 ENV COMPOSER_INSTALL "composer install --prefer-dist --no-interaction --no-progress"
