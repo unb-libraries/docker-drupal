@@ -14,7 +14,6 @@ LABEL ca.unb.lib.generator="drupal8" \
 ENV COMPOSER_INSTALL "composer install --no-suggest --prefer-dist --no-interaction --no-progress"
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
 ENV DRUPAL_CONFIGURATION_DIR ${APP_ROOT}/configuration
-ENV DRUPAL_DEPLOY_CONFIGURATION FALSE
 ENV DRUPAL_ROOT $APP_WEBROOT
 ENV DRUPAL_SITE_ID defaultd
 ENV DRUPAL_SITE_UUID FALSE
