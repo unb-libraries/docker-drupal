@@ -1,4 +1,4 @@
-name: build-test-deploy
+name: docker-drupal
 
 on:
   push:
@@ -9,6 +9,7 @@ jobs:
     name: Notify Slack of Testing Start
     runs-on: ubuntu-latest
     steps:
+      - uses: FranzDiebold/github-env-vars-action@v2.1.0
       - uses: 8398a7/action-slack@v3
         with:
           status: custom
@@ -16,23 +17,81 @@ jobs:
           custom_payload: |
             {
               attachments: [{
-                color: 'good',
-                text: `${process.env.AS_REPO}\nBuild Started (${process.env.AS_ACTION})\n${process.env.AS_MESSAGE}\n${process.env.AS_COMMIT} by ${process.env.AS_AUTHOR}`,
+                color: 'warning',
+                text: `${process.env.AS_REPO} ${process.env.CI_REF_NAME} - Build Started :shipit: (${process.env.AS_ACTION})\n${process.env.AS_COMMIT} ${process.env.AS_MESSAGE}\n${process.env.AS_AUTHOR}`,
               }]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always()
 
-  build-deploy-image:
-    name: Build and Deploy Image
+  set-deployment-image-tag:
+    name: Set deployment image tag
+    runs-on: ubuntu-latest
+    steps:
+      - uses: FranzDiebold/github-env-vars-action@v2.1.0
+      -
+        name: Get current time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYYMMDDHHMMSS
+      -
+        name: Set Tag
+        env:
+          TIMESTAMP: "${{ steps.current-time.outputs.formattedTime }}"
+        run: echo "BUILD_IMAGE_TAG=$CI_SHA_SHORT-$TIMESTAMP" > /tmp/image_tag.env
+      -
+        name: Display Tag
+        run: cat /tmp/image_tag.env
+      -
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-image-tag
+          path: /tmp/image_tag.env
+
+  set-deployment-image-name:
+    name: Set deployment image name
+    runs-on: ubuntu-latest
+    steps:
+      - uses: FranzDiebold/github-env-vars-action@v2.1.0
+      -
+        name: Set Name
+        run: echo "BUILD_IMAGE_NAME=drupal" > /tmp/image_name.env
+      -
+        name: Display Tag
+        run: cat /tmp/image_name.env
+      -
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-image-name
+          path: /tmp/image_name.env
+
+  build-image:
+    name: Build Image
+    needs: [set-deployment-image-tag]
     runs-on: ubuntu-latest
     steps:
       - uses: FranzDiebold/github-env-vars-action@v2.1.0
       - uses: actions/checkout@v2
       -
+        name: Retrieve Image Tag
+        uses: actions/download-artifact@v2
+        with:
+          name: build-image-tag
+          path: /tmp
+      -
         name: Set Image Tag
-        run: echo "BUILD_IMAGE_TAG=8.x-3.x-unblib" >> $GITHUB_ENV
+        run: cat /tmp/image_tag.env >> $GITHUB_ENV
+      -
+        name: Retrieve Image Name
+        uses: actions/download-artifact@v2
+        with:
+          name: build-image-name
+          path: /tmp
+      -
+        name: Set Image Name
+        run: cat /tmp/image_name.env >> $GITHUB_ENV
       -
         name: Get current time
         uses: gerred/actions/current-time@master
@@ -46,7 +105,7 @@ jobs:
             --build-arg BUILD_DATE=$TIMESTAMP \
             --build-arg VCS_REF=$CI_REF_NAME \
             --build-arg VERSION=$BUILD_IMAGE_TAG \
-            --tag "ghcr.io/unb-libraries/drupal:$BUILD_IMAGE_TAG" \
+            --tag "ghcr.io/$CI_REPOSITORY_OWNER/$BUILD_IMAGE_NAME:$BUILD_IMAGE_TAG" \
             .
       -
         name: Login to GHCR
@@ -56,24 +115,40 @@ jobs:
           GH_CONTAINER_REGISTRY_USER: ${{secrets.GH_CONTAINER_REGISTRY_USER}}
       -
         name: Push Image to GHCR
-        run: docker push "ghcr.io/unb-libraries/drupal:$BUILD_IMAGE_TAG"
+        run: docker push "ghcr.io/$CI_REPOSITORY_OWNER/$BUILD_IMAGE_NAME:$BUILD_IMAGE_TAG"
+      -
+        name: Update Branch Tag
+        run: docker image tag "ghcr.io/$CI_REPOSITORY_OWNER/$BUILD_IMAGE_NAME:$BUILD_IMAGE_TAG" "ghcr.io/$CI_REPOSITORY_OWNER/$BUILD_IMAGE_NAME:$CI_REF_NAME"
+      -
+        name: Push Branch Tag
+        run: docker push "ghcr.io/$CI_REPOSITORY_OWNER/$BUILD_IMAGE_NAME:$CI_REF_NAME"
 
   slack-results:
     name: Notify Slack of Build Results
     runs-on: ubuntu-latest
-    needs: [build-deploy-image]
+    needs: [build-image]
+    if: always()
     steps:
+      - uses: FranzDiebold/github-env-vars-action@v2.1.0
+      - uses: technote-space/workflow-conclusion-action@v2
+      - name: Set environment variables
+        run: |
+          if [[ ${{ env.WORKFLOW_CONCLUSION }} == success ]]; then
+            echo 'DEPLOY_EMOJI=:rocket:' >> $GITHUB_ENV
+          else
+            echo 'DEPLOY_EMOJI=:boom:' >> $GITHUB_ENV
+          fi
       - uses: 8398a7/action-slack@v3
         with:
           status: custom
-          fields: workflow,job,commit,repo,ref,author,took,action,message
+          job_name:
+          fields: workflow,job,commit,repo,ref,author,action,message
           custom_payload: |
             {
               attachments: [{
-                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: `${process.env.AS_REPO}\nBuild/Deploy ${{ job.status }} in ${process.env.AS_TOOK}\n${process.env.AS_ACTION}\n${process.env.AS_MESSAGE}\n${process.env.AS_COMMIT} by ${process.env.AS_AUTHOR}`,
+                color: '${{ env.WORKFLOW_CONCLUSION }}' === 'success' ? 'good' : '${{ env.WORKFLOW_CONCLUSION }}' === 'failure' ? 'danger' : 'warning',
+                text: `${process.env.AS_REPO} ${process.env.CI_REF_NAME} - ${{ env.WORKFLOW_CONCLUSION }} ${{ env.DEPLOY_EMOJI }} (${process.env.AS_ACTION})\n${process.env.AS_COMMIT} ${process.env.AS_MESSAGE}\n${process.env.AS_AUTHOR}`,
               }]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always()
