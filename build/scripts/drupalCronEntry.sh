@@ -14,6 +14,10 @@ rm -f /etc/php7/conf.d/newrelic.ini
 /scripts/pre-init.d/52_process_settings.sh
 /scripts/pre-init.d/55_wait_for_mysql_server.sh
 
+# Run any pending queues.
+# (Tip! To find queues, search trees for '@QueueWorker')
+# Ex : drush queue-run traf_sys_import
+
 # Run cron.
 /scripts/drupalCron.sh
 
