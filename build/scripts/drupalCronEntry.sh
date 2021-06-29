@@ -17,6 +17,13 @@ rm -f /etc/php7/conf.d/newrelic.ini
 # Run cron.
 /scripts/drupalCron.sh
 
+# Run any pending queues.
+# (Tip! To find queues, search trees for '@QueueWorker')
+# Ex : drush queue-run traf_sys_import
+
+# Flush postfix.
+/scripts/flushEmailsFromPostfix.sh
+
 # Report run time.
 START_TIME=`cat /tmp/start_time`
 NOW=`date +%s`
