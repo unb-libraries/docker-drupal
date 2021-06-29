@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 if [ -n "$LOCAL_HOSTNAME" ] && [ -n "$LOCAL_PORT" ]; then
   printf "\nVisit your instance at:" > /tmp/startup_block.txt
-  printf "\nhttp://$LOCAL_HOSTNAME" >> /tmp/startup_block.txt
+  printf "\nhttp://$LOCAL_HOSTNAME:$LOCAL_PORT" >> /tmp/startup_block.txt
 
   printf "\n\nLog-in to your instance via:\n" >> /tmp/startup_block.txt
   /scripts/drupalUli.sh >> /tmp/startup_block.txt
