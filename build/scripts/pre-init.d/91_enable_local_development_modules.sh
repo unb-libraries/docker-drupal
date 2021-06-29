@@ -10,8 +10,8 @@ if [ "$DEPLOY_ENV" == "local" ]; then
   # Set dev container settings.
   yq w -i ${DRUPAL_ROOT}/sites/development.services.yml parameters.[http.response.debug_cacheability_headers] true
   yq w -i ${DRUPAL_ROOT}/sites/development.services.yml parameters.[twig.config].auto_reload true
-  yq w -i ${DRUPAL_ROOT}/sites/development.services.yml parameters.[twig.config].auto_debug true
-  yq w -i ${DRUPAL_ROOT}/sites/development.services.yml parameters.[twig.config].auto_cache false
+  yq w -i ${DRUPAL_ROOT}/sites/development.services.yml parameters.[twig.config].debug true
+  yq w -i ${DRUPAL_ROOT}/sites/development.services.yml parameters.[twig.config].cache false
 
   # Make sure caching is disabled.
   echo "\$settings['cache']['bins']['render'] = 'cache.backend.null';" >> ${DRUPAL_ROOT}/sites/all/settings/settings.local.inc
