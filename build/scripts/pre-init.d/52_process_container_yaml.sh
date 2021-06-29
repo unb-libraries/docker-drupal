@@ -29,8 +29,5 @@ if [[ "$NEEDS_COMBINE" == "TRUE" ]]; then
   echo "Executing [$COMBINE_COMMAND]"
   ${COMBINE_COMMAND} > ${OUTPUT_SERVICES_FILE}
 else
-  echo "Using default services YML files..."
-  if [ ! -f "${OUTPUT_SERVICES_FILE}" ]; then
-    cp ${DEFAULT_SERVICES_FILE} ${OUTPUT_SERVICES_FILE}
-  fi
+  echo "Using default services YML values..."
 fi
