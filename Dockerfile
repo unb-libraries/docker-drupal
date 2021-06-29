@@ -1,4 +1,4 @@
-FROM unblibraries/nginx-php:alpine-php7
+FROM ghcr.io/unb-libraries/nginx-php:1.x-7.x
 MAINTAINER Jacob Sanford <libsystems_at_unb.ca>
 
 LABEL ca.unb.lib.generator="drupal8" \
