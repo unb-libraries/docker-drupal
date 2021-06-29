@@ -17,6 +17,9 @@ rm -f /etc/php7/conf.d/newrelic.ini
 # Run cron.
 /scripts/drupalCron.sh
 
+# Flush postfix.
+/scripts/flushEmailsFromPostfix.sh
+
 # Report run time.
 START_TIME=`cat /tmp/start_time`
 NOW=`date +%s`
