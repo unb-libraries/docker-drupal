@@ -2,7 +2,7 @@
 # Add environment based container YAML to instance.
 
 # Defaults.
-DEFAULT_SERVICES_FILE="${DRUPAL_ROOT}/sites/default/default.services.yml"
+DEFAULT_SERVICES_FILE="${DRUPAL_ROOT}/core/assets/scaffold/files/default.services.yml"
 OUTPUT_SERVICES_FILE="${DRUPAL_ROOT}/sites/default/services.yml"
 OVERRIDE_SERVICES_PATH="/app/services"
 FILES_TO_COMBINE="$DEFAULT_SERVICES_FILE"
@@ -30,4 +30,7 @@ if [[ "$NEEDS_COMBINE" == "TRUE" ]]; then
   ${COMBINE_COMMAND} > ${OUTPUT_SERVICES_FILE}
 else
   echo "Using default services YML files..."
+  if [ ! -f "${OUTPUT_SERVICES_FILE}" ]; then
+    cp ${DEFAULT_SERVICES_FILE} ${OUTPUT_SERVICES_FILE}
+  fi
 fi
