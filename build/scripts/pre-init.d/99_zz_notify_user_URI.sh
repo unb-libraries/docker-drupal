@@ -14,5 +14,8 @@ if [ -n "$LOCAL_HOSTNAME" ] && [ -n "$LOCAL_PORT" ]; then
 fi
 
 cat /scripts/data/complete.txt
-cat /tmp/startup_block.txt
-printf "\n"
+
+if [ -n "$LOCAL_HOSTNAME" ] && [ -n "$LOCAL_PORT" ]; then
+  cat /tmp/startup_block.txt
+  printf "\n"
+fi
