@@ -20,5 +20,5 @@ do
   nc -zw5 ${MYSQL_HOSTNAME} ${MYSQL_PORT}
   RETVAL=$?
   echo -e "\t Waiting for MySQL server on $MYSQL_HOSTNAME:$MYSQL_PORT..."
-  sleep 5
+  sleep 1
 done
