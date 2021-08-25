@@ -7,5 +7,4 @@ drush sql-query "SELECT table_name FROM information_schema.tables WHERE table_na
     COMMAND="${COMMAND} TRUNCATE TABLE $LINE;"
   fi
 done
-COMMAND="${COMMAND} TRUNCATE TABLE cachekeys;"
 $DRUSH sqlq "$COMMAND" && echo "Tables Truncated!" )
