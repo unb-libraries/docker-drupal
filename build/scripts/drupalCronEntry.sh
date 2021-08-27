@@ -12,6 +12,7 @@ rm -f /etc/php7/conf.d/newrelic.ini
 /scripts/pre-init.d/52_process_container_yaml.sh
 /scripts/pre-init.d/52_process_settings.sh
 /scripts/pre-init.d/55_wait_for_mysql_server.sh
+/scripts/pre-init.d/71_set_public_file_permissions.sh
 
 # Run cron.
 /scripts/drupalCron.sh
