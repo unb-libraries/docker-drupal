@@ -1,8 +1,4 @@
 #!/usr/bin/env sh
-# This script flushes the redis cache for the instance prefix only.
-CACHE_PREFIX=$(drush eval 'echo \Drupal\Core\Site\Settings::get("cache_prefix")["default"]')
-if [ -n "$CACHE_PREFIX" ]; then
-  redis-cli -h drupal-redis-lib-unb-ca EVAL "for _,k in ipairs(redis.call('keys', ARGV[1])) do redis.call('del',k) end" 0 "$CACHE_PREFIX:*:*"
+if [ -n "$DRUPAL_SITE_ID" ]; then
+  redis-cli -h drupal-redis-lib-unb-ca EVAL "for _,k in ipairs(redis.call('keys', ARGV[1])) do redis.call('del',k) end" 0 "$DRUPAL_SITE_ID:*:*"
 fi
-
-
