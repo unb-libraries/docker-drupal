@@ -58,7 +58,7 @@ RUN apk --no-cache add \
     sudo \
     unzip && \
   ${RSYNC_MOVE} /build/scripts/ /scripts/ && \
-  ${RSYNC_MOVE} /build/data/htaccess /security_htaccess && \
+  ${RSYNC_MOVE} /build/data/htaccess/ /security_htaccess && \
   /scripts/setupDoasConf.sh && \
   composer global require hirak/prestissimo zaporylie/composer-drupal-optimizations:^1.1.2 --prefer-dist --no-interaction --update-no-dev && \
   apk --no-cache add yq --repository=http://dl-cdn.alpinelinux.org/alpine/v3.13/community/ && \
