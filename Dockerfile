@@ -45,7 +45,7 @@ RUN apk --no-cache add \
     sudo \
     unzip && \
   ${RSYNC_MOVE} /build/scripts/ /scripts/ && \
-  ${RSYNC_MOVE} /build/data/htaccess /security_htaccess && \
+  ${RSYNC_MOVE} /build/data/htaccess/ /security_htaccess && \
   /scripts/setupDoasConf.sh && \
   apk --no-cache add yq --repository=http://dl-cdn.alpinelinux.org/alpine/v3.13/community/ && \
   rm -rf ~/.composer/cache
