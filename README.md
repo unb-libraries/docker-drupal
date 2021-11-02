@@ -5,12 +5,13 @@ A lightweight extensible Drupal docker image, suitable for a development-to-prod
 This image offers little benefit on its own, and shines when serving as the base of an extension. [An example of how we extend this image for our main library site](https://github.com/unb-libraries/lib.unb.ca) should provide enough for you to get started.
 
 ## Repository Tags
-This image was previously available in many configurations and formats, which became a tremendous maintenance burden. There is currently only one supported branch - Drupal 8 and PHP7 built by Composer.
+This image was previously available in many configurations and formats, which became a tremendous maintenance burden. There is currently only one supported branch per major version - Drupal8/9 and PHP7 built by composer/composer2.
 
 The other branches have been deprecated and will not be updated. They will most likely become broken! If you wish to contribute to the project and maintain these other configurations, please contact us.
 
 |                    Tag                    | Drupal | PHP   |
 |:-----------------------------------------:|--------|-------|
+| ghcr.io/unb-libraries/drupal:8.x-3.x |   8.x  | 7.4.x |
 | ghcr.io/unb-libraries/drupal:9.x-1.x |   9.x  | 7.4.x |
 
 ## Author / Contributors
