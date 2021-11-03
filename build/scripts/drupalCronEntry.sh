@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
+set -x
+
 # Serves as an entrypoint for containers to run cron only.
 /scripts/pre-init.d/01_log_start_time.sh
 
@@ -21,6 +23,7 @@ rm -f /etc/php7/conf.d/newrelic.ini
 # Run any pending queues.
 # (Tip! To find queues, search trees for '@QueueWorker')
 # Ex : drush queue-run traf_sys_import
+# List queues with : drush queue-list
 
 # Flush postfix.
 /scripts/flushEmailsFromPostfix.sh
