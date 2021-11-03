@@ -13,7 +13,7 @@ ln -s /scripts/pre-init.d/71_set_public_file_permissions.sh /scripts/pre-init.cr
 ln -s /scripts/pre-init.d/72_secure_config_sync_dir.sh /scripts/pre-init.cron.d/
 
 # Run cron.
-ln -s /scripts/pre-init.d/scripts/drupalCron.sh /scripts/pre-init.cron.d/90_drupalCron.sh
+ln -s /scripts/pre-init.d/scripts/drupalCron.sh /scripts/pre-init.cron.d/95_drupal_cron.sh
 
 # Here is an appropriate time to Run any pending queues.
 # (Tip! To find queues, search source trees for '@QueueWorker')
