@@ -48,6 +48,7 @@ RUN apk --no-cache add \
   ${RSYNC_MOVE} /build/data/htaccess/ /security_htaccess && \
   /scripts/setupDoasConf.sh && \
   apk --no-cache add yq --repository=http://dl-cdn.alpinelinux.org/alpine/v3.13/community/ && \
+  /scripts/linkDrupalCronEntryInit.sh && \
   rm -rf ~/.composer/cache
 
 # Volumes
