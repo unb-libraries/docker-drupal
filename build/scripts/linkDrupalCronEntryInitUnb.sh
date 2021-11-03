@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-mkdir -p /scripts/pre-init.cron.d
 
 # Enable Postfix.
 ln -s /scripts/pre-init.d/20_enable_postfix.sh /scripts/pre-init.cron.d/
