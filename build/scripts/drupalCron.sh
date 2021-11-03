@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-${DRUSH} core-cron
+${DRUSH} -vvv core-cron
