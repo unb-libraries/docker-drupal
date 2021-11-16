@@ -12,6 +12,7 @@ ln -s /scripts/pre-init.d/55_wait_for_mysql_server.sh /scripts/pre-init.cron.d/
 ln -s /scripts/pre-init.d/61_apply_drupal_settings.sh /scripts/pre-init.cron.d/
 ln -s /scripts/pre-init.d/71_set_public_file_permissions.sh /scripts/pre-init.cron.d/
 ln -s /scripts/pre-init.d/72_secure_config_sync_dir.sh /scripts/pre-init.cron.d/
+ln -s /scripts/pre-init.d/72_secure_filesystems.sh /scripts/pre-init.cron.d/
 
 # Run cron.
 ln -s /scripts/drupalCron.sh /scripts/pre-init.cron.d/95_drupal_cron.sh
