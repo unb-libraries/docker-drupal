@@ -25,9 +25,9 @@ fi
 # Write final output.
 if [ "$NEEDS_COMBINE" = "TRUE" ]; then
   echo "Combining overrides of services YML files..."
-  COMBINE_COMMAND="/usr/bin/yq m -x $FILES_TO_COMBINE"
-  echo "Executing [$COMBINE_COMMAND]"
-  $COMBINE_COMMAND > "$OUTPUT_SERVICES_FILE"
+  COMBINE_COMMAND='/usr/bin/yq ea '\''. as $item ireduce ({}; . * $item )'\'''
+  echo "Executing [$COMBINE_COMMAND $FILES_TO_COMBINE]"
+  $COMBINE_COMMAND $FILES_TO_COMBINE > "$OUTPUT_SERVICES_FILE"
 else
   if [ ! -f "$OUTPUT_SERVICES_FILE" ]; then
     cp "$DEFAULT_SERVICES_FILE" "$OUTPUT_SERVICES_FILE"

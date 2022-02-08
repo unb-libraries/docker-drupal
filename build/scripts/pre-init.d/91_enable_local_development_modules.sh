@@ -3,10 +3,10 @@ if [ "$DEPLOY_ENV" = "local" ]; then
   echo "Local environment detected, installing and enabling development modules..."
 
   # Set dev container settings in scaffold files.
-  yq w -i "$DRUPAL_ROOT/core/assets/scaffold/files/development.services.yml" parameters.[http.response.debug_cacheability_headers] true
-  yq w -i "$DRUPAL_ROOT/core/assets/scaffold/files/development.services.yml" parameters.[twig.config].auto_reload true
-  yq w -i "$DRUPAL_ROOT/core/assets/scaffold/files/development.services.yml" parameters.[twig.config].debug true
-  yq w -i "$DRUPAL_ROOT/core/assets/scaffold/files/development.services.yml" parameters.[twig.config].cache false
+  yq -i 'parameters.[http.response.debug_cacheability_headers] = "true"' "$DRUPAL_ROOT/core/assets/scaffold/files/development.services.yml"
+  yq -i 'parameters.[twig.config].auto_reload = "true"' "$DRUPAL_ROOT/core/assets/scaffold/files/development.services.yml"
+  yq -i 'parameters.[twig.config].debug = "true"' "$DRUPAL_ROOT/core/assets/scaffold/files/development.services.yml"
+  yq -i 'parameters.[twig.config].cache = "false"' "$DRUPAL_ROOT/core/assets/scaffold/files/development.services.yml"
   cp "$DRUPAL_ROOT/core/assets/scaffold/files/development.services.yml" "$DRUPAL_ROOT/sites/development.services.yml"
 
   # Install composer dev packages.
