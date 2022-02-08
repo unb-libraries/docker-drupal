@@ -1,4 +1,4 @@
-FROM ghcr.io/unb-libraries/nginx-php:1.x-7.x-composer2
+FROM ghcr.io/unb-libraries/nginx-php:2.x
 MAINTAINER UNB Libraries <libsupport@unb.ca>
 
 ENV COMPOSER_INSTALL "composer install --prefer-dist --no-interaction --no-progress"
@@ -43,11 +43,11 @@ RUN apk --no-cache add \
     redis \
     rsync \
     sudo \
-    unzip && \
+    unzip \
+    yq && \
   ${RSYNC_MOVE} /build/scripts/ /scripts/ && \
   ${RSYNC_MOVE} /build/data/htaccess/ /security_htaccess && \
   /scripts/setupDoasConf.sh && \
-  apk --no-cache add yq --repository=http://dl-cdn.alpinelinux.org/alpine/v3.13/community/ && \
   /scripts/linkDrupalCronEntryInit.sh && \
   rm -rf ~/.composer/cache
 
