@@ -7,7 +7,7 @@ ENV PHP_FPM_ERROR_LOG /proc/self/fd/2
 ENV RSYNC_FLAGS --quiet
 
 COPY ./build /build
-RUN ${RSYNC_MOVE} /build/scripts/ /scripts/&& \
+RUN $RSYNC_MOVE /build/scripts/ /scripts/&& \
   /scripts/linkDrupalCronEntryInitUnb.sh
 
 ARG BUILD_DATE

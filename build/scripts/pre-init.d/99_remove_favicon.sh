@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-rm -rf "${DRUPAL_ROOT}/favicon.ico"
+rm -rf "$DRUPAL_ROOT/favicon.ico"

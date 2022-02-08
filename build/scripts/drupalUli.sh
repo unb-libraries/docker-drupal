@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 # Get ULI Output.
 if [ -z "$1" ]; then
-  ULI_OUTPUT=$(${DRUSH} --no-browser user:login)
+  ULI_OUTPUT=$($DRUSH --no-browser user:login)
 else
-  ULI_OUTPUT=$(${DRUSH} --yes --no-browser user:login --name="$1")
+  ULI_OUTPUT=$($DRUSH --yes --no-browser user:login --name="$1")
 fi
 
 # Substitute in environment URIs, otherwise output link with 'default'.

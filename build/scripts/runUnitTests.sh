@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 set -e
 
-if [ ! -e "${DRUPAL_ROOT}/vendor/bin/phpunit" ]; then
+if [ ! -e "$DRUPAL_ROOT/vendor/bin/phpunit" ]; then
   echo "Installing PHPUnit testing tools..."
-  cd ${DRUPAL_ROOT}
-  ${COMPOSER_INSTALL}
+  cd $DRUPAL_ROOT
+  $COMPOSER_INSTALL
 fi
 
 # PHPUnit Tests

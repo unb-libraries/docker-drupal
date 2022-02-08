@@ -6,4 +6,4 @@ rm -rf /build
 mkdir -p /build
 
 # Remove upstream tests.
-rm -rf ${DRUPAL_TESTING_ROOT}
+rm -rf "$DRUPAL_TESTING_ROOT"
