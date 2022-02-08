@@ -2,12 +2,12 @@
 # Check if MySQL vars are set and then test the connection.
 
 # Check if MySQL env vars exist.
-if [[ -z "$MYSQL_HOSTNAME" ]]; then
+if [ -z "$MYSQL_HOSTNAME" ]; then
  echo 'A MySQL server IP address has not been set in $MYSQL_HOSTNAME'
  exit 1
 fi
 
-if [[ -z "$MYSQL_PORT" ]]; then
+if [ -z "$MYSQL_PORT" ]; then
  echo 'A MySQL server port has not been set in $MYSQL_PORT'
  exit 1
 fi

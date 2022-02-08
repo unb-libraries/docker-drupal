@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 # Check if this is a new deployment. If so, install.
-if [[ ! -f /tmp/DRUPAL_DB_LIVE && ! -f /tmp/DRUPAL_FILES_LIVE ]];
+if [ ! -f /tmp/DRUPAL_DB_LIVE && ! -f /tmp/DRUPAL_FILES_LIVE ];
 then
   # Deploy the sites/default tree likely removed by the volume.
   rsync -a /tmp/default /app/html/sites/

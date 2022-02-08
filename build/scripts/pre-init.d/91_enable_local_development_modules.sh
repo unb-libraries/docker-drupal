@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-if [ "$DEPLOY_ENV" == "local" ]; then
+if [ "$DEPLOY_ENV" = "local" ]; then
   echo "Local environment detected, installing and enabling development modules..."
 
   # Set dev container settings in scaffold files.
