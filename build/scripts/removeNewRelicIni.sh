@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-rm -f /etc/php7/conf.d/newrelic.ini
+rm -f "$PHP_CONFD_DIR/newrelic.ini"
