@@ -3,18 +3,18 @@ MAINTAINER UNB Libraries <libsupport@unb.ca>
 
 ENV COMPOSER_INSTALL "composer install --prefer-dist --no-interaction --no-progress"
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
-ENV DRUPAL_CONFIGURATION_DIR ${APP_ROOT}/configuration
+ENV DRUPAL_CONFIGURATION_DIR $APP_ROOT/configuration
 ENV DRUPAL_ROOT $APP_WEBROOT
 ENV DRUPAL_SITE_ID defaultd
 ENV DRUPAL_SITE_UUID FALSE
-ENV DRUPAL_TESTING_ROOT ${APP_ROOT}/tests
+ENV DRUPAL_TESTING_ROOT $APP_ROOT/tests
 ENV DRUPAL_CHOWN_PUBLIC_FILES_STARTUP FALSE
 ENV DRUPAL_UNIT_TEST_MODULES ''
-ENV DRUSH "doas -u ${NGINX_RUN_USER} -- /app/html/vendor/bin/drush --root=${DRUPAL_ROOT} --uri=default --yes"
+ENV DRUSH "doas -u $NGINX_RUN_USER -- /app/html/vendor/bin/drush --root=$DRUPAL_ROOT --uri=default --yes"
 ENV DRUSH_PHP /usr/bin/php
 ENV RSYNC_FLAGS --quiet
-ENV RSYNC_COPY "rsync -a --inplace --no-compress ${RSYNC_FLAGS}"
-ENV RSYNC_MOVE "${RSYNC_COPY} --remove-source-files"
+ENV RSYNC_COPY "rsync -a --inplace --no-compress $RSYNC_FLAGS"
+ENV RSYNC_MOVE "$RSYNC_COPY --remove-source-files"
 ENV TERM dumb
 
 # Install required packages, libraries.
@@ -45,8 +45,8 @@ RUN apk --no-cache add \
     sudo \
     unzip \
     yq && \
-  ${RSYNC_MOVE} /build/scripts/ /scripts/ && \
-  ${RSYNC_MOVE} /build/data/htaccess/ /security_htaccess && \
+  $RSYNC_MOVE /build/scripts/ /scripts/ && \
+  $RSYNC_MOVE /build/data/htaccess/ /security_htaccess && \
   /scripts/setupDoasConf.sh && \
   /scripts/linkDrupalCronEntryInit.sh && \
   rm -rf ~/.composer/cache

@@ -10,4 +10,4 @@ while getopts ":s" OPT; do
   esac
 done
 
-${DRUSH} scr /scripts/getDrupalUpdates.php $DRUSH_ARGS
+$DRUSH scr /scripts/getDrupalUpdates.php $DRUSH_ARGS

@@ -16,15 +16,15 @@ fi
 
 ENTITY_CONF_FILE="${DRUPAL_CONFIGURATION_DIR}/${SET_CONF_ENTITY}.yml"
 
-if [ -f "${ENTITY_CONF_FILE}" ]; then
-  CURRENT_KEY_VALUE=$(cat ${ENTITY_CONF_FILE} | grep ${SET_CONF_KEY} | awk '{print $2}')
+if [ -f "$ENTITY_CONF_FILE" ]; then
+  CURRENT_KEY_VALUE=$(cat "$ENTITY_CONF_FILE" | grep "$SET_CONF_KEY" | awk '{print $2}')
   if [ ! -z "$CURRENT_KEY_VALUE" ]; then
     echo "Setting ${SET_CONF_ENTITY}:${SET_CONF_KEY} to ${CURRENT_KEY_VALUE}"
-    CUR_CONFIG_VALUE=$(drush cget --format=list ${SET_CONF_ENTITY} ${SET_CONF_KEY})
+    CUR_CONFIG_VALUE=$(drush cget --format=list "$SET_CONF_ENTITY" "$SET_CONF_KEY")
     if [ ! "$CUR_CONFIG_VALUE" = "$CURRENT_KEY_VALUE" ]; then
-      ${DRUSH} config-set ${SET_CONF_ENTITY} ${SET_CONF_KEY} ${CURRENT_KEY_VALUE}
+      ${DRUSH} config-set "$SET_CONF_ENTITY" "$SET_CONF_KEY" "$CURRENT_KEY_VALUE"
     else
-      echo "Skipping ${SET_CONF_ENTITY} ${SET_CONF_KEY} update due to identical stored value"
+      echo "Skipping $SET_CONF_ENTITY $SET_CONF_KEY update due to identical stored value"
     fi
   fi
 fi
