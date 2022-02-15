@@ -1,7 +1,6 @@
 FROM ghcr.io/unb-libraries/nginx-php:2.x
 MAINTAINER UNB Libraries <libsupport@unb.ca>
 
-ENV COMPOSER_INSTALL "composer install --prefer-dist --no-interaction --no-progress"
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
 ENV DRUPAL_CONFIGURATION_DIR $APP_ROOT/configuration
 ENV DRUPAL_ROOT $APP_WEBROOT
@@ -12,22 +11,16 @@ ENV DRUPAL_CHOWN_PUBLIC_FILES_STARTUP FALSE
 ENV DRUPAL_UNIT_TEST_MODULES ''
 ENV DRUSH "doas -u $NGINX_RUN_USER -- /app/html/vendor/bin/drush --root=$DRUPAL_ROOT --uri=default --yes"
 ENV DRUSH_PHP /usr/bin/php
-ENV RSYNC_FLAGS --quiet
-ENV RSYNC_COPY "rsync -a --inplace --no-compress $RSYNC_FLAGS"
-ENV RSYNC_MOVE "$RSYNC_COPY --remove-source-files"
-ENV TERM dumb
 
 # Install required packages, libraries.
 COPY ./build /build
 RUN apk --no-cache add \
     doas \
-    git \
     mysql-client \
     php7-ctype \
     php7-dom \
     php7-dom \
     php7-fileinfo \
-    php7-gd \
     php7-mbstring \
     php7-mysqlnd \
     php7-opcache \
@@ -38,12 +31,8 @@ RUN apk --no-cache add \
     php7-session \
     php7-simplexml \
     php7-tokenizer \
-    php7-xml \
     php7-xmlwriter \
     redis \
-    rsync \
-    sudo \
-    unzip \
     yq && \
   $RSYNC_MOVE /build/scripts/ /scripts/ && \
   $RSYNC_MOVE /build/data/htaccess/ /security_htaccess && \
