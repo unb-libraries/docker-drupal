@@ -23,4 +23,5 @@ ln -s /scripts/drupalCron.sh /scripts/pre-init.cron.d/95_drupal_cron.sh
 # List queues with : drush queue-list
 
 # Report run time.
+ln -s /scripts/pre-init.d/99_z_log_startup_time.sh /scripts/pre-init.cron.d/
 ln -s /scripts/pre-init.d/99_z_report_completion.sh /scripts/pre-init.cron.d/
