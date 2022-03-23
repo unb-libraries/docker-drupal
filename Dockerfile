@@ -41,6 +41,7 @@ RUN apk --no-cache add \
     php7-dom \
     php7-fileinfo \
     php7-gd \
+    php7-intl \
     php7-mbstring \
     php7-mysqlnd \
     php7-opcache \
