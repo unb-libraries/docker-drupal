@@ -20,6 +20,7 @@ RUN apk --no-cache add \
     php8-ctype \
     php8-dom \
     php8-fileinfo \
+    php8-intl \
     php8-mbstring \
     php8-mysqlnd \
     php8-opcache \
