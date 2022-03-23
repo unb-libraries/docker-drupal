@@ -5,10 +5,11 @@ A lightweight, extensible Drupal docker image, suitable for a development-to-pro
 This image offers little benefit on its own, but shines when serving as a base image for an application. An example of how we extend this image for [https://lib.unb.ca](https://lib.unb.ca) should provide a reference for you to get started.
 
 ## Branches/Tags
-The only currently maintained image/tag is **ghcr.io/unb-libraries/drupal:9.x-2.x**. Previous branches are not under active development, and are only maintained for legacy reasons.
+The only currently maintained image/tag is **ghcr.io/unb-libraries/drupal:9.x-3.x**. Previous branches are not under active development, and are only maintained for legacy reasons.
 
 |                 Tag                  | Drupal | PHP   |
 |:------------------------------------:|--------|-------|
+| ghcr.io/unb-libraries/drupal:9.x-3.x |   9.x  | 8.0.x |
 | ghcr.io/unb-libraries/drupal:9.x-2.x |   9.x  | 7.4.x |
 | ghcr.io/unb-libraries/drupal:8.x-3.x |   8.x  | 7.4.x |
 
