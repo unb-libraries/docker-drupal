@@ -1,5 +1,5 @@
 # unb-libraries/docker-drupal  [![](https://github.com/unb-libraries/docker-drupal/workflows/build-test-deploy/badge.svg?branch=`9.x-1.x`)](https://github.com/unb-libraries/docker-drupal/actions?query=workflow%3Abuild-test-deploy) [![GitHub license](https://img.shields.io/github/license/unb-libraries/docker-drupal)](https://github.com/unb-libraries/lib.unb.ca/blob/prod/LICENSE) ![GitHub repo size](https://img.shields.io/github/repo-size/unb-libraries/docker-drupal?label=lean%20repo%20size)
-A lightweight extensible Drupal docker image, suitable for a development-to-production workflow.
+A lightweight, extensible Drupal docker image, suitable for a development-to-production workflow.
 
 ## Usage
 This image offers little benefit on its own, but shines when serving as a base image for an application. An example of how we extend this image for [https://lib.unb.ca](https://lib.unb.ca) should provide a reference for you to get started.
