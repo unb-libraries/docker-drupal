@@ -12,5 +12,5 @@ then
 
   # Perform a drush site-install.
   cd "$DRUPAL_ROOT"
-  /usr/bin/env PHP_OPTIONS="-d sendmail_path=`which true`" "$DRUSH" site-install minimal --verbose --account-name="$DRUPAL_ADMIN_ACCOUNT_NAME" --account-pass="$DRUPAL_ADMIN_ACCOUNT_PASS" --db-url="mysqli://${DRUPAL_SITE_ID}_user:$DRUPAL_DB_PASSWORD@$MYSQL_HOSTNAME:$MYSQL_PORT/${DRUPAL_SITE_ID}_db"
+  /usr/bin/env PHP_OPTIONS="-d sendmail_path=`which true`" "$DRUSH" site:install minimal --verbose --account-name="$DRUPAL_ADMIN_ACCOUNT_NAME" --account-pass="$DRUPAL_ADMIN_ACCOUNT_PASS" --db-url="mysqli://${DRUPAL_SITE_ID}_user:$DRUPAL_DB_PASSWORD@$MYSQL_HOSTNAME:$MYSQL_PORT/${DRUPAL_SITE_ID}_db"
 fi
