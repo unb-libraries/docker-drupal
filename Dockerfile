@@ -26,6 +26,7 @@ RUN apk --no-cache add \
     php7-mysqlnd \
     php7-opcache \
     php7-pcntl \
+    php7-pecl-uploadprogress \
     php7-pdo \
     php7-pdo_mysql \
     php7-posix \
