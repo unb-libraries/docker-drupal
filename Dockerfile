@@ -17,22 +17,22 @@ COPY ./build /build
 RUN apk --no-cache add \
     doas \
     mysql-client \
-    php8-ctype \
-    php8-dom \
-    php8-fileinfo \
-    php8-intl \
-    php8-mbstring \
-    php8-mysqlnd \
-    php8-opcache \
-    php8-pcntl \
-    php8-pecl-uploadprogress \
-    php8-pdo \
-    php8-pdo_mysql \
-    php8-posix \
-    php8-session \
-    php8-simplexml \
-    php8-tokenizer \
-    php8-xmlwriter \
+    php81-ctype \
+    php81-dom \
+    php81-fileinfo \
+    php81-intl \
+    php81-mbstring \
+    php81-mysqlnd \
+    php81-opcache \
+    php81-pcntl \
+    php81-pecl-uploadprogress \
+    php81-pdo \
+    php81-pdo_mysql \
+    php81-posix \
+    php81-session \
+    php81-simplexml \
+    php81-tokenizer \
+    php81-xmlwriter \
     redis \
     yq && \
   $RSYNC_MOVE /build/scripts/ /scripts/ && \
@@ -44,7 +44,8 @@ RUN apk --no-cache add \
 # Volumes
 VOLUME /app/html/sites/default
 
-LABEL ca.unb.lib.generator="drupal9" \
+LABEL ca.unb.lib.generator="drupal" \
+  ca.unb.lib.generator.version="9" \
   org.label-schema.build-date=$BUILD_DATE \
   org.label-schema.description="docker-drupal is the base drupal image at UNB Libraries." \
   org.label-schema.name="drupal" \
