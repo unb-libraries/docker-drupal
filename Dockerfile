@@ -13,5 +13,5 @@ ARG BUILD_DATE
 ARG VCS_REF
 ARG VERSION
 LABEL org.label-schema.build-date=$BUILD_DATE \
-  org.label-schema.vcs-ref="9.x-2.x-unblib" \
+  org.label-schema.vcs-ref="9.x-3.x-unblib" \
   org.label-schema.version=$VERSION
