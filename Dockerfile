@@ -1,4 +1,4 @@
-FROM ghcr.io/unb-libraries/nginx-php:2.x
+FROM ghcr.io/unb-libraries/nginx-php:3.x
 MAINTAINER UNB Libraries <libsupport@unb.ca>
 
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
@@ -17,23 +17,23 @@ COPY ./build /build
 RUN apk --no-cache add \
     doas \
     mysql-client \
-    php7-ctype \
-    php7-dom \
-    php7-dom \
-    php7-fileinfo \
-    php7-intl \
-    php7-mbstring \
-    php7-mysqlnd \
-    php7-opcache \
-    php7-pcntl \
-    php7-pecl-uploadprogress \
-    php7-pdo \
-    php7-pdo_mysql \
-    php7-posix \
-    php7-session \
-    php7-simplexml \
-    php7-tokenizer \
-    php7-xmlwriter \
+    php-ctype \
+    php-dom \
+    php-dom \
+    php-fileinfo \
+    php-intl \
+    php-mbstring \
+    php-mysqlnd \
+    php-opcache \
+    php-pcntl \
+    php81-pecl-uploadprogress \
+    php-pdo \
+    php-pdo_mysql \
+    php-posix \
+    php-session \
+    php-simplexml \
+    php-tokenizer \
+    php-xmlwriter \
     redis \
     yq && \
   $RSYNC_MOVE /build/scripts/ /scripts/ && \
