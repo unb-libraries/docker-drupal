@@ -6,8 +6,10 @@ then
   rsync -a /tmp/default "$DRUPAL_ROOT/sites/"
   chown -R "$NGINX_RUN_USER":"$NGINX_RUN_GROUP" "$DRUPAL_ROOT/sites/default"
 
-  # Creates the database.
-  mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -h "$MYSQL_HOSTNAME" -P "$MYSQL_PORT" -e "DROP DATABASE IF EXISTS ${DRUPAL_SITE_ID}_db; CREATE DATABASE ${DRUPAL_SITE_ID}_db CHARACTER SET utf8 COLLATE utf8_general_ci; CREATE USER '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; GRANT ALL PRIVILEGES ON ${DRUPAL_SITE_ID}_db.* TO '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; FLUSH PRIVILEGES;"
+  # Local Dockworker installs do not need the DB created, as the env variables do so in MySQL.
+  if [ "$DEPLOY_ENV" != "local" ]; then
+    mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -h "$MYSQL_HOSTNAME" -P "$MYSQL_PORT" -e "DROP DATABASE IF EXISTS ${DRUPAL_SITE_ID}_db; CREATE DATABASE ${DRUPAL_SITE_ID}_db CHARACTER SET utf8 COLLATE utf8_general_ci; CREATE USER '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; GRANT ALL PRIVILEGES ON ${DRUPAL_SITE_ID}_db.* TO '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; FLUSH PRIVILEGES;"
+  fi
 
   # Creates the database structure for an empty site via Drush.
   cd "$DRUPAL_ROOT" || exit
