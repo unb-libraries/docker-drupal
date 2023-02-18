@@ -2,7 +2,7 @@
 if [ ! -f /tmp/DRUPAL_DB_LIVE ] && [ ! -f /tmp/DRUPAL_FILES_LIVE ];
 then
   # Enables the default modules.
-  $DRUSH en redis
+  $DRUSH en redis menu_ui toolbar
 
   # Sets the default themes.
   $DRUSH theme:install claro olivero
