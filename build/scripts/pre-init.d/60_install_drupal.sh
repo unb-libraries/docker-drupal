@@ -16,6 +16,6 @@ then
   chmod +w "$DRUPAL_ROOT/sites/default/settings.php"
   PHP_SET_SENDMAIL_NOWHERE="/usr/bin/env PHP_OPTIONS=\"-d sendmail_path=`which true`\""
   DRUPAL_DB_URI="mysql://${DRUPAL_SITE_ID}_user:$DRUPAL_DB_PASSWORD@$MYSQL_HOSTNAME:$MYSQL_PORT/${DRUPAL_SITE_ID}_db"
-  $PHP_SET_SENDMAIL_NOWHERE $DRUSH site-install minimal --verbose --account-name="$DRUPAL_ADMIN_ACCOUNT_NAME" --account-pass="$DRUPAL_ADMIN_ACCOUNT_PASS" --db-url="$DRUPAL_DB_URI"
+  $PHP_SET_SENDMAIL_NOWHERE $DRUSH site-install minimal --verbose --account-name="$DRUPAL_ADMIN_ACCOUNT_NAME" --account-pass="$DRUPAL_ADMIN_ACCOUNT_PASS" --db-url="$DRUPAL_DB_URI" --site-name="$DRUPAL_SITE_URI"
   chmod -w "$DRUPAL_ROOT/sites/default/settings.php"
 fi
