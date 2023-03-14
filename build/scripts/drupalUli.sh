@@ -3,7 +3,7 @@
 if [ -z "$1" ]; then
   ULI_OUTPUT=$($DRUSH --no-browser user:login)
 else
-  ULI_OUTPUT=$($DRUSH --yes --no-browser user:login --name="$1")
+  ULI_OUTPUT=$($DRUSH --yes --no-browser user:login --uid="$1")
 fi
 
 # Substitute in local URI if it exists. Otherwise, output link with 'default'.
