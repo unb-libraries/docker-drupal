@@ -41,6 +41,7 @@ RUN apk --no-cache add \
   /scripts/setupDoasConf.sh && \
   /scripts/linkDrupalCronEntryInit.sh && \
   rm -rf ~/.composer/cache
+WORKDIR /app/html
 
 # Volumes
 VOLUME /app/html/sites/default
