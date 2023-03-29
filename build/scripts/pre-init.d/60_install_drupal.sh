@@ -13,7 +13,12 @@ then
 
   # Creates the database structure for an empty site via Drush.
   cd "$DRUPAL_ROOT" || exit
-  chmod +w "$DRUPAL_ROOT/sites/default/settings.php"
+
+  SETTINGS_FILE="$DRUPAL_ROOT/sites/default/settings.php"
+  if [ -f "$SETTINGS_FILE" ]; then
+      chmod +w "$SETTINGS_FILE"
+  fi
+
   PHP_SET_SENDMAIL_NOWHERE="/usr/bin/env PHP_OPTIONS=\"-d sendmail_path=`which true`\""
   DRUPAL_DB_URI="mysql://${DRUPAL_SITE_ID}_user:$DRUPAL_DB_PASSWORD@$MYSQL_HOSTNAME:$MYSQL_PORT/${DRUPAL_SITE_ID}_db"
   $PHP_SET_SENDMAIL_NOWHERE $DRUSH site-install minimal --verbose --account-name="$DRUPAL_ADMIN_ACCOUNT_NAME" --account-pass="$DRUPAL_ADMIN_ACCOUNT_PASS" --db-url="$DRUPAL_DB_URI" --site-name="$DRUPAL_SITE_URI"
