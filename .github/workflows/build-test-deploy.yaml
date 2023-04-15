@@ -26,11 +26,11 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always()
 
-  set-deployment-image-tag:
-    name: Set deployment image tag
+  set-deployment-image-name:
+    name: Set deployment image name
     runs-on: ubuntu-latest
     steps:
-      - uses: FranzDiebold/github-env-vars-action@v2.1.0
+      - uses: FranzDiebold/github-env-vars-action@v2
       -
         name: Get current time
         uses: 1466587594/get-current-time@v2
@@ -38,29 +38,25 @@ jobs:
         with:
           format: YYYYMMDDHHMMSS
       -
-        name: Set Tag
+        name: Set Name
+        run: echo "BUILD_IMAGE_NAME=drupal" >> $GITHUB_ENV
+      -
+        name: Set Full Name
+        run: echo "BUILD_IMAGE_FULL_NAME=ghcr.io/$CI_REPOSITORY_OWNER/$BUILD_IMAGE_NAME" >> $GITHUB_ENV
+      - name: Set SHA Image Tag
         env:
           TIMESTAMP: "${{ steps.current-time.outputs.formattedTime }}"
-        run: echo "BUILD_IMAGE_TAG=$CI_SHA_SHORT-$TIMESTAMP" > /tmp/image_tag.env
+        run: echo "SHA_IMAGE_TAG=$CI_SHA_SHORT-$TIMESTAMP" > /tmp/image_name.env
       -
-        name: Display Tag
-        run: cat /tmp/image_tag.env
+        name: Set SHA Image Name
+        env:
+          TIMESTAMP: "${{ steps.current-time.outputs.formattedTime }}"
+        run: echo "SHA_IMAGE_NAME=$BUILD_IMAGE_FULL_NAME:$CI_SHA_SHORT-$TIMESTAMP" >> /tmp/image_name.env
       -
-        uses: actions/upload-artifact@v2
-        with:
-          name: build-image-tag
-          path: /tmp/image_tag.env
-
-  set-deployment-image-name:
-    name: Set deployment image name
-    runs-on: ubuntu-latest
-    steps:
-      - uses: FranzDiebold/github-env-vars-action@v2.1.0
+        name: Set Branch Image Name
+        run: echo "BRANCH_IMAGE_NAME=$BUILD_IMAGE_FULL_NAME:$CI_REF_NAME" >> /tmp/image_name.env
       -
-        name: Set Name
-        run: echo "BUILD_IMAGE_NAME=drupal" > /tmp/image_name.env
-      -
-        name: Display Tag
+        name: Display Names
         run: cat /tmp/image_name.env
       -
         uses: actions/upload-artifact@v2
@@ -69,45 +65,30 @@ jobs:
           path: /tmp/image_name.env
 
   build-image:
-    name: Build Image
-    needs: [set-deployment-image-tag]
+    name: Build Image And Push
+    needs: [set-deployment-image-name]
     runs-on: ubuntu-latest
     steps:
-      - uses: FranzDiebold/github-env-vars-action@v2.1.0
-      - uses: actions/checkout@v2
+      - uses: FranzDiebold/github-env-vars-action@v2
+      - uses: actions/checkout@v3
       -
-        name: Retrieve Image Tag
-        uses: actions/download-artifact@v2
-        with:
-          name: build-image-tag
-          path: /tmp
-      -
-        name: Set Image Tag
-        run: cat /tmp/image_tag.env >> $GITHUB_ENV
-      -
-        name: Retrieve Image Name
-        uses: actions/download-artifact@v2
+        name: Retrieve Image Names
+        uses: actions/download-artifact@v3
         with:
           name: build-image-name
           path: /tmp
       -
-        name: Set Image Name
+        name: Set Image Names
         run: cat /tmp/image_name.env >> $GITHUB_ENV
       -
-        name: Get current time
-        uses: gerred/actions/current-time@master
-        id: current-time
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: 'arm64'
       -
-        name: Build Docker Image
-        env:
-          TIMESTAMP: "${{ steps.current-time.outputs.time }}"
-        run: |
-          docker build \
-            --build-arg BUILD_DATE=$TIMESTAMP \
-            --build-arg VCS_REF=$CI_REF_NAME \
-            --build-arg VERSION=$BUILD_IMAGE_TAG \
-            --tag "ghcr.io/$CI_REPOSITORY_OWNER/$BUILD_IMAGE_NAME:$BUILD_IMAGE_TAG" \
-            .
+        name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
       -
         name: Login to GHCR
         run: echo $GH_CONTAINER_REGISTRY_TOKEN | docker login ghcr.io -u $GH_CONTAINER_REGISTRY_USER --password-stdin
@@ -115,14 +96,19 @@ jobs:
           GH_CONTAINER_REGISTRY_TOKEN: ${{secrets.GH_CONTAINER_REGISTRY_TOKEN}}
           GH_CONTAINER_REGISTRY_USER: ${{secrets.GH_CONTAINER_REGISTRY_USER}}
       -
-        name: Push Image to GHCR
-        run: docker push "ghcr.io/$CI_REPOSITORY_OWNER/$BUILD_IMAGE_NAME:$BUILD_IMAGE_TAG"
-      -
-        name: Update Branch Tag
-        run: docker image tag "ghcr.io/$CI_REPOSITORY_OWNER/$BUILD_IMAGE_NAME:$BUILD_IMAGE_TAG" "ghcr.io/$CI_REPOSITORY_OWNER/$BUILD_IMAGE_NAME:$CI_REF_NAME"
-      -
-        name: Push Branch Tag
-        run: docker push "ghcr.io/$CI_REPOSITORY_OWNER/$BUILD_IMAGE_NAME:$CI_REF_NAME"
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          pull: true
+          push: true
+          platforms: linux/amd64,linux/arm64/v8
+          context: .
+          file: ./Dockerfile
+          tags: ${{ env.SHA_IMAGE_NAME }},${{ env.BRANCH_IMAGE_NAME }}
+          build-args: |
+            BUILD_DATE=${{ github.event.repository.updated_at }}
+            VCS_REF=${{ env.CI_REF_NAME }}
+            VERSION=${{ env.SHA_IMAGE_TAG }}
 
   slack-results:
     name: Notify Slack of Build Results
