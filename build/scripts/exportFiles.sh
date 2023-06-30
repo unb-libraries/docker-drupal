@@ -9,6 +9,6 @@ fi
 mkdir -p "$1"
 
 OUTPUT_FILE="$1/files.tar.gz"
-/scripts/clearDrupalCache.sh 2>&1 /dev/null || exit 1;
-tar -cvpzf "$1/files.tar.gz" --exclude=*.css --exclude=*.css.gz --exclude=*.js --exclude=*.js.gz --exclude=app/html/sites/default/files/php --exclude=app/html/sites/default/files/styles /app/html/sites/default/files  2>&1 /dev/null || exit 1;
+/scripts/clearDrupalCache.sh > /dev/null 2>&1
+tar -cvpzf "$1/files.tar.gz" --exclude=*.css --exclude=*.css.gz --exclude=*.js --exclude=*.js.gz --exclude=app/html/sites/default/files/php --exclude=app/html/sites/default/files/styles /app/html/sites/default/files > /dev/null 2>&1
 echo "$OUTPUT_FILE"
