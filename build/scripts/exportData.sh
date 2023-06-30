@@ -9,5 +9,5 @@ rm -rf "$EXPORT_PATH"
 mkdir -p "$EXPORT_PATH"
 
 # Export Content
-/scripts/exportContent.sh "$EXPORT_PATH"
-/scripts/exportFiles.sh "$EXPORT_PATH"
+/scripts/exportContent.sh "$EXPORT_PATH" || exit 1;
+/scripts/exportFiles.sh "$EXPORT_PATH" || exit 1;
