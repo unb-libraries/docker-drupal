@@ -12,9 +12,9 @@ dockworker:
       - nginx
       - php
       - drupal
-  image:
-    name: ghcr.io/unb-libraries/drupal
   workflows:
+    image:
+      name: ghcr.io/unb-libraries/drupal
     vcs:
       type: github
       owner: unb-libraries
