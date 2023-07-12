@@ -1,4 +1,3 @@
 .gitkeep
-.idea
 vendor
-composer.lock
+/composer.lock

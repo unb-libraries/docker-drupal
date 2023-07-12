@@ -1,0 +1,21 @@
+dockworker:
+  version: '6'
+  application:
+    description: A lightweight extensible drupal docker image, suitable for development or production deployments.
+    uri: https://github.com/unb-libraries/docker-drupal
+    identifiers:
+      id: docker-drupal
+      slug: docker-drupal
+      short_slug: basedrupal
+      uuid: 6003
+    topics:
+      - nginx
+      - php
+      - drupal
+  image:
+    name: ghcr.io/unb-libraries/drupal
+  workflows:
+    vcs:
+      type: github
+      owner: unb-libraries
+      name: docker-drupal

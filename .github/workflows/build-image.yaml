@@ -1,0 +1,17 @@
+name: Build ghcr.io/unb-libraries/drupal
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    uses: unb-libraries/dockworker-baseimage/.github/workflows/build-base-image.yaml@6.x
+    with:
+      image-name: ghcr.io/unb-libraries/drupal
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      GH_CONTAINER_REGISTRY_TOKEN: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
+      GH_CONTAINER_REGISTRY_USER: ${{ secrets.GH_CONTAINER_REGISTRY_USER }}
+      
