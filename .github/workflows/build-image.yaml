@@ -10,8 +10,9 @@ jobs:
     uses: unb-libraries/dockworker-baseimage/.github/workflows/build-base-image.yaml@6.x
     with:
       image-name: ghcr.io/unb-libraries/drupal
+      protected-tags: '8.x-3.x,9.x-2.x,9.x-2.x-unblib,10.x-1.x,10.x-1.x-unblib'
     secrets:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       GH_CONTAINER_REGISTRY_TOKEN: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
       GH_CONTAINER_REGISTRY_USER: ${{ secrets.GH_CONTAINER_REGISTRY_USER }}
-      
+
