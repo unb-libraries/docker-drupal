@@ -3,6 +3,7 @@ name: docker-drupal
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 jobs:
   slack-start:
