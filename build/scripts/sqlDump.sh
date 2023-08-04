@@ -6,4 +6,4 @@ if [ $# -ne 1 ];then
   exit 1
 fi
 
-$DRUSH sql-dump --quiet --extra-dump=--no-tablespaces --structure-tables-list="accesslog,batch,cache,cache_*,ctools_css_cache,ctools_object_cache,flood,search_*,history,queue,semaphore,sessions,watchdog" --result-file=$1
+$DRUSH sql-dump --debug --extra-dump=--no-tablespaces --structure-tables-list="accesslog,batch,cache,cache_*,ctools_css_cache,ctools_object_cache,flood,search_*,history,queue,semaphore,sessions,watchdog" --result-file=$1
