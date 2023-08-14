@@ -13,6 +13,8 @@ fi
 /scripts/importContent.sh "$1/db.sql.gz"
 
 # (Optionally) Import Files.
-elif [ -f "$1/files.tar.gz" ] ; then
+if [ -f "$1/files.tar.gz" ] ; then
   /scripts/importFiles.sh "$1/files.tar.gz"
 fi
+
+Echo 'Success!'

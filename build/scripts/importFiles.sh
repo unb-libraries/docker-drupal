@@ -13,6 +13,6 @@ fi
 # Import the filesystem archive to the public filesystem.
 tar -tzf $1 >/dev/null # Check if the archive is valid.
 rm -rf "$DRUPAL_ROOT/sites/default/files/*"
-tar -xzf $1 --directory /
+tar -xzf $1 --directory "$DRUPAL_ROOT/sites/default/files/"
 /scripts/pre-init.d/71_set_public_file_permissions.sh
 /scripts/pre-init.d/72_secure_filesystems.sh
