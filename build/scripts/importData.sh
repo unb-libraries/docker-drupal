@@ -17,4 +17,4 @@ if [ -f "$1/files.tar.gz" ] ; then
   /scripts/importFiles.sh "$1/files.tar.gz"
 fi
 
-Echo 'Success!'
+echo 'Success!'

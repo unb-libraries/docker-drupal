@@ -10,8 +10,9 @@ elif [ ! -f "$1" ] ; then
 fi
 
 # Import the content.
-EXTRACTED_FILE=$(echo $1 | rev | cut -f 2- -d '.' | rev)
-gunzip -c "$1" >/tmp/$EXTRACTED_FILE
+EXTRACTED_PATH=$(echo $1 | rev | cut -f 2- -d '.' | rev)
+EXTRACTED_FILE=$(basename "$EXTRACTED_PATH")
+gunzip -c "$1" > "/tmp/$EXTRACTED_FILE"
 echo "Importing $EXTRACTED_FILE"
 sh -c "$DRUSH sql-cli < /tmp/$EXTRACTED_FILE"
 $DRUSH cr
