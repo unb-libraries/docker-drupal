@@ -11,5 +11,5 @@ mkdir -p "$1"
 OUTPUT_FILE="$1/db.sql"
 /scripts/clearDrupalCache.sh > /dev/null 2>&1
 /scripts/sqlDump.sh "$OUTPUT_FILE"
-gzip "$OUTPUT_FILE"
+gzip -f "$OUTPUT_FILE"
 echo "$OUTPUT_FILE.gz"
