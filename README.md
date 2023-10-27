@@ -1,5 +1,5 @@
-# unb-libraries/docker-drupal:9.x-2.x-unblib [![](https://github.com/unb-libraries/docker-drupal/workflows/build-test-deploy/badge.svg?branch=9.x-2.x-unblib)](https://github.com/unb-libraries/docker-drupal/actions?query=workflow%3Abuild-test-deploy)
-This branch extends unb-libraries/docker-drupal:9.x-2.x with common local modifications for UNB libraries Drupal instances.
+# unb-libraries/docker-drupal:10.x-1.x-unblib [![](https://github.com/unb-libraries/docker-drupal/workflows/build-test-deploy/badge.svg?branch=10.x-1.x-unblib)](https://github.com/unb-libraries/docker-drupal/actions?query=workflow%3Abuild-test-deploy)
+This branch extends unb-libraries/docker-drupal:10.x-1.x with common local modifications for UNB libraries Drupal instances.
 
 ## Usage
 If you're reading this and unsure, this image likely isn't what you're looking for. The base [unb-libraries/drupal image](https://github.com/unb-libraries/docker-drupal) is more generalized.
