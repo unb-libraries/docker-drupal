@@ -1,3 +1,5 @@
 #!/usr/bin/env sh
 /scripts/setSiteUuidFromEnv.sh
-/scripts/setConfigValueFromExistingFiles.sh language.entity.en uuid
+
+# Is this necessary?
+# /scripts/setConfigValueFromExistingFiles.sh language.entity.en uuid
