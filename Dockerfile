@@ -1,6 +1,7 @@
 FROM ghcr.io/unb-libraries/nginx-php:3.x
 MAINTAINER UNB Libraries <libsupport@unb.ca>
 
+ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
 ENV DRUPAL_CONFIGURATION_DIR $APP_ROOT/configuration
 ENV DRUPAL_ROOT $APP_WEBROOT
