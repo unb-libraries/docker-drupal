@@ -1,2 +1,5 @@
 #!/usr/bin/env sh
-exit 0
+rm /scripts/pre-init.cron.d/94_drupal_cron.sh
+/scripts/drupalCronEntry.sh
+
+/scripts/exportData.sh /snapshot
