@@ -1,16 +1,16 @@
 FROM ghcr.io/unb-libraries/nginx-php:2.x
 MAINTAINER UNB Libraries <libsupport@unb.ca>
 
-ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
-ENV DRUPAL_CONFIGURATION_DIR $APP_ROOT/configuration
-ENV DRUPAL_ROOT $APP_WEBROOT
-ENV DRUPAL_SITE_ID defaultd
-ENV DRUPAL_SITE_UUID FALSE
-ENV DRUPAL_TESTING_ROOT $APP_ROOT/tests
-ENV DRUPAL_CHOWN_PUBLIC_FILES_STARTUP FALSE
-ENV DRUPAL_UNIT_TEST_MODULES ''
-ENV DRUSH "doas -u $NGINX_RUN_USER -- /app/html/vendor/bin/drush --root=$DRUPAL_ROOT --uri=default --yes"
-ENV DRUSH_PHP /usr/bin/php
+ENV DRUPAL_ADMIN_ACCOUNT_NAME="admin"
+ENV DRUPAL_CONFIGURATION_DIR="$APP_ROOT/configuration"
+ENV DRUPAL_ROOT="$APP_WEBROOT"
+ENV DRUPAL_SITE_ID="defaultd"
+ENV DRUPAL_SITE_UUID="FALSE"
+ENV DRUPAL_TESTING_ROOT="$APP_ROOT/tests"
+ENV DRUPAL_CHOWN_PUBLIC_FILES_STARTUP="FALSE"
+ENV DRUPAL_UNIT_TEST_MODULES="''"
+ENV DRUSH=""doas -u $NGINX_RUN_USER -- /app/html/vendor/bin/drush --root=$DRUPAL_ROOT --uri=default --yes""
+ENV DRUSH_PHP="/usr/bin/php"
 
 # Install required packages, libraries.
 COPY ./build /build
