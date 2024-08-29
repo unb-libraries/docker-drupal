@@ -1,5 +1,4 @@
 FROM ghcr.io/unb-libraries/nginx-php:3.x
-MAINTAINER UNB Libraries <libsupport@unb.ca>
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
@@ -55,4 +54,5 @@ LABEL ca.unb.lib.generator="drupal9" \
   org.label-schema.vcs-ref=$VCS_REF \
   org.label-schema.vcs-url="https://github.com/unb-libraries/docker-drupal" \
   org.label-schema.version=$VERSION \
+  org.opencontainers.image.authors="UNB Libraries <libsupport@unb.ca>" \
   org.opencontainers.image.source="https://github.com/unb-libraries/docker-drupal"
