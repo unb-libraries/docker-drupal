@@ -1,5 +1,4 @@
 FROM ghcr.io/unb-libraries/drupal:10.x-1.x
-MAINTAINER UNB Libraries <libsupport@unb.ca>
 
 ENV DRUPAL_REDIS_HOSTNAME drupal-redis-lib-unb-ca
 
