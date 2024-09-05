@@ -3,6 +3,7 @@ set -e
 
 # Set-up Composer
 cp /build/composer.json "$DRUPAL_ROOT"
+cp /build/composer.lock "$DRUPAL_ROOT"
 cd "$DRUPAL_ROOT"
 
 # Get latest composer/ScriptHandler.php.
