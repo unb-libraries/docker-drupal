@@ -2,4 +2,4 @@
 rm /scripts/pre-init.cron.d/94_drupal_cron.sh
 /scripts/drupalCronEntry.sh
 
-/scripts/exportData.sh /snapshot
+/scripts/exportData.sh /snapshot "$@"
