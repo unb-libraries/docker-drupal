@@ -46,7 +46,7 @@ jobs:
         name: Display Tag
         run: cat /tmp/image_tag.env
       -
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: build-image-tag
           path: /tmp/image_tag.env
@@ -63,7 +63,7 @@ jobs:
         name: Display Tag
         run: cat /tmp/image_name.env
       -
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: build-image-name
           path: /tmp/image_name.env
@@ -77,7 +77,7 @@ jobs:
       - uses: actions/checkout@v2
       -
         name: Retrieve Image Tag
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-image-tag
           path: /tmp
@@ -86,7 +86,7 @@ jobs:
         run: cat /tmp/image_tag.env >> $GITHUB_ENV
       -
         name: Retrieve Image Name
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-image-name
           path: /tmp
