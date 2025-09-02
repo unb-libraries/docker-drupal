@@ -18,5 +18,5 @@ if [ "$TARGETPLATFORM" = "linux/amd64" ]; then
   rm -f "/opt/newrelic/$NEWRELIC_DOWNLOAD_FILE"
   rm -f /tmp/nrinstall-*
 else
-  echo "New Relic not supported on amd64 architecture. Skipping install..."
+  echo "New Relic not supported on current ($TARGETPLATFORM) architecture. Skipping install..."
 fi
