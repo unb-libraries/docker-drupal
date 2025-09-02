@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -e
 
-if [ "$TARGETPLATFORM" = "linux/amd64" ]; then
+if [ -z "$TARGETPLATFORM" ] || [ "$TARGETPLATFORM" = "linux/amd64" ]; then
   # Get latest download URI.
   NEWRELIC_DOWNLOAD_FILE=$(curl -s https://download.newrelic.com/php_agent/release/ | sed -rn 's/.*(newrelic-php5-[0-9.]+-linux-musl\.tar\.gz).*/\1/p')
   NEWRELIC_DOWNLOAD_URI="https://download.newrelic.com/php_agent/release/$NEWRELIC_DOWNLOAD_FILE"
