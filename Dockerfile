@@ -1,4 +1,4 @@
-FROM ghcr.io/unb-libraries/drupal:10.x-1.x
+FROM ghcr.io/unb-libraries/drupal:11.x-1.x
 
 ENV DRUPAL_REDIS_HOSTNAME=drupal-redis-lib-unb-ca
 ENV ENABLE_NEWRELIC=false
@@ -12,5 +12,5 @@ ARG BUILD_DATE
 ARG VCS_REF
 ARG VERSION
 LABEL org.label-schema.build-date=$BUILD_DATE \
-  org.label-schema.vcs-ref="10.x-1.x-unblib" \
+  org.label-schema.vcs-ref="11.x-1.x-unblib" \
   org.label-schema.version=$VERSION
