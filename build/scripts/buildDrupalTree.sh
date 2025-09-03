@@ -3,7 +3,10 @@ set -e
 
 # Set-up Composer
 cp /build/composer.json "$DRUPAL_ROOT"
-cp /build/composer.lock "$DRUPAL_ROOT"
+# If this is a new site, a lockfile may not exist.
+if [ -f /build/composer.lock ]; then
+  cp /build/composer.lock "$DRUPAL_ROOT"
+fi
 cd "$DRUPAL_ROOT"
 
 # Get latest composer/ScriptHandler.php.
