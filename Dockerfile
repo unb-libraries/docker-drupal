@@ -1,4 +1,4 @@
-FROM ghcr.io/unb-libraries/nginx-php:3.x
+FROM ghcr.io/unb-libraries/nginx-php:3.22.x
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
@@ -26,7 +26,7 @@ RUN apk --no-cache add \
     php-mysqlnd \
     php-opcache \
     php-pcntl \
-    php81-pecl-uploadprogress \
+    php83-pecl-uploadprogress \
     php-pdo \
     php-pdo_mysql \
     php-posix \
@@ -46,7 +46,7 @@ WORKDIR /app/html
 # Volumes
 VOLUME /app/html/sites/default
 
-LABEL ca.unb.lib.generator="drupal9" \
+LABEL ca.unb.lib.generator="drupal11" \
   org.label-schema.build-date=$BUILD_DATE \
   org.label-schema.description="docker-drupal is the base drupal image at UNB Libraries." \
   org.label-schema.name="drupal" \
