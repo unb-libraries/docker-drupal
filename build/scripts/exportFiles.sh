@@ -6,10 +6,16 @@ if [ $# -ne 1 ];then
   exit 1
 fi
 
+echo "Exporting Drupal files..."
+
+echo "(Optionally) Creating files directory..."
 mkdir -p "$1"
 
 OUTPUT_FILE="$1/files.tar.gz"
+echo "Exporting files to $OUTPUT_FILE..."
+echo "Clearing Drupal cache..."
 /scripts/clearDrupalCache.sh > /dev/null 2>&1
 cd "$DRUPAL_ROOT/sites/default/files"
+echo "Creating file archive..."
 tar -cvpzf "$1/files.tar.gz" --exclude=*.css --exclude=*.css.gz --exclude=*.js --exclude=*.js.gz --exclude=./php --exclude=./styles . > /dev/null 2>&1
 echo "$OUTPUT_FILE"
