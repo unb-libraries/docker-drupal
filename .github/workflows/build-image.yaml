@@ -11,7 +11,6 @@ jobs:
     with:
       image-name: ghcr.io/unb-libraries/drupal
       platforms: linux/amd64
-      protected-tags: '8.x-3.x*,9.x-2.x*,10.x-1.x*'
     secrets:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       GH_CONTAINER_REGISTRY_TOKEN: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
