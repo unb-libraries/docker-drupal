@@ -7,8 +7,14 @@ then
   chown -R "$NGINX_RUN_USER":"$NGINX_RUN_GROUP" /app/html/sites/default
   chmod +w /app/html/sites/default/settings.php
 
-  # Create the database.
-  mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -h "$MYSQL_HOSTNAME" -P "$MYSQL_PORT" -e "DROP DATABASE IF EXISTS ${DRUPAL_SITE_ID}_db; CREATE DATABASE ${DRUPAL_SITE_ID}_db CHARACTER SET utf8 COLLATE utf8_general_ci; CREATE USER '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; GRANT ALL PRIVILEGES ON ${DRUPAL_SITE_ID}_db.* TO '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; FLUSH PRIVILEGES;"
+  # If MYSQL_ROOT_PASSWORD is specified, we can create the database/user. This is mainly for local.
+  # In production, these should be created externally and not provided!
+  if [ -n "$MYSQL_ROOT_PASSWORD" ]; then
+    echo "Creating Drupal database and user..."
+    mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -h "$MYSQL_HOSTNAME" -P "$MYSQL_PORT" -e "DROP DATABASE IF EXISTS ${DRUPAL_SITE_ID}_db; CREATE DATABASE ${DRUPAL_SITE_ID}_db CHARACTER SET utf8 COLLATE utf8_general_ci; CREATE USER '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; GRANT ALL PRIVILEGES ON ${DRUPAL_SITE_ID}_db.* TO '${DRUPAL_SITE_ID}_user'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; FLUSH PRIVILEGES;"
+  else
+    echo "MYSQL_ROOT_PASSWORD not specified, skipping database/user creation."
+  fi
 
   # Perform a drush site-install.
   cd "$DRUPAL_ROOT"
