@@ -19,9 +19,11 @@ else
   fi
 fi
 
+
 # Determine if the site was previously built by checking for both .htaccess and settings.php in the public file dir.
 if [ -f "$DRUPAL_ROOT/sites/default/files/.htaccess" ] && [ -f "$DRUPAL_ROOT/sites/default/files/settings.php" ]; then
   touch /tmp/DRUPAL_FILES_LIVE
   echo "Triage : Found Drupal Filesystem and settings.php."
+else
+  echo "Triage : Filesystem and/or settings.php not found."
 fi
-
