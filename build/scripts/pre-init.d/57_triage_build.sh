@@ -5,12 +5,15 @@
 rm -rf /tmp/DRUPAL_DB_LIVE
 rm -rf /tmp/DRUPAL_FILES_LIVE
 
-# Test DB connection
-CONNECTION_TEST=$($DRUSH sql-query "SELECT 1;" --skip-column-names 2>&1)
+
+# Test DB connection using environment variables, do NOT use Drush as we haven't bootstrapped Drupal.
+CONNECTION_TEST=$(mysql --host="$DRUPAL_DB_HOSTNAME" --port="$DRUPAL_DB_PORT" --user="$DRUPAL_DB_USER" --password="$DRUPAL_DB_PASSWORD" --database="$DRUPAL_DB_NAME" --execute="SELECT 1;" 2>&1)
 if echo "$CONNECTION_TEST" | grep -q "ERROR"; then
   echo "Triage : Database connection issue: $CONNECTION_TEST"
+  echo "Refusing to proceed with build triage."
+  exit 1
 else
-  TABLE_COUNT=$($DRUSH sql-query "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name LIKE '%node%';" --skip-column-names)
+  TABLE_COUNT=$(mysql --host="$DRUPAL_DB_HOSTNAME" --port="$DRUPAL_DB_PORT" --user="$DRUPAL_DB_USER" --password="$DRUPAL_DB_PASSWORD" --database="$DRUPAL_DB_NAME" --skip-column-names --execute="SELECT COUNT(*) FROM information_schema.tables WHERE table_schma = DATABASE() AND table_name LIKE '%node%';" 2>/dev/null)
   if [ "$TABLE_COUNT" -gt 0 ]; then
     touch /tmp/DRUPAL_DB_LIVE
     echo "Triage : Found Drupal Database with $TABLE_COUNT node tables."
