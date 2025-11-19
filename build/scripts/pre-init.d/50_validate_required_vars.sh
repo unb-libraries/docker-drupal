@@ -32,6 +32,12 @@ if [ -z "$DRUPAL_DB_DRIVER" ]; then
  exit 1
 fi
 
+# Check database prefix (can be empty string, just verify variable exists)
+if [ ! -v DRUPAL_DB_PREFIX ]; then
+ echo 'ERROR: Database prefix variable $DRUPAL_DB_PREFIX is not defined'
+ exit 1
+fi
+
 # Check Drupal Site ID
 if [ -z "$DRUPAL_SITE_ID" ]; then
  echo 'ERROR: Drupal site ID has not been set in $DRUPAL_SITE_ID'
