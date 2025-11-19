@@ -33,7 +33,7 @@ if [ -z "$DRUPAL_DB_DRIVER" ]; then
 fi
 
 # Check database prefix (can be empty string, just verify variable exists)
-if [ ! -v DRUPAL_DB_PREFIX ]; then
+if [ -z "${DRUPAL_DB_PREFIX+x}" ]; then
  echo 'ERROR: Database prefix variable $DRUPAL_DB_PREFIX is not defined'
  exit 1
 fi
