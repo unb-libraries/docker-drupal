@@ -1,14 +1,14 @@
 #!/usr/bin/env sh
 # Validate required environment variables before container initialization.
 
-# Check MySQL connection variables
-if [ -z "$MYSQL_HOSTNAME" ]; then
- echo 'ERROR: A MySQL server IP address has not been set in $MYSQL_HOSTNAME'
+# Check database connection variables
+if [ -z "$DRUPAL_DB_HOSTNAME" ]; then
+ echo 'ERROR: Database hostname has not been set in $DRUPAL_DB_HOSTNAME'
  exit 1
 fi
 
-if [ -z "$MYSQL_PORT" ]; then
- echo 'ERROR: A MySQL server port has not been set in $MYSQL_PORT'
+if [ -z "$DRUPAL_DB_PORT" ]; then
+ echo 'ERROR: Database port has not been set in $DRUPAL_DB_PORT'
  exit 1
 fi
 
