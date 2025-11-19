@@ -2,6 +2,8 @@
 # Check if this is a new deployment. If so, install.
 if [ ! -f /tmp/DRUPAL_DB_LIVE ] && [ ! -f /tmp/DRUPAL_FILES_LIVE ];
 then
+  echo "Performing new Drupal installation..."
+
   # Validate required variables for new installation
   if [ -z "$DRUPAL_ADMIN_ACCOUNT_PASS" ]; then
     echo 'ERROR: Drupal admin password has not been set in $DRUPAL_ADMIN_ACCOUNT_PASS'
@@ -17,8 +19,9 @@ then
   rsync -a /tmp/default "$DRUPAL_ROOT/sites/"
   chown -R "$NGINX_RUN_USER":"$NGINX_RUN_GROUP" "$DRUPAL_ROOT/sites/default"
 
-  # If MYSQL_ROOT_PASSWORD is specified, we can create the database/user. This is mainly for local.
-  # In production, these should be created externally and not provided!
+  # If MYSQL_ROOT_PASSWORD is specified, we can create the database/user.
+  # This is a hidden magic feature for local.
+  # Do not use this in production!
   if [ -n "$MYSQL_ROOT_PASSWORD" ]; then
     echo "Creating Drupal database and user..."
     mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -h "$DRUPAL_DB_HOSTNAME" -P "$DRUPAL_DB_PORT" -e "DROP DATABASE IF EXISTS $DRUPAL_DB_NAME; CREATE DATABASE $DRUPAL_DB_NAME CHARACTER SET utf8 COLLATE utf8_general_ci; CREATE USER '$DRUPAL_DB_USER'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; GRANT ALL PRIVILEGES ON $DRUPAL_DB_NAME.* TO '$DRUPAL_DB_USER'@'%' IDENTIFIED BY '$DRUPAL_DB_PASSWORD'; FLUSH PRIVILEGES;"
