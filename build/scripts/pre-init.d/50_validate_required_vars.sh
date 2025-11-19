@@ -27,6 +27,11 @@ if [ -z "$DRUPAL_DB_PASSWORD" ]; then
  exit 1
 fi
 
+if [ -z "$DRUPAL_DB_DRIVER" ]; then
+ echo 'ERROR: Database driver has not been set in $DRUPAL_DB_DRIVER'
+ exit 1
+fi
+
 # Check Drupal Site ID
 if [ -z "$DRUPAL_SITE_ID" ]; then
  echo 'ERROR: Drupal site ID has not been set in $DRUPAL_SITE_ID'
