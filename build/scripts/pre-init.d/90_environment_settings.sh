@@ -1,5 +1,10 @@
 #!/usr/bin/env sh
 if [ "$DEPLOY_ENV" = "prod" ]; then
-  echo "Ensuring some modules are disabled in production..."
-  ${DRUSH} pm-uninstall devel field_ui views_ui dblog  > /dev/null 2>&1
+  FORBID_MODULES="devel field_ui views_ui dblog"
+  for MODULE in $FORBID_MODULES; do
+    if ${DRUSH} pm-list --status=enabled --type=module | grep -q "^$MODULE "; then
+      echo "Error: Module '$MODULE' is enabled in production environment. Please disable it before deploying."
+      exit 1
+    fi
+  done
 fi
