@@ -4,7 +4,7 @@
 ln -s /scripts/pre-init.d/20_enable_postfix.sh /scripts/pre-init.cron.d/
 
 # Disable newrelic logging in cron pods
-ln -s /scripts/removeNewRelicIni.sh /scripts/pre-init.cron.d/21_remove_newrelic_ini.sh
+# ln -s /scripts/removeNewRelicIni.sh /scripts/pre-init.cron.d/21_remove_newrelic_ini.sh
 
 # Private filesystem creation.
 ln -s /scripts/pre-init.d/56_create_private_filesystem.sh /scripts/pre-init.cron.d/
