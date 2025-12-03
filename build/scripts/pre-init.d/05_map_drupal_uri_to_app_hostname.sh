@@ -1,9 +1,8 @@
 #!/bin/sh
 set -eu
 
-# If SITE_URI exists and APP_HOSTNAME is not already set,
-# map SITE_URI -> APP_HOSTNAME.
-if [ -n "${SITE_URI:-}" ] && [ -z "${APP_HOSTNAME:-}" ]; then
-  export APP_HOSTNAME="$SITE_URI"
+# If DRUPAL_SITE_URI exists and APP_HOSTNAME is not already set,
+# map DRUPAL_SITE_URI -> APP_HOSTNAME.
+if [ -n "${DRUPAL_SITE_URI:-}" ] && [ -z "${APP_HOSTNAME:-}" ]; then
+  export APP_HOSTNAME="$DRUPAL_SITE_URI"
 fi
-
