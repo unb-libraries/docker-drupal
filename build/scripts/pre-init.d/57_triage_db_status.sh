@@ -1,9 +1,8 @@
 #!/usr/bin/env sh
-# Triage the build to determine how to deploy.
+# Triage the database status.
 
-# Remove possible old file markers to eliminate false positives
+# Remove possible old file marker to eliminate false positives
 rm -rf /tmp/DRUPAL_DB_LIVE
-rm -rf /tmp/DRUPAL_FILES_LIVE
 
 # Test DB connection using environment variables, do NOT use Drush as we haven't bootstrapped Drupal.
 CONNECTION_TEST=$(mariadb --host="$DRUPAL_DB_HOSTNAME" --port="$DRUPAL_DB_PORT" --user="$DRUPAL_DB_USER" --password="$DRUPAL_DB_PASSWORD" --database="$DRUPAL_DB_NAME" --execute="SELECT 1;" 2>&1)
@@ -21,13 +20,4 @@ else
   else
     echo "Triage : Unexpected result from node table count: '$TABLE_COUNT'"
   fi
-fi
-
-# Determine if the site was previously built by checking for settings.php and that a 'files' directory exists under $DRUPAL_PUBLIC_FILES_ROOT.
-DRUPAL_PUBLIC_FILES_ROOT="$DRUPAL_ROOT/sites/default"
-if [ -f "$DRUPAL_PUBLIC_FILES_ROOT/.htaccess" ] && [ -d "$DRUPAL_PUBLIC_FILES_ROOT/files" ] && [ -f "$DRUPAL_PUBLIC_FILES_ROOT/files/.htaccess" ]; then
-  touch /tmp/DRUPAL_FILES_LIVE
-  echo "Triage : Found Drupal Filesystem: .htaccess and 'files/.htaccess' directory."
-else
-  echo "Triage : settings.php or 'files' directory not found."
 fi
