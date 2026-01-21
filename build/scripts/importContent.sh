@@ -15,4 +15,5 @@ EXTRACTED_FILE=$(basename "$EXTRACTED_PATH")
 gunzip -c "$1" > "/tmp/$EXTRACTED_FILE"
 echo "Importing $EXTRACTED_FILE"
 sh -c "$DRUSH sql-cli < /tmp/$EXTRACTED_FILE"
+rm -f "/tmp/$EXTRACTED_FILE"
 $DRUSH cr
