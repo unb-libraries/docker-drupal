@@ -26,7 +26,6 @@ RUN apk --no-cache add \
     mysql-client \
     php-ctype \
     php-dom \
-    php-dom \
     php-fileinfo \
     php-intl \
     php-mbstring \
