@@ -17,10 +17,12 @@ fi
 ENTITY_CONF_FILE="${DRUPAL_CONFIGURATION_DIR}/${SET_CONF_ENTITY}.yml"
 
 if [ -f "$ENTITY_CONF_FILE" ]; then
-  CURRENT_KEY_VALUE=$(cat "$ENTITY_CONF_FILE" | grep "$SET_CONF_KEY" | awk '{print $2}')
-  if [ ! -z "$CURRENT_KEY_VALUE" ]; then
+  CURRENT_KEY_VALUE=$(yq eval ".$SET_CONF_KEY" "$ENTITY_CONF_FILE" 2>/dev/null)
+  # yq returns "null" for missing keys
+  [ "$CURRENT_KEY_VALUE" = "null" ] && CURRENT_KEY_VALUE=""
+  if [ -n "$CURRENT_KEY_VALUE" ]; then
     echo "Setting ${SET_CONF_ENTITY}:${SET_CONF_KEY} to ${CURRENT_KEY_VALUE}"
-    CUR_CONFIG_VALUE=$(drush cget --format=list "$SET_CONF_ENTITY" "$SET_CONF_KEY")
+    CUR_CONFIG_VALUE=$($DRUSH cget --format=list "$SET_CONF_ENTITY" "$SET_CONF_KEY")
     if [ ! "$CUR_CONFIG_VALUE" = "$CURRENT_KEY_VALUE" ]; then
       ${DRUSH} config-set "$SET_CONF_ENTITY" "$SET_CONF_KEY" "$CURRENT_KEY_VALUE"
     else
