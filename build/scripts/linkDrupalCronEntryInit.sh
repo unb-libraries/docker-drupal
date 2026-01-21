@@ -9,7 +9,7 @@ ln -s /scripts/pre-init.d/52_process_container_yaml.sh /scripts/pre-init.cron.d/
 ln -s /scripts/pre-init.d/52_process_settings.sh /scripts/pre-init.cron.d/
 ln -s /scripts/pre-init.d/53_process_settings_tokens.sh /scripts/pre-init.cron.d/
 ln -s /scripts/pre-init.d/55_wait_for_mysql_server.sh /scripts/pre-init.cron.d/
-ln -s /scripts/pre-init.d/61_apply_drupal_settings.sh /scripts/pre-init.cron.d/
+ln -s /scripts/pre-init.d/61_add_base_settings_include.sh /scripts/pre-init.cron.d/
 ln -s /scripts/pre-init.d/71_set_public_file_permissions.sh /scripts/pre-init.cron.d/
 ln -s /scripts/pre-init.d/72_secure_config_sync_dir.sh /scripts/pre-init.cron.d/
 ln -s /scripts/pre-init.d/72_secure_filesystems.sh /scripts/pre-init.cron.d/
