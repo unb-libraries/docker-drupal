@@ -2,25 +2,18 @@
 # Synchronize Drupal extensions (modules and themes) to match core.extension.yml.
 echo "Sync Extensions : Synchronizing modules and themes..."
 
-# Gets items in list1 but not in list2 (space-separated)
+# Gets items in list1 but not in list2 (space-separated) - O(n log n)
 diff_lists() {
   LIST1="$1"
   LIST2="$2"
-  RESULT=""
-  for item in $LIST1; do
-    [ -z "$item" ] && continue
-    FOUND=0
-    for check in $LIST2; do
-      if [ "$item" = "$check" ]; then
-        FOUND=1
-        break
-      fi
-    done
-    if [ "$FOUND" -eq 0 ]; then
-      RESULT="$RESULT $item"
-    fi
-  done
-  echo "$RESULT" | xargs
+  # Handle empty lists
+  [ -z "$LIST1" ] && return
+  [ -z "$LIST2" ] && { echo "$LIST1" | xargs; return; }
+  # Use comm for efficient set difference (requires sorted input)
+  printf '%s\n' $LIST1 | sort > /tmp/diff_list1.$$
+  printf '%s\n' $LIST2 | sort > /tmp/diff_list2.$$
+  comm -23 /tmp/diff_list1.$$ /tmp/diff_list2.$$ | tr '\n' ' ' | xargs
+  rm -f /tmp/diff_list1.$$ /tmp/diff_list2.$$
 }
 
 # Gets if item exists in list
