@@ -14,7 +14,7 @@ usage() {
 # Check if first argument is missing or an option
 if [ $# -eq 0 ] || [ "${1#--}" != "$1" ]; then
     echo "No target location specified, generating random location."
-    HASH=$(echo $RANDOM | md5sum | head -c 20; echo)
+    HASH=$(od -A n -t x -N 10 /dev/urandom | tr -d ' \n')
     EXPORT_PATH="$BASE_PATH/$HASH"
     mkdir -p "$EXPORT_PATH"
 
