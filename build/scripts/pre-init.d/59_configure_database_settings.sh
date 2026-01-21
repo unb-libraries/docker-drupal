@@ -16,40 +16,18 @@ if [ -f /tmp/DRUPAL_DB_LIVE ] && [ -f /tmp/DRUPAL_FILES_LIVE ]; then
   # Construct namespace from driver
   DRUPAL_DB_NAMESPACE="Drupal\\\\Core\\\\Database\\\\Driver\\\\$DRUPAL_DB_DRIVER"
 
-  # Substitute database fields - handle both single and double quotes
-  # Each field has two sed commands: one for single quotes, one for double quotes
-
-  # Database name
-  sed -i "s|'database' => '[^']*'|'database' => '$DRUPAL_DB_NAME'|g" "$SETTINGS_FILE"
-  sed -i "s|\"database\" => \"[^\"]*\"|\"database\" => \"$DRUPAL_DB_NAME\"|g" "$SETTINGS_FILE"
-
-  # Username
-  sed -i "s|'username' => '[^']*'|'username' => '$DRUPAL_DB_USER'|g" "$SETTINGS_FILE"
-  sed -i "s|\"username\" => \"[^\"]*\"|\"username\" => \"$DRUPAL_DB_USER\"|g" "$SETTINGS_FILE"
-
-  # Password
-  sed -i "s|'password' => '[^']*'|'password' => '$DRUPAL_DB_PASSWORD'|g" "$SETTINGS_FILE"
-  sed -i "s|\"password\" => \"[^\"]*\"|\"password\" => \"$DRUPAL_DB_PASSWORD\"|g" "$SETTINGS_FILE"
-
-  # Prefix
-  sed -i "s|'prefix' => '[^']*'|'prefix' => '$DRUPAL_DB_PREFIX'|g" "$SETTINGS_FILE"
-  sed -i "s|\"prefix\" => \"[^\"]*\"|\"prefix\" => \"$DRUPAL_DB_PREFIX\"|g" "$SETTINGS_FILE"
-
-  # Host
-  sed -i "s|'host' => '[^']*'|'host' => '$DRUPAL_DB_HOSTNAME'|g" "$SETTINGS_FILE"
-  sed -i "s|\"host\" => \"[^\"]*\"|\"host\" => \"$DRUPAL_DB_HOSTNAME\"|g" "$SETTINGS_FILE"
-
-  # Port
-  sed -i "s|'port' => '[^']*'|'port' => '$DRUPAL_DB_PORT'|g" "$SETTINGS_FILE"
-  sed -i "s|\"port\" => \"[^\"]*\"|\"port\" => \"$DRUPAL_DB_PORT\"|g" "$SETTINGS_FILE"
-
-  # Driver
-  sed -i "s|'driver' => '[^']*'|'driver' => '$DRUPAL_DB_DRIVER'|g" "$SETTINGS_FILE"
-  sed -i "s|\"driver\" => \"[^\"]*\"|\"driver\" => \"$DRUPAL_DB_DRIVER\"|g" "$SETTINGS_FILE"
-
-  # Namespace (constructed from driver)
-  sed -i "s|'namespace' => '[^']*'|'namespace' => '$DRUPAL_DB_NAMESPACE'|g" "$SETTINGS_FILE"
-  sed -i "s|\"namespace\" => \"[^\"]*\"|\"namespace\" => \"$DRUPAL_DB_NAMESPACE\"|g" "$SETTINGS_FILE"
+  # Substitute database fields in single sed invocation
+  # Handles both single and double quoted values via character class
+  sed -i \
+    -e "s|['\"]database['\"] => ['\"][^'\"]*['\"]|'database' => '$DRUPAL_DB_NAME'|g" \
+    -e "s|['\"]username['\"] => ['\"][^'\"]*['\"]|'username' => '$DRUPAL_DB_USER'|g" \
+    -e "s|['\"]password['\"] => ['\"][^'\"]*['\"]|'password' => '$DRUPAL_DB_PASSWORD'|g" \
+    -e "s|['\"]prefix['\"] => ['\"][^'\"]*['\"]|'prefix' => '$DRUPAL_DB_PREFIX'|g" \
+    -e "s|['\"]host['\"] => ['\"][^'\"]*['\"]|'host' => '$DRUPAL_DB_HOSTNAME'|g" \
+    -e "s|['\"]port['\"] => ['\"][^'\"]*['\"]|'port' => '$DRUPAL_DB_PORT'|g" \
+    -e "s|['\"]driver['\"] => ['\"][^'\"]*['\"]|'driver' => '$DRUPAL_DB_DRIVER'|g" \
+    -e "s|['\"]namespace['\"] => ['\"][^'\"]*['\"]|'namespace' => '$DRUPAL_DB_NAMESPACE'|g" \
+    "$SETTINGS_FILE"
 
   echo "Database settings configured successfully."
 fi
