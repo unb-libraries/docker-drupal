@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 set -eu
 
 # If DRUPAL_SITE_URI exists and APP_HOSTNAME is not already set,
