@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
+set -e
 #
 # Forcibly truncate all cache tables.
-drush sql-query "SELECT table_name FROM information_schema.tables WHERE table_name LIKE 'cache\_%';" | ( while read -r LINE ; do
+$DRUSH sql-query "SELECT table_name FROM information_schema.tables WHERE table_name LIKE 'cache\_%';" | ( while read -r LINE ; do
   if [ -n "$LINE" ]; then
     COMMAND="$COMMAND TRUNCATE TABLE $LINE;"
   fi
