@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 set -eu
+set -o pipefail
 : "${DRUPAL_SITE_ID:?DRUPAL_SITE_ID is required}"
 : "${DRUPAL_REDIS_HOSTNAME:?DRUPAL_REDIS_HOSTNAME is required}"
 
