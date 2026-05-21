@@ -32,7 +32,7 @@ RUN apk --no-cache add \
     php-mysqlnd \
     php-opcache \
     php-pcntl \
-    php83-pecl-uploadprogress \
+    php84-pecl-uploadprogress \
     php-pdo \
     php-pdo_mysql \
     php-posix \
