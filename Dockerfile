@@ -24,22 +24,22 @@ COPY ./build /build
 RUN apk --no-cache add \
     doas \
     mysql-client \
-    php84-ctype \
-    php84-dom \
-    php84-fileinfo \
-    php84-intl \
-    php84-mbstring \
-    php84-mysqlnd \
-    php84-opcache \
-    php84-pcntl \
-    php84-pecl-uploadprogress \
-    php84-pdo \
-    php84-pdo_mysql \
-    php84-posix \
-    php84-session \
-    php84-simplexml \
-    php84-tokenizer \
-    php84-xmlwriter \
+    php${PHP_VERSION}-ctype \
+    php${PHP_VERSION}-dom \
+    php${PHP_VERSION}-fileinfo \
+    php${PHP_VERSION}-intl \
+    php${PHP_VERSION}-mbstring \
+    php${PHP_VERSION}-mysqlnd \
+    php${PHP_VERSION}-opcache \
+    php${PHP_VERSION}-pcntl \
+    php${PHP_VERSION}-pecl-uploadprogress \
+    php${PHP_VERSION}-pdo \
+    php${PHP_VERSION}-pdo_mysql \
+    php${PHP_VERSION}-posix \
+    php${PHP_VERSION}-session \
+    php${PHP_VERSION}-simplexml \
+    php${PHP_VERSION}-tokenizer \
+    php${PHP_VERSION}-xmlwriter \
     redis \
     yq && \
   $RSYNC_MOVE /build/scripts/ /scripts/ && \
