@@ -1,4 +1,4 @@
-FROM ghcr.io/unb-libraries/nginx-php:3.22.x
+FROM ghcr.io/unb-libraries/nginx-php:3.23.x
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV DRUPAL_ADMIN_ACCOUNT_NAME=admin
