@@ -81,7 +81,6 @@ handle_theme_setting_change() {
 CURRENT_MODULES=$(/scripts/getEnabledProjects.sh module | tr '\n' ' ')
 TARGET_MODULES=$(/scripts/getStagedProjects.sh module | tr '\n' ' ')
 MODULES_TO_UNINSTALL=$(diff_lists "$CURRENT_MODULES" "$TARGET_MODULES")
-MODULES_TO_INSTALL=$(diff_lists "$TARGET_MODULES" "$CURRENT_MODULES")
 
 ### THEMES
 CURRENT_THEMES=$(/scripts/getEnabledProjects.sh theme | tr '\n' ' ')
@@ -133,16 +132,11 @@ else
 fi
 
 ### INSTALL PHASE
-if [ -n "$MODULES_TO_INSTALL" ]; then
-  echo "Sync Extensions : Installing modules: $MODULES_TO_INSTALL"
-  ${DRUSH} en $MODULES_TO_INSTALL || {
-    echo "Sync Extensions : ERROR - Failed to install modules"
-    exit 1
-  }
-else
-  echo "Sync Extensions : No modules to install."
-fi
+# Modules are installed by config-import (syncing mode), not `drush en`, to avoid
+# PreExistingConfigException on config already in active config.
+echo "Sync Extensions : Module installation delegated to config-import (syncing mode); no 'drush en' here."
 
+# Themes are installed here; no syncing-mode install path exists for them.
 if [ -n "$THEMES_TO_INSTALL" ]; then
   echo "Sync Extensions : Installing themes: $THEMES_TO_INSTALL"
   ${DRUSH} theme:install $THEMES_TO_INSTALL || {
