@@ -1,0 +1,8 @@
+services:
+  # Routes ERROR-and-worse watchdog entries to the container stderr stream.
+  # Registered via container_yamls in global.settings.php.
+  unblib.logger.container_stderr:
+    class: UnbLib\Logger\ContainerStderrLogger
+    arguments: ['@logger.log_message_parser']
+    tags:
+      - { name: logger }

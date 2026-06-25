@@ -6,7 +6,12 @@ ENV ENABLE_NEWRELIC_TRACING=false
 
 COPY ./build /build
 RUN $RSYNC_MOVE /build/scripts/ /scripts/&& \
-  /scripts/linkDrupalCronEntryInitUnb.sh
+  /scripts/linkDrupalCronEntryInitUnb.sh && \
+  mkdir -p /app/php && \
+  cp /build/php-src/ContainerStderrLogger.php \
+     /build/php-src/services.yml \
+     /build/php-src/global.settings.php \
+     /app/php/
 
 ARG BUILD_DATE
 ARG VCS_REF
