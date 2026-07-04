@@ -55,8 +55,16 @@ rm /scripts/pre-init.cron.d/94_drupal_cron.sh
 # directory is dot-prefixed so it is never listed as a snapshot.
 rm -rf "$STAGING_PATH"
 mkdir -p "$STAGING_PATH"
+# The database dump runs as the web user (drush drops privileges), while this
+# script - and thus the mkdir above - runs as root, which the snapshot NFS
+# root-squashes to a different owner. chown across a root-squashed export is not
+# permitted, but the squashed root owns the directory it just created, so it may
+# relax the mode. 0777 lets the web user write the dump into the staging dir.
+chmod 0777 "$STAGING_PATH"
 /scripts/exportData.sh "$STAGING_PATH" $NO_FILES
 /scripts/writeSnapshotManifest.sh "$STAGING_PATH"
+# Restore standard perms before publishing the snapshot.
+chmod 0755 "$STAGING_PATH"
 rm -rf "$FINAL_PATH"
 mv "$STAGING_PATH" "$FINAL_PATH"
 
