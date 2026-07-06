@@ -46,7 +46,7 @@ STAGING_PATH="$SNAPSHOT_ROOT/.$SNAPSHOT_NAME.tmp"
 
 # Cron is an efficient way to bootstrap Drupal without duplicating code.
 # Skipping the cron itself at the end.
-rm /scripts/pre-init.cron.d/94_drupal_cron.sh
+rm /scripts/pre-init.cron.d/95_drupal_cron.sh
 /scripts/drupalCronEntry.sh
 
 # Atomic write: export into a staging directory, write the manifest LAST, then
