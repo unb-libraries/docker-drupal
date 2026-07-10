@@ -45,12 +45,11 @@ RUN apk --no-cache add \
 VOLUME /app/html/sites/default
 
 LABEL ca.unb.lib.generator="drupal9" \
-  org.label-schema.build-date=$BUILD_DATE \
-  org.label-schema.description="docker-drupal is the base drupal image at UNB Libraries." \
-  org.label-schema.name="drupal" \
-  org.label-schema.url="https://github.com/unb-libraries/docker-drupal" \
-  org.label-schema.vcs-ref=$VCS_REF \
-  org.label-schema.vcs-url="https://github.com/unb-libraries/docker-drupal" \
-  org.label-schema.version=$VERSION \
+  org.opencontainers.image.title="drupal" \
+  org.opencontainers.image.description="docker-drupal is the base drupal image at UNB Libraries." \
   org.opencontainers.image.authors="UNB Libraries <libsupport@unb.ca>" \
-  org.opencontainers.image.source="https://github.com/unb-libraries/docker-drupal"
+  org.opencontainers.image.url="https://github.com/unb-libraries/docker-drupal" \
+  org.opencontainers.image.source="https://github.com/unb-libraries/docker-drupal" \
+  org.opencontainers.image.version="$VERSION" \
+  org.opencontainers.image.revision="$VCS_REF" \
+  org.opencontainers.image.created="$BUILD_DATE"
