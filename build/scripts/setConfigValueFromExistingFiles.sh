@@ -41,7 +41,7 @@ if [ -f "$ENTITY_CONF_FILE" ]; then
     # creates a partial record containing only the one key we set, which
     # later breaks ConfigEntity imports (e.g. ConfigurableLanguage::save
     # throws "The entity does not have an ID."). Empty/missing is treated
-    # identically: in either case, let deploy.d/40_import_configuration.sh
+    # identically: in either case, let deploy.d/74.40_import_configuration.sh
     # create or repair the record via the entity API.
     ACTIVE_YAML=$($DRUSH cget --format=yaml "$SET_CONF_ENTITY" 2>/dev/null)
     if [ -z "$ACTIVE_YAML" ]; then

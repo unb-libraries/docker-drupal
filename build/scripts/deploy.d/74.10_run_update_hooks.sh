@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 # Apply pending database updates BEFORE any step that rebuilds the router or
-# container (e.g. 20_sync_extensions' module uninstalls, 30's `drush en`). A
+# container (e.g. 74.20_sync_extensions' module uninstalls, 74.30's `drush en`). A
 # code update that changes a core/module schema (for example the router table)
 # must have its update hooks applied first, otherwise those rebuilds run against
 # the old schema and fail. Mirrors Drupal's canonical deploy order (updatedb
