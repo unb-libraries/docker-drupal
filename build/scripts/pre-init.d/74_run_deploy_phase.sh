@@ -10,6 +10,12 @@
 # restart the entire phase is skipped, turning a multi-second/minute startup into a
 # single SELECT.
 #
+# Three always-run overrides bypass the skip: DEPLOY_ENV=local (local dev runs every step
+# on every boot), an unset DRUPAL_DEPLOYMENT_IDENTIFIER (bare/non-versioned image), and
+# DRUPAL_FORCE_DEPLOY set to any non-empty value (an orchestration-level escape hatch to
+# force a redeploy of an unchanged image -- e.g. to recover a partial deploy). A forced
+# run still records the marker afterward, so a later non-forced restart skips as usual.
+#
 # Single-execution across pods relies on the RollingUpdate maxSurge:1 strategy: k8s brings
 # up one new pod at a time, so the first new pod deploys and later pods see the marker and
 # skip. Genuinely concurrent deploys (Recreate / maxSurge>1 / a concurrent first install)
@@ -55,12 +61,15 @@ CURRENT_ID=$(printf '%s' "$DRUPAL_DEPLOYMENT_IDENTIFIER" | tr -cd 'A-Za-z0-9._-'
 deploy_guard_ensure_table
 LAST_ID=$(deploy_guard_last_completed)
 
-if [ "$LAST_ID" = "$CURRENT_ID" ]; then
+if [ -n "$DRUPAL_FORCE_DEPLOY" ]; then
+  echo "[i] Deploy phase: DRUPAL_FORCE_DEPLOY set; forcing deploy of build '$CURRENT_ID' (last deployed: '${LAST_ID:-none}')."
+elif [ "$LAST_ID" = "$CURRENT_ID" ]; then
   echo "[i] Deploy phase: build '$CURRENT_ID' already deployed; skipping deploy steps."
   exit 0
+else
+  echo "[i] Deploy phase: deploying build '$CURRENT_ID' (last deployed: '${LAST_ID:-none}')..."
 fi
 
-echo "[i] Deploy phase: deploying build '$CURRENT_ID' (last deployed: '${LAST_ID:-none}')..."
 run_deploy_steps
 deploy_guard_mark_complete "$CURRENT_ID"
 echo "[i] Deploy phase: build '$CURRENT_ID' recorded as deployed."
