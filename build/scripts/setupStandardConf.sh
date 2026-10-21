@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # nginx
-mv /build/nginx/* "$NGINX_CONFD_DIR/"
+$RSYNC_MOVE /build/nginx/ "$NGINX_CONFD_DIR/"
 
 # php
 mv /build/php/app-php.ini "$PHP_CONFD_DIR/zz_app.ini"
