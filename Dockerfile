@@ -7,13 +7,18 @@ RUN apk add alpine-sdk && \
   adduser -D builder && \
   addgroup builder abuild
 COPY --chown=builder ./build/php-apk /home/builder/php-apk
+# abuild -r installs makedepends through setuid abuild-apk, which fails under
+# QEMU for the arm64 build. Install them as root and build with -d instead.
+RUN cd /home/builder/php-apk/php84 && \
+  . ./APKBUILD && \
+  apk add $(for d in $makedepends; do case "$d" in "$pkgname"*) ;; *) echo "$d" ;; esac; done)
 USER builder
 RUN abuild-keygen -an
 USER root
 RUN cp /home/builder/.abuild/*.rsa.pub /etc/apk/keys/
 USER builder
 WORKDIR /home/builder/php-apk/php84
-RUN abuild -r
+RUN abuild -d
 
 FROM ghcr.io/unb-libraries/drupal:11.x-1.x
 
