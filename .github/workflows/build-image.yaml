@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    uses: unb-libraries/dockworker-baseimage/.github/workflows/build-base-image.yaml@6.x
+    uses: unb-libraries/github-workflows/.github/workflows/publish-image.yaml@1.x
     with:
       image-name: ghcr.io/unb-libraries/drupal
       platforms: linux/amd64
