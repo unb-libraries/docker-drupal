@@ -1,4 +1,4 @@
-FROM ghcr.io/unb-libraries/nginx-php:3.x
+FROM ghcr.io/unb-libraries/nginx-php:3.22.x-php82
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV DRUPAL_ADMIN_ACCOUNT_NAME admin
@@ -17,23 +17,22 @@ COPY ./build /build
 RUN apk --no-cache add \
     doas \
     mysql-client \
-    php-ctype \
-    php-dom \
-    php-dom \
-    php-fileinfo \
-    php-intl \
-    php-mbstring \
-    php-mysqlnd \
-    php-opcache \
-    php-pcntl \
-    php81-pecl-uploadprogress \
-    php-pdo \
-    php-pdo_mysql \
-    php-posix \
-    php-session \
-    php-simplexml \
-    php-tokenizer \
-    php-xmlwriter \
+    php${PHP_VERSION}-ctype \
+    php${PHP_VERSION}-dom \
+    php${PHP_VERSION}-fileinfo \
+    php${PHP_VERSION}-intl \
+    php${PHP_VERSION}-mbstring \
+    php${PHP_VERSION}-mysqlnd \
+    php${PHP_VERSION}-opcache \
+    php${PHP_VERSION}-pcntl \
+    php${PHP_VERSION}-pecl-uploadprogress \
+    php${PHP_VERSION}-pdo \
+    php${PHP_VERSION}-pdo_mysql \
+    php${PHP_VERSION}-posix \
+    php${PHP_VERSION}-session \
+    php${PHP_VERSION}-simplexml \
+    php${PHP_VERSION}-tokenizer \
+    php${PHP_VERSION}-xmlwriter \
     redis \
     yq && \
   $RSYNC_MOVE /build/scripts/ /scripts/ && \
