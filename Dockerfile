@@ -45,6 +45,7 @@ RUN apk --no-cache add \
     yq && \
   $RSYNC_MOVE /build/scripts/ /scripts/ && \
   $RSYNC_MOVE /build/data/htaccess/ /security_htaccess && \
+  $RSYNC_MOVE /build/nginx/server/ "$NGINX_CONFD_DIR/server/" && \
   /scripts/setupDoasConf.sh && \
   /scripts/linkDrupalCronEntryInit.sh && \
   rm -rf ~/.composer/cache
