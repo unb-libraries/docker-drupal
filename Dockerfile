@@ -1,6 +1,9 @@
 FROM ghcr.io/unb-libraries/drupal:9.x-4.x
 MAINTAINER UNB Libraries <libsupport@unb.ca>
 
+ENV ROBOTS_TXT_REPLACE=""
+ENV ROBOTS_TXT_APPEND=""
+
 COPY ./build /build
 RUN $RSYNC_MOVE /build/scripts/ /scripts/&& \
   /scripts/linkDrupalCronEntryInitUnb.sh
